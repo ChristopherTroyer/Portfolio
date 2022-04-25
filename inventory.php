@@ -19,5 +19,27 @@
 
     <hr>
     <h2>Products</h2>
+    <?php
+    include 'password.php';
+    try { // connect to the database, forms don't do much good if they can't connect
+        $pdo = new PDO($dbname, $user, $pass);        
+        $res = $pdo->query("SELECT NAME, QTY FROM PRODUCT");
+        echo "<table border=1>";
+        while($fet = $res->fetch(PDO::FETCH_ASSOC)){
+            echo"<tr>";
+            foreach($fet as $data){
+                echo "<td>$data</td>";
+            }
+            echo "</tr>";
+        }
+        echo "</table>";
+
+        echo "</pre></body></html>";
+    }
+    catch(PDOexception $e) { // handle that exception
+        echo "Connection to database failed: " . $e->getMessage();
+    }
+    
+    ?>
 </body>
 </html>
