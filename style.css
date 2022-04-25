@@ -1,0 +1,36 @@
+/* center body and header */
+body {
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+header {
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+/* put links in a row, center them, make them look nice */
+nav {
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+}
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+nav li {
+  display: inline-block;
+  padding: 0;
+}
+nav a {
+  display: block;
+  padding: 0.5em;
+  text-decoration: none;
+  color: #000;
+  background-color: #ccc;
+}
+nav a:hover {
+  background-color: #999;
+}
