@@ -1,7 +1,7 @@
 -- Remove all tables that were created
 DROP TABLE IF EXISTS PRODUCT, CUSTOMER, ORDR, CART;
 
--- Create S table
+-- Create PRODUCT table
 CREATE TABLE PRODUCT (
     PID INT PRIMARY KEY AUTO_INCREMENT,
     NAME VARCHAR(40) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE CUSTOMER (
 -- Show CUSTOMER table
 DESCRIBE CUSTOMER;
 
--- Create SP table
+-- Create ORDR table
 CREATE TABLE ORDR (
     OID INT AUTO_INCREMENT,
     USERID INT,
