@@ -23,13 +23,29 @@
     include 'password.php';
     try { // connect to the database, forms don't do much good if they can't connect
         $pdo = new PDO($dbname, $user, $pass);        
+        
+        if($_POST != NULL){
+            $res = $pdo->prepare("UPDATE PRODUCT SET QTY = QTY + ? WHERE NAME=?");
+            $res->execute(array(($_POST["quantity"]), ($_POST["name"])));
+            echo "Quantity updated successfully.";
+        }
+
         $res = $pdo->query("SELECT NAME, QTY FROM PRODUCT");
         echo "<table border=1>";
+        echo "<tr><th>Product</th><th>Quantity</th></tr>";
         while($fet = $res->fetch(PDO::FETCH_ASSOC)){
             echo"<tr>";
-            foreach($fet as $data){
-                echo "<td>$data</td>";
-            }
+            $name = $fet["NAME"];
+            $qty = $fet["QTY"];
+            echo "
+            <td>
+                <form action=\"prodinfo.php\" method = POST>
+                    <input type=\"submit\" name=\"name\" value=\"$name\"/>
+                </form>
+            </td>
+            <td>
+                $qty
+            </td>";
             echo "</tr>";
         }
         echo "</table>";
