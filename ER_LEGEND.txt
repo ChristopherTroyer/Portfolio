@@ -1,0 +1,46 @@
+ENTITIES
+
+Ent     - CUSTOMER
+Desc    - Account of the people buying from the website to associate with orders/purchases/rewards etc
+ATT_KEY - USERID      - surrogate key assigned to identify customer
+ATT     - Name        - Name of customer
+ATT     - Addr        - Address of customer
+ATT     - Birthday    - birthday of customer
+ATT     - Phone       - valid phone number
+ATT     - Email       - valid email address
+
+
+Ent     - PRODUCT
+Desc    - Product tracked in store inventory
+ATT_KEY - ID          - surrogate key assigned to identify product in inventory
+ATT     - Name        - Name of product
+ATT     - Weight      - Weight of product
+ATT     - Price       - Price per count of product
+ATT     - Rating      - Rating of product
+ATT     - Quantity    - Count of product in stock
+ATT     - Description - Brief description of product
+
+
+Ent     - ORDER
+Desc    - Weak entity holding informations about orders in various states belonging to customers. Order would not exist without a Customer having one
+ATT_KEY - ID          - surrogate key assigned to orders upon data storage
+ATT     - Status      - status of order ('SHOPPING', 'PENDING', 'COMPLETE')
+
+
+
+
+RELATIONSHIPS
+
+Relat   - Places An
+Ents    - CUSTOMER, ORDER
+Desc    - Represents that each ORDER belongs to exactly one CUSTOMER
+#C      - For any given ORDER, there is exactly one CUSTOMER who owns it
+#O      - For any given CUSTOMER, there can be many or no ORDERS under their ownership
+
+
+Relat   - IN CART
+Ents    - ORDER, PRODUCT
+Desc    - Represents a product being associated with an order (in the shopping cart)
+ATT     - NUM        - Number of PRODUCT in cart 
+#O      - For any given PRODUCT/s there can be many or no ORDERs
+#P      - For any given ORDER there can be none to many PRODUCTs
