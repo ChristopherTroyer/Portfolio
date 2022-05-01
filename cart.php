@@ -18,6 +18,82 @@
     </nav>
 
     <hr>
-    <h2>Products</h2>
+    <?php
+    include 'password.php';
+    try {
+        $pdo = new PDO($dbname, $user, $pass);
+
+        if($_POST != NULL){
+            $res = $pdo->prepare("UPDATE CART SET NUM = ? WHERE NAME=?");
+            $res->execute(array(($_POST["quantity"]), ($_POST["name"])));
+            echo "Quantity updated successfully.";
+        }
+
+        echo "<h3>User: (shows username)</h3>";
+        $res = $pdo->query("SELECT NAME, NUM FROM PRODUCT, CART
+          WHERE PRODUCT.PID = CART.PID AND CART.OID = 1");
+        echo "<h3>Items in Cart.</h3>";
+        echo "<table border=0 cellpadding=5 align=center>";
+        echo "<tr><th>Item</th><th>Quantity</th></tr>";
+        while($fet = $res->fetch(PDO::FETCH_ASSOC)){
+            echo"<tr>";
+            $name = $fet["NAME"];
+            $qty = $fet["NUM"];
+            echo "
+            <td>
+                $name
+            </td>
+            <td>
+                $qty
+            </td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+
+        echo "<br><br>";
+        echo "<form action=\"cart.php\" method = POST>";
+        echo "<label for='Name'>Choose Item: </label>";
+        echo "<select id='Name' name='Item'>";
+        $res = $pdo->query("SELECT NAME, NUM FROM PRODUCT, CART
+          WHERE PRODUCT.PID = CART.PID AND CART.OID = 1");
+        while($fet = $res->fetch(PDO::FETCH_ASSOC)){
+              $name = $fet["NAME"];
+              echo "<option value=".$name.">".$name."</option>";
+        }
+        echo "</select>";
+        echo "
+        New Qty: <input type=\"text\" size='1' name=\"qty\" />
+        <input type='submit' value='Update'>
+        <input type='submit' value='Remove Item'>
+        <input type='submit' value='Move to WishList'> </form>";
+
+        echo "<br>";
+        $res = $pdo->query("SELECT NAME, NUM FROM PRODUCT, CART
+          WHERE PRODUCT.PID = CART.PID AND CART.OID = 1");
+        echo "<h3>Items in WishList.</h3>";
+        echo "<table border=0 cellpadding=5 align=center>";
+        echo "<tr><th>Item</th><th>Quantity</th></tr>";
+        while($fet = $res->fetch(PDO::FETCH_ASSOC)){
+            echo"<tr>";
+            $name = $fet["NAME"];
+            $qty = $fet["NUM"];
+            echo "
+            <td>
+                $name
+            </td>
+            <td>
+                $qty
+            </td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+
+        echo "</pre></body></html>";
+    }
+    catch(PDOexception $e) { // handle that exception
+        echo "Connection to database failed: " . $e->getMessage();
+    }
+
+    ?>
 </body>
 </html>
