@@ -2,7 +2,7 @@ ENTITIES
 
 Ent     - CUSTOMER
 Desc    - Account of the people buying from the website to associate with orders/purchases/rewards etc
-ATT_KEY - UID         - surrogate key assigned to identify customer
+ATT_KEY - USERID      - surrogate key assigned to identify customer
 ATT     - Name        - Name of customer
 ATT     - Addr        - Address of customer
 ATT     - Birthday    - birthday of customer
