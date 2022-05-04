@@ -19,5 +19,42 @@
 
     <hr>
     <h2>Products</h2>
+    <?php
+    
+    //run a query
+    function run_query($QRY, $pdo)
+    {
+        $rs = $pdo->query($QRY);       //run query
+        $a = $rs->fetchAll(PDO::FETCH_ASSOC);      //set $a to query
+        return $a;
+    }
+
+    include 'password.php';
+    try { // connect to the database, forms don't do much good if they can't connect
+        $pdo = new PDO($dbname, $user, $pass);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);    
+        
+        $products = run_query("SELECT * FROM PRODUCT;", $pdo);
+
+        //begin order table
+        echo '<table style="border:1px solid black;margin-left:auto;margin-right:auto;">';
+        echo "<tr>";
+        echo "<th style=\"text-decoration: underline;font-size:50px;\">Product</th>";
+        echo "<th style=\"text-decoration: underline;font-size:50px;\">Price</th>";
+        echo "<th style=\"text-decoration: underline;font-size:50px;\">Rating</th>";
+        for ($x = 0; $x < sizeof($products); $x++)
+        {
+            echo "<tr>";
+            echo "<th style=\"font-size:40px;\">" . $products[$x]["NAME"] . "</th>";
+            echo "<th style=\"font-size:40px;\">" . $products[$x]["PRICE"] . "</th>";
+            echo "<th style=\"font-size:40px;\">" . $products[$x]["RATING"] . "</th>";
+            echo "</tr>";
+        }
+        echo "</tr>";
+    }
+    catch(PDOexception $e) { // handle that exception
+        echo "Connection to database failed: " . $e->getMessage();
+    }
+    ?>
 </body>
 </html>
