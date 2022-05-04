@@ -20,6 +20,7 @@ ATT     - Price       - Price per count of product
 ATT     - Rating      - Rating of product
 ATT     - Quantity    - Count of product in stock
 ATT     - Description - Brief description of product
+ATT     - IMG         - path to image file (from root)
 
 
 Ent     - ORDER
