@@ -15,6 +15,7 @@
             <li><a href="wish.php">WishList</a></li>
             <li><a href="checkout.php">Checkout</a></li>
             <li><a href="inventory.php">Inventory</a></li>
+            <li><a href="orders.php">Orders</a></li>
         </ul>
     </nav>
 
