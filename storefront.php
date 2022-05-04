@@ -39,14 +39,17 @@
         //begin order table
         echo '<table style="border:1px solid black;margin-left:auto;margin-right:auto;">';
         echo "<tr>";
+        echo "<th style=\"text-decoration: underline;font-size:50px;\">Image</th>";
         echo "<th style=\"text-decoration: underline;font-size:50px;\">Product</th>";
         echo "<th style=\"text-decoration: underline;font-size:50px;\">Price</th>";
         echo "<th style=\"text-decoration: underline;font-size:50px;\">Rating</th>";
         for ($x = 0; $x < sizeof($products); $x++)
         {
             echo "<tr>";
+            //echo '<th>' . "<div id=\"main\" style=\"width:200px; height:200px; background-position:center; background-repeat:no-repeat; background-image:url('" . $products[$x]["IMG"] . "')\"></div>" . "</th>";
+            echo '<th>' . "<div style=\"height:200px; width: 200px;\"> <img style=\"max-width:100%; max-height:100%;\"src=\"" . $products[$x]["IMG"] . "\"> </div>" . "</th>";
             echo "<th style=\"font-size:40px;\">" . $products[$x]["NAME"] . "</th>";
-            echo "<th style=\"font-size:40px;\">" . $products[$x]["PRICE"] . "</th>";
+            echo "<th style=\"font-size:40px;\">$" . $products[$x]["PRICE"] . "</th>";
             echo "<th style=\"font-size:40px;\">" . $products[$x]["RATING"] . "</th>";
             echo "</tr>";
         }
