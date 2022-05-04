@@ -19,7 +19,7 @@
 
     <hr>
     <?php
-    
+
     //run a query
     function run_query($QRY, $pdo)
     {
@@ -40,7 +40,7 @@
         echo "<p style=\"font-size:40\"> Orders </p>\n"; //label
 
         //begin order table
-        echo "<table border=1 cellspacing=1 style=\"font-size:32\">";
+        echo "<table border=1 cellspacing=1 style=\"font-size:32;margin-left:auto;margin-right:auto;\">";
         echo "<tr>";
         echo "<th>Order ID</th>";
         echo "<th>User ID</th>";
