@@ -7,7 +7,7 @@
     </head>
 <body>
     <h1>Group 22's Site</h1>
-    <h2>Cart</h2>
+    <h2>WishList</h2>
     <nav>
         <ul>
             <li><a href="storefront.php">Storefront</a></li>
@@ -25,7 +25,7 @@
         $pdo = new PDO($dbname, $user, $pass);
 
         if($_GET != NULL){
-            $res = $pdo->prepare("UPDATE CART SET NUM=? WHERE PID=?");
+            $res = $pdo->prepare("UPDATE WISH SET NUM=? WHERE PID=?");
             $res->execute(array(($_GET["qty"]), ($_GET["pid"])));
         }
 
@@ -35,9 +35,9 @@
         }
         echo "<h3>For user $name</h3>";
 
-        $res = $pdo->query("SELECT NAME, PRODUCT.PID, NUM FROM PRODUCT, CART, ORDR
-          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND ORDR.USERID=2");
-        echo "<h3>Items in Cart.</h3>";
+        $res = $pdo->query("SELECT NAME, NUM FROM PRODUCT, WISH
+          WHERE PRODUCT.PID = WISH.PID AND WISH.USERID = 2");
+        echo "<h3>Items in WishList.</h3>";
         echo "<table border=0 cellpadding=5 align=center>";
         echo "<tr><th>Item</th><th>Quantity</th></tr>";
         while($fet = $res->fetch(PDO::FETCH_ASSOC)){
@@ -56,11 +56,11 @@
         echo "</table>";
 
         echo "<br><br>";
-        echo "<form action=\"cart.php\" method = GET>";
+        echo "<form action=\"wish.php\" method = GET>";
         echo "<label for='Name'>Choose Item: </label>";
         echo "<select id='Name' name='pid'>";
-        $res = $pdo->query("SELECT NAME, PRODUCT.PID, NUM FROM PRODUCT, CART, ORDR
-          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND ORDR.USERID=2");
+        $res = $pdo->query("SELECT NAME, PRODUCT.PID, NUM FROM PRODUCT, WISH
+          WHERE PRODUCT.PID = WISH.PID AND WISH.USERID = 2");
         while($fet = $res->fetch(PDO::FETCH_ASSOC)){
               $name = $fet["NAME"];
               $pid = $fet["PID"];
@@ -69,14 +69,14 @@
         echo "</select>";
         echo "
         New Qty: <input type=\"text\" size='1' name=\"qty\" />
-        <input type='submit' value='Update'>
-        <input type='submit' value='Remove Item'>
-        <input type='submit' value='Move to WishList'> </form>";
+        <input type='submit' value='Update Qty'>
+        <input type='submit' value='Delete'>
+        <input type='submit' value='Move to Cart'> </form>";
 
         echo "<br>";
-        $res = $pdo->query("SELECT NAME, NUM FROM PRODUCT, WISH
-          WHERE PRODUCT.PID = WISH.PID AND WISH.USERID = 2");
-        echo "<h3>Items in WishList.</h3>";
+        $res = $pdo->query("SELECT NAME, PRODUCT.PID, NUM FROM PRODUCT, CART, ORDR
+          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND ORDR.USERID=2");
+        echo "<h3>Items in Cart.</h3>";
         echo "<table border=0 cellpadding=5 align=center>";
         echo "<tr><th>Item</th><th>Quantity</th></tr>";
         while($fet = $res->fetch(PDO::FETCH_ASSOC)){
