@@ -24,14 +24,14 @@ VALUES
        ('20', 'Generic Laptop Charger Cable', '5', '29.99', '2.3', '30', 'Useful in case you lose your original. Not compatible with 4PPLE Laptops');
 
 -- Insert rows into CUSTOMER --
--- (UID, NAME, PHONE, EMAIL, ADDR, BDAY) --
+-- (UID, NAME, PHONE, EMAIL, ADDR, BDAY, PASS, EMP) --
 INSERT INTO CUSTOMER
 VALUES
-      ('1', 'Jared Wilkinson', '8157877272', 'Z1885727@students.niu.edu', NULL, NULL),
-      ('2', 'Tim Lenny', '7727641123', 'TLENNY@realmail.com', '132 House St Dallas, Florida 44823, United States', '1987-03-14'),
-      ('3', 'Agatha Vilakay', '2238460123', 'vkayagath@aol.gov', '1924 342nd Street APT 3 Denver, Arizona 77372, United Sates', '2000-11-23'),
-      ('4', 'Suzannah McReallyLongnameBecauseLongName', '7736429984', 'shortemail@mail.co', '3 Clamshell Blvd. Burger, Illinois, United States', '1999-01-01'),
-      ('5', 'Gary Yunmer', '7736429984', 'ComparativelyReallyLongEmailFromSomeoneWhoHasSamePhoneNumber@mail.co', '3 Clamshell Blvd. Burger, Illinois, United States', '1996-04-21');
+      ('1', 'Jared Wilkinson', '8157877272', 'Z1885727@students.niu.edu', NULL, NULL, 'boley', '1'),
+      ('2', 'Tim Lenny', '7727641123', 'TLENNY@realmail.com', '132 House St Dallas, Florida 44823, United States', '1987-03-14', 'LennyFl0rida', '0'),
+      ('3', 'Agatha Vilakay', '2238460123', 'vkayagath@aol.gov', '1924 342nd Street APT 3 Denver, Arizona 77372, United Sates', '2000-11-23', 'agath123', '0'),
+      ('4', 'Suzannah McReallyLongnameBecauseLongName', '7736429984', 'shortemail@mail.co', '3 Clamshell Blvd. Burger, Illinois, United States', '1999-01-01', '123pass', '0'),
+      ('5', 'Gary Yunmer', '7736429984', 'ComparativelyReallyLongEmailFromSomeoneWhoHasSamePhoneNumber@mail.co', '3 Clamshell Blvd. Burger, Illinois, United States', '1996-04-21', 'SomeSomewhatLongPassword22', '0');
 
 -- Insert rows into ORDR --
 -- (OID, UID, STATUS) --
@@ -66,4 +66,15 @@ VALUES
       ('6', '8', '1'),
       ('7', '20', '1'),
       ('8', '7', '2');
+      
+-- Insert rows into WISH --
+-- (UID, PID, NUM) --
+INSERT INTO WISH
+VALUES
+      ('1', '19', '1'),
+      ('1', '8', '2'),
+      ('2', '20', '19'),
+      ('3', '5', '1'),
+      ('4', '3', '1');
 
+-- NO rows inserted into SESS --
