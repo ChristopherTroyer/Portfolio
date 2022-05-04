@@ -20,24 +20,6 @@
     </nav>
 
     <hr>
-    <!-- <div style="padding: 20px;">
-        <div style="width: 48%; float: left; padding: 20px;">
-            <div style="height:600px; width: 600px; float: right;"><img style="max-width:100%; max-height:100%;"src="img/4pple_earpods.jpg"></div>
-        </div>
-        <div style="width: 48%; float: left; padding: 20px;">
-            <div>
-                <h3 style="font-size: 40px; float: left;">Apple Earpods</h3><br style="clear:both" />
-                <p style="font-size: 30px; float: left;">Rating: 4.3 Stars</p><br style="clear:both" />
-                <p style="font-size: 30px; float: left;">Price: $15</p><br style="clear:both" />
-                <p style="font-size: 30px; float: left;">In Stock</p><br style="clear:both" />
-                <p style="float: left;">About this Item:</p><br style="clear:both" />
-                <ul>
-                    <li style="float: left">description</li><br style="clear:both" />
-                    <li style="float: left">weight: 20</li>
-                </ul>
-            </div>
-        </div>
-    </div> -->
     <?php
 
     //run a query
@@ -54,8 +36,6 @@
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $products = run_query("SELECT * FROM PRODUCT WHERE NAME=\"" . $_POST["name"] . "\";", $pdo);
-
-        //print_r($products);
 
         //begin product information
 
