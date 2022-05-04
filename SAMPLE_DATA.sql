@@ -15,7 +15,7 @@ VALUES
        ('11', 'Intull I5 13000', '5', '549.99', '4.8', '60', 'A sturdy processor from Intull that will complete your daily tasks without fail.', 'img/Intull_processor.jpg'),
        ('12', 'TridentX 2x16GB DDR5 4000mhz Memory', '2', '400.00', '4.2', '20', 'More memory than your system will ever need.', 'img/TridentX.jpg'),
        ('13', 'TridentX 4x4GB DDR4 3200mhz Memory', '4', '200.00', '5.0', '30', 'A good memory package to support all your applications with speed.', 'img/TridentX.jpg'),
-       ('14', 'LoggyTech Q520 Mouse', '3', '79.99', '5.0', '50', 'A well tested and revered mouse with integrated programmable buttons.', 'img/loggytech_mouse_pad.jpg'),
+       ('14', 'LoggyTech Q520 Mouse', '3', '79.99', '5.0', '50', 'A well tested and revered mouse with integrated programmable buttons.', 'img/LoggyTech_mouse.jpg'),
        ('15', '4PPLE Bluetooth Trackpad', '5', '199.99', '4.6', '20', 'This bluetooth trackpad will connect to your desktop so you use it instead of a mouse if you like that.', 'img/trackpad.jpg'),
        ('16', 'D3LL Wired Mouse', '2', '9.99', '4.1', '50', 'A sturdy mouse that will withstand almost anything. Comes with most prebuilt desktops from D3LL.', 'img/d3ll_mouse.jpg'),
        ('17', 'Raiser Gaming Headset', '7', '179.99', '4.0', '35', 'This gaming headset has an integrated microphone so that you can communicate in games or during classes.', 'img/Raiser_headset.jpg'),
