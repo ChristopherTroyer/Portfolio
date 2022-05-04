@@ -12,6 +12,7 @@
         <ul>
             <li><a href="storefront.php">Storefront</a></li>
             <li><a href="cart.php">Cart</a></li>
+            <li><a href="wish.php">WishList</a></li>
             <li><a href="checkout.php">Checkout</a></li>
             <li><a href="inventory.php">Inventory</a></li>
             <li><a href="orders.php">Orders</a></li>
@@ -32,8 +33,8 @@
     include 'password.php';
     try { // connect to the database, forms don't do much good if they can't connect
         $pdo = new PDO($dbname, $user, $pass);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);    
-        
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
         $orders = run_query("SELECT * FROM ORDR;", $pdo);
         $customers = run_query("SELECT * FROM CUSTOMER;", $pdo);
         $products = run_query("SELECT * FROM PRODUCT;", $pdo);
@@ -54,7 +55,7 @@
             echo "<th>" . $orders[$x]["OID"] . "</th>";
             echo "<th>" . $orders[$x]["USERID"] ."</th>";
             echo "<th>" . $customers[$orders[$x]["USERID"]-1]["NAME"] . "</th>";    //print name -1 to get correct id since id starts with 1 and not 0
-            echo "<th>" . $customers[$orders[$x]["USERID"]-1]["ADDR"] . "</th>";    //print address 
+            echo "<th>" . $customers[$orders[$x]["USERID"]-1]["ADDR"] . "</th>";    //print address
             echo "<th>" . $orders[$x]["STATUS"] . "</th>";
             echo "</tr>";
         }

@@ -12,6 +12,7 @@
         <ul>
             <li><a href="storefront.php">Storefront</a></li>
             <li><a href="cart.php">Cart</a></li>
+            <li><a href="wish.php">WishList</a></li>
             <li><a href="checkout.php">Checkout</a></li>
             <li><a href="inventory.php">Inventory</a></li>
             <li><a href="orders.php">Orders</a></li>
@@ -22,7 +23,7 @@
     <?php
     include 'password.php';
     try { // connect to the database, forms don't do much good if they can't connect
-        $pdo = new PDO($dbname, $user, $pass);        
+        $pdo = new PDO($dbname, $user, $pass);
         $res = $pdo->prepare("SELECT * FROM PRODUCT WHERE NAME=?;");
         $res->execute(array(($_POST["name"])));
         if($fet = $res->fetch(PDO::FETCH_ASSOC)){
@@ -43,7 +44,7 @@
     catch(PDOexception $e) { // handle that exception
         echo "Connection to database failed: " . $e->getMessage();
     }
-    
+
     ?>
 </body>
 </html>

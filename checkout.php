@@ -12,6 +12,7 @@
         <ul>
             <li><a href="storefront.php">Storefront</a></li>
             <li><a href="cart.php">Cart</a></li>
+            <li><a href="wish.php">WishList</a></li>
             <li><a href="checkout.php">Checkout</a></li>
             <li><a href="inventory.php">Inventory</a></li>
             <li><a href="orders.php">Orders</a></li>
