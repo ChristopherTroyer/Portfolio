@@ -19,7 +19,6 @@
         </ul>
     </nav>
     <hr>
-    
     <?php
     include 'password.php';
     try {
