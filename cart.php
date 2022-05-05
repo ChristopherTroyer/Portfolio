@@ -24,20 +24,47 @@
     include 'password.php';
     try {
         $pdo = new PDO($dbname, $user, $pass);
+        $userId = 2;
+        $cartNum = 0;
 
         if($_GET != NULL){
-            $res = $pdo->prepare("UPDATE CART SET NUM=? WHERE PID=?");
-            $res->execute(array(($_GET["qty"]), ($_GET["pid"])));
+          switch ($_GET["subtyp"]){
+            case '1':
+              $res = $pdo->prepare("UPDATE CART SET NUM=? WHERE PID=?");
+              $res->execute(array(($_GET["qty"]), ($_GET["pid"])));
+              break;
+            case '2':
+              $res = $pdo->prepare("DELETE FROM CART WHERE PID=?");
+              $res->execute(array($_GET["pid"]));
+              break;
+            case '3':
+              // Get product quantity in cart
+              $cartPid = $_GET["pid"];
+              $res = $pdo->query("SELECT NUM FROM CART WHERE PID=$cartPid");
+              while($fet = $res->fetch(PDO::FETCH_ASSOC)) {
+                    $cartNum = $fet["NUM"];
+              }
+              // Move item to Wishlist
+              $res = $pdo->prepare("DELETE FROM CART WHERE PID=?");
+              $res->execute(array($_GET["pid"]));
+              $res = $pdo->prepare("INSERT INTO WISH VALUES($userId,?,?)");
+              $res->execute(array(($_GET["pid"]),$cartNum));
+              break;
+            default:
+              echo "Default";
+              break;
+          }
         }
 
-        $res = $pdo->query("SELECT NAME FROM CUSTOMER WHERE USERID=2");
+
+        $res = $pdo->query("SELECT NAME FROM CUSTOMER WHERE USERID=$userId");
         while($fet = $res->fetch(PDO::FETCH_ASSOC)) {
               $name = $fet["NAME"];
         }
         echo "<h3>For user $name</h3>";
 
         $res = $pdo->query("SELECT NAME, PRODUCT.PID, NUM FROM PRODUCT, CART, ORDR
-          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND ORDR.USERID=2");
+          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND ORDR.USERID=$userId");
         echo "<h3>Items in Cart.</h3>";
         echo "<table border=0 cellpadding=5 align=center>";
         echo "<tr><th>Item</th><th>Quantity</th></tr>";
@@ -61,7 +88,7 @@
         echo "<label for='Name'>Choose Item: </label>";
         echo "<select id='Name' name='pid'>";
         $res = $pdo->query("SELECT NAME, PRODUCT.PID, NUM FROM PRODUCT, CART, ORDR
-          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND ORDR.USERID=2");
+          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND ORDR.USERID=$userId");
         while($fet = $res->fetch(PDO::FETCH_ASSOC)){
               $name = $fet["NAME"];
               $pid = $fet["PID"];
@@ -70,13 +97,15 @@
         echo "</select>";
         echo "
         New Qty: <input type=\"text\" size='1' name=\"qty\" />
-        <input type='submit' value='Update'>
-        <input type='submit' value='Remove Item'>
-        <input type='submit' value='Move to WishList'> </form>";
+        <input type='radio' name='subtyp' value='1' /> Update Qty
+        <input type='radio' name='subtyp' value='2' /> Delete Item
+        <input type='radio' name='subtyp' value='3' /> Move Item to Wishlist
+        <input type='submit' value='Submit'>
+        </form>";
 
         echo "<br>";
         $res = $pdo->query("SELECT NAME, NUM FROM PRODUCT, WISH
-          WHERE PRODUCT.PID = WISH.PID AND WISH.USERID = 2");
+          WHERE PRODUCT.PID = WISH.PID AND WISH.USERID = $userId");
         echo "<h3>Items in WishList.</h3>";
         echo "<table border=0 cellpadding=5 align=center>";
         echo "<tr><th>Item</th><th>Quantity</th></tr>";
