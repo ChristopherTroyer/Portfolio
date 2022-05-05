@@ -41,22 +41,22 @@
         //begin order table
         echo '<table style="border:1px solid black;margin-left:auto;margin-right:auto;">';
         echo "<tr>";
-        echo "<th style=\"text-decoration: underline;font-size:50px;\">Image</th>";
-        echo "<th style=\"text-decoration: underline;font-size:50px;\">Product</th>";
-        echo "<th style=\"text-decoration: underline;font-size:50px;\">Price</th>";
-        echo "<th style=\"text-decoration: underline;font-size:50px;\">Rating</th>";
+        echo "<th class=\"storefrontHeader\">Image</th>";
+        echo "<th class=\"storefrontHeader\">Product</th>";
+        echo "<th class=\"storefrontHeader\">Price</th>";
+        echo "<th class=\"storefrontHeader\">Rating</th>";
         echo "</tr>";
         for ($x = 0; $x < sizeof($products); $x++)
         {
             echo "<tr>";
-            echo '<th>' . "<div style=\"height:200px; width: 200px;\"> <img style=\"max-width:100%; max-height:100%;\"src=\"" . $products[$x]["IMG"] . "\"> </div>" . "</th>";
+            echo '<th>' . "<div class=\"storefrontDiv\"> <img class=\"storefrontImg\"src=\"" . $products[$x]["IMG"] . "\"> </div>" . "</th>";
             echo '<th>
                     <form action="prodpage.php" method = POST>
                         <input style="font-size:40px;" type="submit" name="name" value="' . $products[$x]["NAME"] . '"/>
                     </form>
                 </th>';
-            echo "<th style=\"font-size:40px;\">$" . $products[$x]["PRICE"] . "</th>";
-            echo "<th style=\"font-size:40px;\">" . $products[$x]["RATING"] . "</th>";
+            echo "<th class=\"storefrontText\">$" . $products[$x]["PRICE"] . "</th>";
+            echo "<th class=\"storefrontText\">" . $products[$x]["RATING"] . "</th>";
             echo "</tr>";
         }
     }

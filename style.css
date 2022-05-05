@@ -53,3 +53,29 @@ tr:nth-child(odd) {
   background-color: #eee;
 }
 
+/*center images vertically within table cells*/
+td img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Storefront classes */
+.storefrontHeader {
+  text-decoration: underline;
+  font-size:50px;
+}
+
+.storefrontText {
+  font-size:40px;
+}
+
+.storefrontImg{
+  max-width:100%;
+  max-height:100%;
+}
+
+.storefrontDiv{
+  height:200px;
+  width: 200px;
+}
