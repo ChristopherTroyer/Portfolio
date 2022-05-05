@@ -10,21 +10,24 @@
     <h2>Cart</h2>
     <nav>
         <ul>
+            <li><a href="login.php">Home</a></li>
             <li><a href="storefront.php">Storefront</a></li>
             <li><a href="cart.php">Cart</a></li>
             <li><a href="wish.php">WishList</a></li>
             <li><a href="checkout.php">Checkout</a></li>
-            <li><a href="inventory.php">Inventory</a></li>
-            <li><a href="orders.php">Orders</a></li>
         </ul>
     </nav>
-
     <hr>
     <?php
     include 'password.php';
     try {
         $pdo = new PDO($dbname, $user, $pass);
-        $userId = 2;
+
+        // get userid from SESS tables
+        $res = $pdo->query("SELECT USERID FROM SESS");
+        while($fet = $res->fetch(PDO::FETCH_ASSOC)) {
+          $userId = $fet["USERID"];
+        }
         $cartNum = 0;
 
         if($_GET != NULL){
@@ -55,7 +58,6 @@
               break;
           }
         }
-
 
         $res = $pdo->query("SELECT NAME FROM CUSTOMER WHERE USERID=$userId");
         while($fet = $res->fetch(PDO::FETCH_ASSOC)) {
@@ -125,7 +127,7 @@
         echo "</table>";
 
     }
-    catch(PDOexception $e) { // handle that exception
+    catch(PDOexception $e) {
         echo "Connection to database failed: " . $e->getMessage();
     }
 

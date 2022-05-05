@@ -10,12 +10,11 @@
     <h2>WishList</h2>
     <nav>
         <ul>
+            <li><a href="login.php">Home</a></li>
             <li><a href="storefront.php">Storefront</a></li>
             <li><a href="cart.php">Cart</a></li>
             <li><a href="wish.php">WishList</a></li>
             <li><a href="checkout.php">Checkout</a></li>
-            <li><a href="inventory.php">Inventory</a></li>
-            <li><a href="orders.php">Orders</a></li>
         </ul>
     </nav>
 
@@ -24,7 +23,12 @@
     include 'password.php';
     try {
         $pdo = new PDO($dbname, $user, $pass);
-        $userId = 2;
+
+        // get userid from SESS tables
+        $res = $pdo->query("SELECT USERID FROM SESS");
+        while($fet = $res->fetch(PDO::FETCH_ASSOC)) {
+          $userId = $fet["USERID"];
+        }
         $wishNum = 0;
 
         if($_GET != NULL){
@@ -44,12 +48,17 @@
               while($fet = $res->fetch(PDO::FETCH_ASSOC)) {
                     $wishNum = $fet["NUM"];
               }
-              // Move item to Wishlist
+              // Get oder Id
+              $res = $pdo->query("SELECT OID FROM ORDR WHERE USERID=$userId AND STATUS='SHOPPING'");
+              while($fet = $res->fetch(PDO::FETCH_ASSOC)) {
+                    $Oid = $fet["OID"];
+              }
+              // Move item to CART
               $res = $pdo->prepare("DELETE FROM WISH WHERE PID=?");
               $res->execute(array($_GET["pid"]));
               echo $userId; echo $_GET["pid"]; echo $wishNum;
-              $res = $pdo->prepare("INSERT INTO CART VALUES($userId,?,?)");
-              $res->execute(array(($_GET["pid"]),$wishNum));
+              $res = $pdo->prepare("INSERT INTO CART VALUES(?,?,?)");
+              $res->execute(array($Oid, $_GET["pid"], $wishNum));
               break;
             default:
               echo "Default";
@@ -61,6 +70,7 @@
         while($fet = $res->fetch(PDO::FETCH_ASSOC)) {
               $name = $fet["NAME"];
         }
+
         echo "<h3>For user $name</h3>";
 
         $res = $pdo->query("SELECT NAME, NUM FROM PRODUCT, WISH
@@ -104,7 +114,7 @@
 
         echo "<br>";
         $res = $pdo->query("SELECT NAME, PRODUCT.PID, NUM FROM PRODUCT, CART, ORDR
-          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND ORDR.USERID =$userId");
+          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND ORDR.USERID =$userId ");
         echo "<h3>Items in Cart.</h3>";
         echo "<table border=0 cellpadding=5 align=center>";
         echo "<tr><th>Item</th><th>Quantity</th></tr>";
