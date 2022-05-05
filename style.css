@@ -81,8 +81,31 @@ td img {
   width: 200px;
 }
 
+/* Order class */
 .orderTable{
   font-size:20px;
   margin-left:auto;
   margin-right:auto;
+}
+
+/* prodClasses */
+.prodStockTextG{
+  font-size:30px;
+  float: left;
+  color: green;
+}
+.prodStockTextR{
+  font-size:30px;
+  float: left;
+  color: red;
+}
+.prodBRClear{
+  clear: both;
+}
+.prodFloat{
+  float: left;
+}
+.prodP30px{
+  font-size:30px;
+  float: left;
 }

@@ -43,23 +43,23 @@
                 <div style=\"width: 48%; float: left; padding: 20px;\">
                     <div style=\"height:600px; width: 600px; float: right;\"><img style=\"width:100%; height:100%;\"src=\"" . $products[0]["IMG"] . "\"></div>
                 </div>
-                <div style=\"width: 48%; float: left; padding: 20px;\">
+                <div style=\" float: left; padding: 20px;\">
                     <div>
-                        <h3 style=\"font-size: 40px; float: left;\">" . $products[0]["NAME"] ."</h3><br style=\"clear:both\" />
-                        <p style=\"font-size: 30px; float: left;\">Rating: " . $products[0]["RATING"] . "</p><br style=\"clear:both\" />
-                        <p style=\"font-size: 30px; float: left;\">Price: $" . $products[0]["PRICE"] . "</p><br style=\"clear:both\" />";   
+                        <h3 style=\"font-size: 40px; float: left;\">" . $products[0]["NAME"] ."</h3><br class=\"prodBRClear\" />
+                        <p class=\"prodP30px\">Rating: " . $products[0]["RATING"] . "</p><br class=\"prodBRClear\" />
+                        <p class=\"prodP30px\">Price: $" . $products[0]["PRICE"] . "</p><br class=\"prodBRClear\" />";   
         if ($products[0]["QTY"] > 0)        //if qty is greater than 0 print in stock
         {
-            echo "<p style=\"font-size: 30px; color: green; float: left;\">In Stock</p><br style=\"clear:both\" />";
+            echo "<p class=\"prodStockTextG\">In Stock</p><br class=\"prodBRClear\" />";
         }
         else        //else out of stock
         {
-            echo "<p style=\"font-size: 30px; color: red; float: left;\">Out of Stock</p><br style=\"clear:both\" />";
+            echo "<p class=\"prodStockTextR\">Out of Stock</p><br class=\"prodBRClear\" />";
         }     
-        echo                "<p style=\"float: left;\">About this Item:</p><br style=\"clear:both\" />
+        echo                "<p class=\"prodFloat\">About this Item:</p><br class=\"prodBRClear\" />
                         <ul>
-                            <li style=\"float: left\">" . $products[0]["DESCRIPT"] ."</li><br style=\"clear:both\" />
-                            <li style=\"float: left\">weight: " . $products[0]["WEIGHT"] . " lbs</li>
+                            <li class=\"prodFloat\">" . $products[0]["DESCRIPT"] ."</li><br class=\"prodBRClear\" />
+                            <li class=\"prodFloat\">weight: " . $products[0]["WEIGHT"] . " lbs</li>
                         </ul>
                     </div>
                 </div>
