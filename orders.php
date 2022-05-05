@@ -39,10 +39,10 @@
         $customers = run_query("SELECT * FROM CUSTOMER;", $pdo);
         $products = run_query("SELECT * FROM PRODUCT;", $pdo);
 
-        echo "<p style=\"font-size:40\"> Orders </p>\n"; //label
+        echo "<h2> Orders </h2>\n"; //label
 
         //begin order table
-        echo "<table border=1 cellspacing=1 style=\"font-size:32;margin-left:auto;margin-right:auto;\">";
+        echo "<table border=1 cellspacing=1 class=\"orderTable\">";
         echo "<tr>";
         echo "<th>Order ID</th>";
         echo "<th>User ID</th>";

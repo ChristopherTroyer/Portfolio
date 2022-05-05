@@ -44,6 +44,7 @@ table {
 td {
   padding: 0.5em;
   border: 1px solid #000;
+  text-align: center;
 }
 /* alternate colors for rows */
 tr:nth-child(even) {
@@ -63,11 +64,11 @@ td img {
 /* Storefront classes */
 .storefrontHeader {
   text-decoration: underline;
-  font-size:50px;
+  font-size:40px;
 }
 
 .storefrontText {
-  font-size:40px;
+  font-size:20px;
 }
 
 .storefrontImg{
@@ -78,4 +79,10 @@ td img {
 .storefrontDiv{
   height:200px;
   width: 200px;
+}
+
+.orderTable{
+  font-size:20px;
+  margin-left:auto;
+  margin-right:auto;
 }
