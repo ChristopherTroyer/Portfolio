@@ -1,5 +1,5 @@
 <?php
-    $dbname = "mysql:host=courses;dbname=Zxxxxxxx";
-    $user = "Zxxxxxxx";
+    $dbname = "mysql:host=courses;dbname=zxxxxxxx";
+    $user = "zxxxxxxx";
     $pass = "YYYYMmmDD";
 ?>
