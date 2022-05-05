@@ -16,6 +16,7 @@
         </ul>
     </nav>
 
+    <form action=""></form>
     <hr>
     <?php
 
@@ -46,6 +47,7 @@
         echo "<th>User</th>";
         echo "<th>Address</th>";
         echo "<th>Status</th>";
+        echo "</tr>";
         for ($x = 0; $x < sizeof($orders); $x++)
         {
             echo "<tr>";
@@ -56,7 +58,28 @@
             echo "<th>" . $orders[$x]["STATUS"] . "</th>";
             echo "</tr>";
         }
-        echo "</tr>";
+        echo "</table>";
+
+        //order id drop down
+        echo "<h2> Update Order Status </h2>\n"; //label
+        echo "<form action=\"orderStatusUpdate.php\" method=\"post\">";
+        echo "<label for=\"orderID\">Choose an order:</label>\n";
+        echo "<select id=\"OID\" name=\"OID\">";
+        foreach($orders as $order)
+        {
+            echo "<option value=\"" . $order["OID"] . "\">" . $order["OID"] . "</option>";
+        }
+        echo "</select></br>";
+        //new status drop down
+        echo "<label for=\"orderID\">Choose New Status:</label>\n";
+        echo "<select id=\"status\" name=\"status\">";
+        echo "<option value=\"PROCESSED\">PROCESSED</option>";
+        echo "<option value=\"SHIPPED\">SHIPPED</option>";
+        echo "<option value=\"DELIVERED\">DELIVERED</option>";
+        echo "</select></br>";
+
+        echo "<input type=\"submit\">";
+        echo "</form>";
     }
     catch(PDOexception $e) { // handle that exception
         echo "Connection to database failed: " . $e->getMessage();
