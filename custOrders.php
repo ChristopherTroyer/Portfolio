@@ -10,7 +10,6 @@
     <h2>Storefront</h2>
     <nav>
         <ul>
-            <li><a href="cusdir.php">Logout</a></li>
             <li><a href="storefront.php">Storefront</a></li>
             <li><a href="cart.php">Cart</a></li>
             <li><a href="wish.php">WishList</a></li>
@@ -19,8 +18,8 @@
         </ul>
     </nav>
 
+    <form action=""></form>
     <hr>
-    <h2>Products</h2>
     <?php
 
     //run a query
@@ -36,29 +35,37 @@
         $pdo = new PDO($dbname, $user, $pass);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $products = run_query("SELECT * FROM PRODUCT;", $pdo);
+        // get userid from SESS tables
+        $res = $pdo->query("SELECT USERID FROM SESS");
+        while($fet = $res->fetch(PDO::FETCH_ASSOC)) {
+          $userId = $fet["USERID"];
+        }
+
+        $orders = run_query("SELECT * FROM ORDR WHERE USERID=\"" . $userId ."\";", $pdo);
+        $customers = run_query("SELECT * FROM CUSTOMER WHERE USERID=\"" . $userId ."\";", $pdo);
+
+        echo "<h2> Orders </h2>\n"; //label
 
         //begin order table
-        echo '<table style="border:1px solid black;margin-left:auto;margin-right:auto;">';
+        echo "<table border=1 cellspacing=1 class=\"orderTable\">";
         echo "<tr>";
-        echo "<th class=\"storefrontHeader\">Image</th>";
-        echo "<th class=\"storefrontHeader\">Product</th>";
-        echo "<th class=\"storefrontHeader\">Price</th>";
-        echo "<th class=\"storefrontHeader\">Rating</th>";
+        echo "<th>Order ID</th>";
+        echo "<th>User ID</th>";
+        echo "<th>User</th>";
+        echo "<th>Address</th>";
+        echo "<th>Status</th>";
         echo "</tr>";
-        for ($x = 0; $x < sizeof($products); $x++)
+        for ($x = 0; $x < sizeof($orders); $x++)
         {
             echo "<tr>";
-            echo '<th>' . "<div class=\"storefrontDiv\"> <img class=\"storefrontImg\"src=\"" . $products[$x]["IMG"] . "\"> </div>" . "</th>";
-            echo '<th>
-                    <form action="prodpage.php" method = POST>
-                        <input style="font-size:40px;" type="submit" name="name" value="' . $products[$x]["NAME"] . '"/>
-                    </form>
-                </th>';
-            echo "<th class=\"storefrontText\">$" . $products[$x]["PRICE"] . "</th>";
-            echo "<th class=\"storefrontText\">" . $products[$x]["RATING"] . "</th>";
+            echo "<th>" . $orders[$x]["OID"] . "</th>";
+            echo "<th>" . $orders[$x]["USERID"] ."</th>";
+            echo "<th>" . $customers[0]["NAME"] . "</th>";    //print name -1 to get correct id since id starts with 1 and not 0
+            echo "<th>" . $customers[0]["ADDR"] . "</th>";    //print address
+            echo "<th>" . $orders[$x]["STATUS"] . "</th>";
             echo "</tr>";
         }
+        echo "</table>";
     }
     catch(PDOexception $e) { // handle that exception
         echo "Connection to database failed: " . $e->getMessage();

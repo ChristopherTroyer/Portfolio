@@ -10,11 +10,12 @@
     <h2>WishList</h2>
     <nav>
         <ul>
-            <li><a href="login.php">Home</a></li>
+          <li><a href="cusdir.php">Logout</a></li>
             <li><a href="storefront.php">Storefront</a></li>
             <li><a href="cart.php">Cart</a></li>
             <li><a href="wish.php">WishList</a></li>
             <li><a href="checkout.php">Checkout</a></li>
+            <li><a href="custOrders.php">Orders</a></li>
         </ul>
     </nav>
 
