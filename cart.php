@@ -78,7 +78,7 @@
             <td>
                 $name
             </td>
-            <td style='text-align:center'>
+            <td>
                 $qty
             </td>";
             echo "</tr>";
@@ -119,7 +119,7 @@
             <td>
                 $name
             </td>
-            <td style='text-align:center'>
+            <td>
                 $qty
             </td>";
             echo "</tr>";
