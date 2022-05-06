@@ -56,7 +56,8 @@
         echo "<h3>For user $name</h3>";
 
         $res = $pdo->query("SELECT NAME, PRODUCT.PID, PRICE, NUM FROM PRODUCT, CART, ORDR
-          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND ORDR.STATUS = 'SHOPPING' AND ORDR.USERID=$userId");
+          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID
+          AND ODRR.STATUS='SHOPPING'AND ORDR.USERID=$userId");
         echo "<h3>Items in Cart.</h3>";
         echo "<table border=0 cellpadding=5 align=center>";
         echo "<tr><th>Item</th><th>Quantity</th></tr>";
