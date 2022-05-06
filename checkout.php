@@ -30,10 +30,23 @@
         }
         $cartNum = 0;
         $subtot = 0;
+        $Oid = 0;
 
         if($_GET != NULL){
-          echo "<h4> - Order is submitted.</h4>";
-          echo "<h4> - A new order was added to the Order table.</h4>";
+          if ($_GET["sub"] == 'Place Order'){
+            // get orderID
+            $res = $pdo->query("SELECT OID FROM ORDR WHERE USERID=$userId AND STATUS='SHOPPING'");
+            while($fet = $res->fetch(PDO::FETCH_ASSOC)) {
+              $Oid = $fet["OID"];
+            }
+            // change order status to PENDING
+            $res = $pdo->prepare("UPDATE ORDR SET STATUS='PENDING' WHERE OID=?");
+            $res->execute(array($Oid));
+            // insert new order with status SHOPPING to ORDR table
+            $res = $pdo->prepare("INSERT INTO ORDR (USERID,STATUS) VALUES(?,'SHOPPING')");
+            $res->execute(array($Oid));
+            header('location: orderplaced.php');
+          }
         }
 
         $res = $pdo->query("SELECT NAME FROM CUSTOMER WHERE USERID=$userId");
@@ -43,7 +56,7 @@
         echo "<h3>For user $name</h3>";
 
         $res = $pdo->query("SELECT NAME, PRODUCT.PID, PRICE, NUM FROM PRODUCT, CART, ORDR
-          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND ORDR.STATUS = 'SHOPPING' AND ORDR.USERID=$userId");
+          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND ORDR.USERID=$userId");
         echo "<h3>Items in Cart.</h3>";
         echo "<table border=0 cellpadding=5 align=center>";
         echo "<tr><th>Item</th><th>Quantity</th></tr>";
@@ -83,7 +96,7 @@
         echo "<br><br>";
 
         echo "<form action=\"checkout.php\" method = GET>
-        <input type='submit' value='Place Order'>
+        <input type='submit' name='sub' value='Place Order'>
         </form>";
 
     }
