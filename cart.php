@@ -51,7 +51,7 @@
           $currOrder = run_query("SELECT * FROM ORDR WHERE USERID=\"" . $userId ."\" AND STATUS=\"" . "SHOPPING" ."\";", $pdo);
           $selOrder = run_query("SELECT * FROM CART WHERE OID=" . $currOrder[0]["OID"] ." AND PID=" . $_POST["newProd"] . ";", $pdo); //to check if already in cart
 
-          if($selOrder == "")
+          if(empty($selOrder))
           {
             $pdo->query("INSERT INTO CART VALUES ('" . $currOrder[0]["OID"] ."', '" . $_POST["newProd"] . "', '" . 1 ."')" . ";");
           }
