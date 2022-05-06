@@ -46,15 +46,19 @@
         echo "<th class=\"storefrontHeader\">Product</th>";
         echo "<th class=\"storefrontHeader\">QTY</th>";
         echo "</tr>";
+        $sum = 0;
         for ($x = 0; $x < sizeof($cart); $x++)
         {
             echo "<tr>";
             echo '<th>' . "<div class=\"storefrontDiv\"> <img class=\"storefrontImg\"src=\"" . $products[$cart[$x]["PID"]-1]["IMG"] . "\"> </div>" . "</th>";
             echo "<th class=\"storefrontText\">$" . $products[$cart[$x]["PID"]-1]["PRICE"] . "</th>";
+            $sum += $products[$cart[$x]["PID"]-1]["PRICE"];
             echo "<th class=\"storefrontText\">" . $products[$cart[$x]["PID"]-1]["NAME"] . "</th>";
             echo "<th class=\"storefrontText\">" . $cart[$x]["NUM"] . "</th>";
             echo "</tr>";
         }
+        echo "</table>";
+        echo "<h2>sum: $" . $sum . "</h2>";
     }
     catch(PDOexception $e) { // handle that exception
         echo "Connection to database failed: " . $e->getMessage();
