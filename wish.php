@@ -144,7 +144,7 @@
 
         echo "<br>";
         $res = $pdo->query("SELECT NAME, PRODUCT.PID, NUM FROM PRODUCT, CART, ORDR
-          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND ORDR.USERID =$userId ");
+          WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND STATUS = 'SHOPPING' AND ORDR.USERID =$userId ");
         echo "<h3>Items in Cart.</h3>";
         echo "<table border=0 cellpadding=5 align=center>";
         echo "<tr><th>Item</th><th>Quantity</th></tr>";
