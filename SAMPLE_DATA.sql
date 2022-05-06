@@ -9,7 +9,7 @@ VALUES
        ('5', '4PPLE M4cbook L21', '10', '1399.99', '4.8', '100', 'This slim aluminum cased laptop will help you do all your work on the go.', 'img/4pple_macbook.jpg'),
        ('6', '4PPLE EPad', '5', '849.99', '5.0', '50', 'This 4PPLE EPad is a sleek powerhouse that fits in the palm of your hand.', 'img/4pple_epad.jpg'),
        ('7', '4PPLE Wireless Earpods', '3', '399.99', '4.9', '30', 'These bluetooth Earpods will work seamlessly with all your 4PPLE Devices on the go.', 'img/4pple_earpods.jpg'),
-       ('8', 'NVODIA RTX 3080', '8', '949.99', '4.8', '6', 'This GPU from NVODIA will give you top of the line performance in all of you games.', 'img/nvodia_rtx_3080.jpg'),
+       ('8', 'NVODIA RTX 3080', '8', '949.99', '4.8', '0', 'This GPU from NVODIA will give you top of the line performance in all of you games.', 'img/nvodia_rtx_3080.jpg'),
        ('9', 'AWD 7X4200', '6', '749.99', '4.4', '20', 'A power GPU like the 7X4200 will bring extra FPS to your gaming experience.', 'img/AWD_7x4200.jpg'),
        ('10', 'Intull I7 13200k', '5', '799.99', '4.0', '40', 'This processor from Intull will push your computer system to the brink.', 'img/Intull_processor.jpg'),
        ('11', 'Intull I5 13000', '5', '549.99', '4.8', '60', 'A sturdy processor from Intull that will complete your daily tasks without fail.', 'img/Intull_processor.jpg'),
