@@ -54,7 +54,7 @@
               $name = $fet["NAME"];
         }
         echo "<br>";
-        echo "<h3>Welcom customer ";
+        echo "<h3>Welcome customer ";
         echo $name;
         echo " to our Web Store.</h3>";
         echo "<br>";
