@@ -58,7 +58,7 @@
             echo "</tr>";
         }
         echo "</table>";
-        echo "<h2>sum: $" . $sum . "</h2>";
+        echo "<h2>Total: $" . $sum . "</h2>";
     }
     catch(PDOexception $e) { // handle that exception
         echo "Connection to database failed: " . $e->getMessage();
