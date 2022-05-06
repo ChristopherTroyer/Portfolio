@@ -10,11 +10,12 @@
     <h2>Checkout</h2>
     <nav>
         <ul>
-            <li><a href="login.php">Home</a></li>
+            <li><a href="cusdir.php">Logout</a></li>
             <li><a href="storefront.php">Storefront</a></li>
             <li><a href="cart.php">Cart</a></li>
             <li><a href="wish.php">WishList</a></li>
             <li><a href="checkout.php">Checkout</a></li>
+            <li><a href="custOrders.php">Orders</a></li>
         </ul>
     </nav>
     <hr>
@@ -57,7 +58,7 @@
 
         $res = $pdo->query("SELECT NAME, PRODUCT.PID, PRICE, NUM FROM PRODUCT, CART, ORDR
           WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID
-          AND ODRR.STATUS='SHOPPING'AND ORDR.USERID=$userId");
+          AND STATUS='SHOPPING' AND ORDR.USERID=$userId");
         echo "<h3>Items in Cart.</h3>";
         echo "<table border=0 cellpadding=5 align=center>";
         echo "<tr><th>Item</th><th>Quantity</th></tr>";
