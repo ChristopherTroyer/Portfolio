@@ -51,11 +51,21 @@
         if ($products[0]["QTY"] > 0)        //if qty is greater than 0 print in stock
         {
             echo "<p class=\"prodStockTextG\">In Stock</p><br class=\"prodBRClear\" />";
+            echo "<form style=\"float: left\" action=\"cart.php\" method=\"POST\">";
+            echo "<input type=\"hidden\" name=\"newProd\" value=\"" . $products[0]["PID"] . "\"/>";
+            echo "<input type=\"submit\" name=\"addToCart\" value=\"Add to Cart\"/>";
+            echo "</form>";
+            echo "<br style=\"clear: both\" />";
         }
         else        //else out of stock
         {
             echo "<p class=\"prodStockTextR\">Out of Stock</p><br class=\"prodBRClear\" />";
-        }     
+        }
+        echo "<form style=\"float: left\" action=\"wish.php\" method=\"POST\">";
+        echo "<input type=\"hidden\" name=\"newProd\" value=\"" . $products[0]["PID"] . "\"/>";
+        echo "<input type=\"submit\" name=\"addToWish\" value=\"Add to Wishlist\"/>";
+        echo "</form>";
+        echo "<br style=\"clear: both\" />";
         echo                "<p class=\"prodFloat\">About this Item:</p><br class=\"prodBRClear\" />
                         <ul>
                             <li class=\"prodFloat\">" . $products[0]["DESCRIPT"] ."</li><br class=\"prodBRClear\" />
