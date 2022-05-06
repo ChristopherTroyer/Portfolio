@@ -64,7 +64,12 @@
         for ($x = 0; $x < sizeof($orders); $x++)
         {
             echo "<tr>";
-            echo "<th>" . $orders[$x]["OID"] . "</th>";
+            //echo "<th>" . $orders[$x]["OID"] . "</th>";
+            echo '<th>
+                    <form action="vieworder.php" method = POST>
+                        <input style="font-size:40px;" type="submit" name="OID" value="' . $orders[$x]["OID"] . '"/>
+                    </form>
+                </th>';
             echo "<th>" . $orders[$x]["USERID"] ."</th>";
             echo "<th>" . $customers[0]["NAME"] . "</th>";    //print name -1 to get correct id since id starts with 1 and not 0
             echo "<th>" . $customers[0]["ADDR"] . "</th>";    //print address
