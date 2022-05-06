@@ -28,7 +28,7 @@
         </form>";
 
         if($_GET != NULL){
-          echo $_GET['usrname']; echo $_GET['psw'];
+          // echo $_GET['usrname']; echo $_GET['psw'];
           // Search database for username and Password and usertype
 
           if ($_GET["usrname"] == '1' && $_GET["psw"] == 'boley') {
