@@ -10,12 +10,11 @@
     <h2>Checkout</h2>
     <nav>
         <ul>
-            <li><a href="cusdir.php">Logout</a></li>
+            <li><a href="login.php">Home</a></li>
             <li><a href="storefront.php">Storefront</a></li>
             <li><a href="cart.php">Cart</a></li>
             <li><a href="wish.php">WishList</a></li>
             <li><a href="checkout.php">Checkout</a></li>
-            <li><a href="custOrders.php">Orders</a></li>
         </ul>
     </nav>
     <hr>
@@ -30,11 +29,7 @@
           $userId = $fet["USERID"];
         }
         $cartNum = 0;
-
-        if($userId == null) //redirect to login if not logged in
-        {
-            header('Location: login.php');
-        }
+        $subtot = 0;
 
         if($_GET != NULL){
           echo "<h4> - Order is submitted.</h4>";
@@ -47,7 +42,7 @@
         }
         echo "<h3>For user $name</h3>";
 
-        $res = $pdo->query("SELECT NAME, PRODUCT.PID, NUM FROM PRODUCT, CART, ORDR
+        $res = $pdo->query("SELECT NAME, PRODUCT.PID, PRICE, NUM FROM PRODUCT, CART, ORDR
           WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID AND ORDR.USERID=$userId");
         echo "<h3>Items in Cart.</h3>";
         echo "<table border=0 cellpadding=5 align=center>";
@@ -56,6 +51,8 @@
             echo"<tr>";
             $name = $fet["NAME"];
             $qty = $fet["NUM"];
+            $price = $fet["PRICE"];
+            $subtot += $qty * $price;
             echo "
             <td>
                 $name
@@ -68,15 +65,22 @@
         echo "</table>";
 
         echo "<br>";
-
+        $res = $pdo->query("SELECT ADDR FROM CUSTOMER WHERE USERID=$userId");
+        while($fet = $res->fetch(PDO::FETCH_ASSOC)) {
+              $address = $fet["ADDR"];
+        }
         echo "<h3>Shipping Address.</h3>";
-        echo "<br>";
-
+        echo $address;
         echo "<h3>Payment Method.</h3>";
+        echo "Using DADCOVER Credit Card.";
         echo "<br>";
 
         echo "<h3>Order Summary.</h3>";
-        echo "<br>";
+        echo "Subtotal: $ "; echo $subtot; echo "<br>";
+        echo "Shipping: Always Free."; echo "<br>";
+        echo "Tax: $ "; echo $subtot*0.06; echo "<br>";
+        echo "Total: $ "; echo $subtot*1.06;
+        echo "<br><br>";
 
         echo "<form action=\"checkout.php\" method = GET>
         <input type='submit' value='Place Order'>
