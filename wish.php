@@ -48,7 +48,20 @@
         if(isset($_POST["newProd"]))    //if add to wishlist button pressed
         {
           //status = SHOPPING, USERID = userId
-          $pdo->query("INSERT INTO WISH VALUES ('" . $userId ."', '" . $_POST["newProd"] . "', '" . 1 ."')" . ";");
+          $currWish = run_query("SELECT * FROM WISH WHERE USERID=\"" . $userId ."\" AND PID=\"" . $_POST["newProd"] ."\";", $pdo);
+          
+          if (empty($currWish))
+          {
+            echo "new";
+            $pdo->query("INSERT INTO WISH VALUES ('" . $userId ."', '" . $_POST["newProd"] . "', '" . 1 ."')" . ";");
+          }
+          else
+          {
+            echo "not new";
+            $buffNum = $currWish[0]["NUM"] + 1;
+            $pdo->query("UPDATE WISH SET NUM=" . $buffNum . " WHERE USERID=" . $userId ." AND PID=" . $currWish[0]["PID"] . ";");
+            echo "UPDATE WISH SET NUM=" . $buffNum . " WHERE USERID=" . $userId ." AND PID=" . $currWish[0]["PID"] . ";";
+          }
         }
 
         if($_GET != NULL){

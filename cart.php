@@ -47,9 +47,19 @@
         if(isset($_POST["newProd"]))    //if add to cart button pressed
         {
           //status = SHOPPING, USERID = userId
+
           $currOrder = run_query("SELECT * FROM ORDR WHERE USERID=\"" . $userId ."\" AND STATUS=\"" . "SHOPPING" ."\";", $pdo);
-          
-          $pdo->query("INSERT INTO CART VALUES ('" . $currOrder[0]["OID"] ."', '" . $_POST["newProd"] . "', '" . 1 ."')" . ";");
+          $selOrder = run_query("SELECT * FROM CART WHERE OID=" . $currOrder[0]["OID"] ." AND PID=" . $_POST["newProd"] . ";", $pdo); //to check if already in cart
+
+          if($selOrder == "")
+          {
+            $pdo->query("INSERT INTO CART VALUES ('" . $currOrder[0]["OID"] ."', '" . $_POST["newProd"] . "', '" . 1 ."')" . ";");
+          }
+          else
+          {
+            $buffNum = $selOrder[0]["NUM"] + 1;
+            $pdo->query("UPDATE CART SET NUM=" . $buffNum . " WHERE OID=" . $currOrder[0]["OID"] ." AND PID=" . $selOrder[0]["PID"] . ";");
+          }
         }
 
         if($_GET != NULL){
