@@ -40,12 +40,25 @@
             while($fet = $res->fetch(PDO::FETCH_ASSOC)) {
               $Oid = $fet["OID"];
             }
+
+            // decrease quantity of items that were purchased
+            $res = $pdo->query("SELECT PRODUCT.PID, NUM FROM PRODUCT, CART, ORDR
+              WHERE PRODUCT.PID = CART.PID AND CART.OID = ORDR.OID
+              AND STATUS='SHOPPING' AND ORDR.USERID=$userId");
+              while($fet = $res->fetch(PDO::FETCH_ASSOC)){
+              $pid = $fet["PID"];
+              $qty = $fet["NUM"];
+              $res2 = $pdo->prepare("UPDATE PRODUCT SET QTY=QTY-? WHERE PID=?");
+              $res2->execute(array($qty,$pid));
+              }
+
             // change order status to PENDING
             $res = $pdo->prepare("UPDATE ORDR SET STATUS='PENDING' WHERE OID=?");
             $res->execute(array($Oid));
+
             // insert new order with status SHOPPING to ORDR table
             $res = $pdo->prepare("INSERT INTO ORDR (USERID,STATUS) VALUES(?,'SHOPPING')");
-            $res->execute(array($userId));
+            $res->execute(array($Oid));
             header('location: orderplaced.php');
           }
         }

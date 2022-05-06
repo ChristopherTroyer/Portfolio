@@ -48,6 +48,7 @@
         echo "<br>";
         echo "<h4> - Order is submitted. Order status was changed to PENDING</h4>";
         echo "<h4> - A new order with status SHOPPING was added to the Order table.</h4>";
+        echo "<h4> - Quantity of purchased items was also removed from Inventory.</h4>";
         echo "<br>";
         echo "<form action=\"mandir.php\" method = GET>
         <input type='submit' name='sub' value='Logout'>
