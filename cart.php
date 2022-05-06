@@ -44,11 +44,11 @@
             header('Location: login.php');
         }
 
-        if($_POST["newProd"] != null)    //if add to cart button pressed
+        if(isset($_POST["newProd"]))    //if add to cart button pressed
         {
           //status = SHOPPING, USERID = userId
           $currOrder = run_query("SELECT * FROM ORDR WHERE USERID=\"" . $userId ."\" AND STATUS=\"" . "SHOPPING" ."\";", $pdo);
-
+          
           $pdo->query("INSERT INTO CART VALUES ('" . $currOrder[0]["OID"] ."', '" . $_POST["newProd"] . "', '" . 1 ."')" . ";");
         }
 

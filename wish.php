@@ -45,7 +45,7 @@
             header('Location: login.php');
         }
 
-        if($_POST["newProd"] != null)    //if add to wishlist button pressed
+        if(isset($_POST["newProd"]))    //if add to wishlist button pressed
         {
           //status = SHOPPING, USERID = userId
           $pdo->query("INSERT INTO WISH VALUES ('" . $userId ."', '" . $_POST["newProd"] . "', '" . 1 ."')" . ";");
