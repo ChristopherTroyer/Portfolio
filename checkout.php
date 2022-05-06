@@ -58,7 +58,7 @@
 
             // insert new order with status SHOPPING to ORDR table
             $res = $pdo->prepare("INSERT INTO ORDR (USERID,STATUS) VALUES(?,'SHOPPING')");
-            $res->execute(array($Oid));
+            $res->execute(array($userId));
             header('location: orderplaced.php');
           }
         }
