@@ -44,6 +44,26 @@
             $res = $pdo->prepare("INSERT INTO SESS VALUES(?,?)");
             $res->execute(array($userId,$Sid));
             header('location: cusdir.php');
+	  }else if ($_GET["usrname"] == '2' && $_GET["psw"] == 'LennyFl0rida') {
+            $userId = $_GET["usrname"];
+            $Sid = "CUSTOMER"; // if usertype =2
+            $res = $pdo->prepare("INSERT INTO SESS VALUES(?,?)");
+            $res->execute(array($userId,$Sid));
+            header('location: cusdir.php');
+	  }
+	  else if ($_GET["usrname"] == '4' && $_GET["psw"] == '123pass') {
+            $userId = $_GET["usrname"];
+            $Sid = "CUSTOMER"; // if usertype =2
+            $res = $pdo->prepare("INSERT INTO SESS VALUES(?,?)");
+            $res->execute(array($userId,$Sid));
+            header('location: cusdir.php');
+	  }
+	  else if ($_GET["usrname"] == '5' && $_GET["psw"] == 'SomeSomewhatLongPassword22') {
+            $userId = $_GET["usrname"];
+            $Sid = "CUSTOMER"; // if usertype =2
+            $res = $pdo->prepare("INSERT INTO SESS VALUES(?,?)");
+            $res->execute(array($userId,$Sid));
+            header('location: cusdir.php');
           } else echo "Invalid username and password. Try again!";
         }
 
