@@ -52,15 +52,12 @@
           
           if (empty($currWish))
           {
-            echo "new";
             $pdo->query("INSERT INTO WISH VALUES ('" . $userId ."', '" . $_POST["newProd"] . "', '" . 1 ."')" . ";");
           }
           else
           {
-            echo "not new";
             $buffNum = $currWish[0]["NUM"] + 1;
             $pdo->query("UPDATE WISH SET NUM=" . $buffNum . " WHERE USERID=" . $userId ." AND PID=" . $currWish[0]["PID"] . ";");
-            echo "UPDATE WISH SET NUM=" . $buffNum . " WHERE USERID=" . $userId ." AND PID=" . $currWish[0]["PID"] . ";";
           }
         }
 
