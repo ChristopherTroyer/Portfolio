@@ -10,7 +10,7 @@
     <h2>Cart</h2>
     <nav>
         <ul>
-          <li><a href="cusdir.php">Logout</a></li>
+            <li><a href="cusdir.php">Logout</a></li>
             <li><a href="storefront.php">Storefront</a></li>
             <li><a href="cart.php">Cart</a></li>
             <li><a href="wish.php">WishList</a></li>
@@ -20,6 +20,14 @@
     </nav>
     <hr>
     <?php
+    //run a query
+    function run_query($QRY, $pdo)
+    {
+        $rs = $pdo->query($QRY);       //run query
+        $a = $rs->fetchAll(PDO::FETCH_ASSOC);      //set $a to query
+        return $a;
+    }
+    
     include 'password.php';
     try {
         $pdo = new PDO($dbname, $user, $pass);
@@ -34,6 +42,14 @@
         if($userId == null) //redirect to login if not logged in
         {
             header('Location: login.php');
+        }
+
+        if($_POST["newProd"] != null)    //if add to cart button pressed
+        {
+          //status = SHOPPING, USERID = userId
+          $currOrder = run_query("SELECT * FROM ORDR WHERE USERID=\"" . $userId ."\" AND STATUS=\"" . "SHOPPING" ."\";", $pdo);
+
+          $pdo->query("INSERT INTO CART VALUES ('" . $currOrder[0]["OID"] ."', '" . $_POST["newProd"] . "', '" . 1 ."')" . ";");
         }
 
         if($_GET != NULL){

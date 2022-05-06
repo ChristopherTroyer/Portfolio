@@ -21,6 +21,14 @@
 
     <hr>
     <?php
+    //run a query
+    function run_query($QRY, $pdo)
+    {
+        $rs = $pdo->query($QRY);       //run query
+        $a = $rs->fetchAll(PDO::FETCH_ASSOC);      //set $a to query
+        return $a;
+    }
+
     include 'password.php';
     try {
         $pdo = new PDO($dbname, $user, $pass);
@@ -35,6 +43,12 @@
         if($userId == null) //redirect to login if not logged in
         {
             header('Location: login.php');
+        }
+
+        if($_POST["newProd"] != null)    //if add to wishlist button pressed
+        {
+          //status = SHOPPING, USERID = userId
+          $pdo->query("INSERT INTO WISH VALUES ('" . $userId ."', '" . $_POST["newProd"] . "', '" . 1 ."')" . ";");
         }
 
         if($_GET != NULL){
