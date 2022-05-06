@@ -31,6 +31,11 @@
         }
         $cartNum = 0;
 
+        if($userId == null) //redirect to login if not logged in
+        {
+            header('Location: login.php');
+        }
+
         if($_GET != NULL){
           echo "<h4> - Order is submitted.</h4>";
           echo "<h4> - A new order was added to the Order table.</h4>";

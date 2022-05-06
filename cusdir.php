@@ -42,6 +42,12 @@
         while($fet = $res->fetch(PDO::FETCH_ASSOC)) {
               $userId = $fet["USERID"];
         }
+
+        if($userId == null) //redirect to login if not logged in
+        {
+            header('Location: login.php');
+        }
+        
         // get name of userid from CUSTOMER table
         $res = $pdo->query("SELECT NAME FROM CUSTOMER WHERE USERID=$userId");
         while($fet = $res->fetch(PDO::FETCH_ASSOC)) {

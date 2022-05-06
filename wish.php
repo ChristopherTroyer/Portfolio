@@ -32,6 +32,11 @@
         }
         $wishNum = 0;
 
+        if($userId == null) //redirect to login if not logged in
+        {
+            header('Location: login.php');
+        }
+
         if($_GET != NULL){
           switch ($_GET["subtyp"]){
             case '1':

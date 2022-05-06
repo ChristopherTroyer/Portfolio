@@ -42,6 +42,11 @@
           $userId = $fet["USERID"];
         }
 
+        if($userId == null) //redirect to login if not logged in
+        {
+            header('Location: login.php');
+        }
+
         $orders = run_query("SELECT * FROM ORDR WHERE USERID=\"" . $userId ."\";", $pdo);
         $customers = run_query("SELECT * FROM CUSTOMER WHERE USERID=\"" . $userId ."\";", $pdo);
 
