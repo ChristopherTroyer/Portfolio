@@ -58,7 +58,8 @@
             echo "</tr>";
         }
         echo "</table>";
-        echo "<h2>Total: $" . $sum . "</h2>";
+        $sum = $sum*1.06;
+        echo "<h2>Total: $" . number_format($sum, 2) . "</h2>";
     }
     catch(PDOexception $e) { // handle that exception
         echo "Connection to database failed: " . $e->getMessage();
