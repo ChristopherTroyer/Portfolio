@@ -42,6 +42,7 @@
         echo '<table style="border:1px solid black;margin-left:auto;margin-right:auto;">';
         echo "<tr>";
         echo "<th class=\"storefrontHeader\">Image</th>";
+        echo "<th class=\"storefrontHeader\">Price</th>";
         echo "<th class=\"storefrontHeader\">Product</th>";
         echo "<th class=\"storefrontHeader\">QTY</th>";
         echo "</tr>";
@@ -49,6 +50,7 @@
         {
             echo "<tr>";
             echo '<th>' . "<div class=\"storefrontDiv\"> <img class=\"storefrontImg\"src=\"" . $products[$cart[$x]["PID"]-1]["IMG"] . "\"> </div>" . "</th>";
+            echo "<th class=\"storefrontText\">$" . $products[$cart[$x]["PID"]-1]["PRICE"] . "</th>";
             echo "<th class=\"storefrontText\">" . $products[$cart[$x]["PID"]-1]["NAME"] . "</th>";
             echo "<th class=\"storefrontText\">" . $cart[$x]["NUM"] . "</th>";
             echo "</tr>";
