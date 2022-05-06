@@ -52,7 +52,7 @@
             echo "<tr>";
             echo '<th>' . "<div class=\"storefrontDiv\"> <img class=\"storefrontImg\"src=\"" . $products[$cart[$x]["PID"]-1]["IMG"] . "\"> </div>" . "</th>";
             echo "<th class=\"storefrontText\">$" . $products[$cart[$x]["PID"]-1]["PRICE"] . "</th>";
-            $sum += $products[$cart[$x]["PID"]-1]["PRICE"];
+            $sum += $products[$cart[$x]["PID"]-1]["PRICE"] * $cart[$x]["NUM"];
             echo "<th class=\"storefrontText\">" . $products[$cart[$x]["PID"]-1]["NAME"] . "</th>";
             echo "<th class=\"storefrontText\">" . $cart[$x]["NUM"] . "</th>";
             echo "</tr>";
