@@ -13,7 +13,6 @@
                 <input type="text" name="login" id="login">
                 <label for="password">Password</label>
                 <input type="text" name="password" id="password">
-                
                 <input type="submit" name="submit" id="submit">
             </form>
         </div>
