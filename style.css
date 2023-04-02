@@ -1,0 +1,29 @@
+/* center body and headers */
+body {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+  }
+  header {
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+  }
+
+
+/*containers*/
+  div#container
+  {
+    margin: 0 auto;
+    position:relative;
+    width:200px;
+  }
+
+  label
+  {
+    margin-top:15px
+  }
+  input[type="submit"] 
+  {
+    margin-top:10px;
+  }
