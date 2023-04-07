@@ -1,0 +1,63 @@
+/* top nav bar*/
+
+.topnav {
+    background-color: #333;
+    overflow: hidden;
+}
+
+/*style the links inside the bar*/
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/*change color on hover*/
+.topnav a:hover {
+    background-color: #ddd;
+    color: #111;
+}
+
+/*add color to the active/current link*/
+.topnav a.active {
+    background-color: #4CAF50;
+    color: #ffffff;
+}
+
+/*signupform input*/
+.signup-form {
+    text-align: center;
+    width: 20%;
+    margin: auto;
+}
+.signup-form input{
+    width: 50%;
+    text-align: left;
+}
+
+.signup-form h2 {
+    text-align: center;
+}
+
+.signup-form button {
+    width: 50%;
+}
+
+/*login-form stuff*/
+.login-form {
+    text-align: center;
+    width: 15%;
+    margin: auto;
+}
+
+.login-form input {
+    width: 50%;
+    text-align: left;
+}
+
+.login-form button {
+    width: 50%;
+}
