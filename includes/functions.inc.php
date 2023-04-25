@@ -150,8 +150,9 @@ function loginUser($conn, $username, $pass) {
     else if($checkPass === true) {
         session_start();
         $_SESSION["userid"] = $uidExists["usersId"];
-        $_SESSION["username"] = $uidExists["usersUid"];
-        $_SESSION["name"] = $uidExists["usersName"];
+        $_SESSION["username"] = $uidExists["usersName"];
+        $_SESSION["name"] = $uidExists["usersUid"];
+        $_SESSION["perms"] = $uidExists["usersPerms"];
         header("location: ../index.php");
         exit();
     }
