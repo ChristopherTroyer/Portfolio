@@ -19,7 +19,7 @@ if(! $conn) { // throw an error if the connection to the db fails
 /*
     create table in db named "users"
     usersId is the primary key
-    usersPerms: 0 = customer, 1 = associate, 2 = hq, 3 = admin
+    usersPerms: 0 = associate, 1 = hq, 2 = admin
 */
 $sql = "CREATE TABLE users (
     usersId int(11) AUTO_INCREMENT,
