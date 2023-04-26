@@ -4,12 +4,12 @@
     Error handling for signup.inc.php and utility functions for login.inc.php
 */
 
-function emptyInputSignup($name, $email, $username, $pass, $reppass) {
+function emptyInputSignup($first_name, $last_name, $username, $pass, $reppass, $address, $commission, $email, $permission) {
     /*
     Check if any of the parameters passed in are empty, return true if so
     */
     $result = false;
-    if(empty($name) || empty($email) || empty($username) || empty($pass) || empty($reppass)) {
+    if(empty($first_name) || empty($last_name) || empty($username) || empty($pass) || empty($reppass) || empty($address) || empty($commission) || empty($email) || empty($permission)) {
         $result = true;
     } 
     return $result;
@@ -168,9 +168,11 @@ function loginUser($conn, $username, $pass) {
         */
         if($_SESSION["perms"] == 0) {
             // go to associate page
+            header("location: ../associate.php");
         }
         else if($_SESSION["perms"] == 1) {
             // go to hq page
+            header("location: ../hq_access.php");
         }
         else if($_SESSION["perms"] == 2) {
             // go to admin page
