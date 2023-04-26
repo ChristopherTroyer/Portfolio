@@ -60,7 +60,8 @@ function usernameExists($conn, $username, $email) {
         connect to db and search for a user using username provided or email
         return false when no match found
     */
-    $sql = "SELECT * FROM users WHERE usersUid = ? OR usersEmail = ?;"; // query for finding a possible match
+    //$sql = "SELECT * FROM users WHERE usersUid = ? OR usersEmail = ?;"; // query for finding a possible match
+    $sql = "SELECT * FROM Associate WHERE username = ? OR email = ?;"; // query for finding a possible match
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt, $sql)) { // error checking the query
@@ -86,11 +87,13 @@ function usernameExists($conn, $username, $email) {
     mysqli_stmt_close($stmt);
 }
 
-function createUser($conn, $name, $email, $username, $pass){
+function createUser($conn, $first_name, $last_name, $username, $pass, $address, $commission, $email, $usersPerms){
     /*
     Create user using parameters
+
+    Updated to handle Associate table and new permission levels
     */
-    $sql = "INSERT INTO users (usersName, usersEmail, usersUid, usersPass) VALUES (?, ?, ?, ?);"; // query to create user in db
+    $sql = "insert into Associate (First_name, last_name, username, password, address, commission, email, usersPerms) values (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt, $sql)) { // error checking for query
@@ -99,14 +102,14 @@ function createUser($conn, $name, $email, $username, $pass){
     }
 
     $hashedPass = password_hash($pass, PASSWORD_DEFAULT); // create a password hash using default algorithm
-    mysqli_stmt_bind_param($stmt, "ssss", $username, $email, $name, $hashedPass);
+
+    mysqli_stmt_bind_param($stmt, "sssssdsi",$first_name, $last_name, $username, $hashedPass, $address, $commission,$email, $usersPerms);
     mysqli_stmt_execute($stmt); // execute creation of new user
 
     mysqli_stmt_close($stmt);
 
     header("location: ../signup.php?error=none"); // placeholder TODO
     exit();
-
 }
 
 /*
@@ -130,7 +133,9 @@ function loginUser($conn, $username, $pass) {
     /*
     Log in user using parameters
 
-    NOTE: can only user EMAIL to log in, wronglogin is thrown with username instead of email
+    Updated to handle new Associate table
+
+    NOTE: Email/username bug seems fixed
     */
     $uidExists = usernameExists($conn, $username, $username); // call function to check for existing username
 
@@ -140,7 +145,8 @@ function loginUser($conn, $username, $pass) {
     }
 
     // no error so proceed with logging in user
-    $passHashed = $uidExists["usersPass"];
+    //$passHashed = $uidExists["usersPass"];
+    $passHashed = $uidExists["password"];
     $checkPass = password_verify($pass, $passHashed); // verify that the password user entered matches the hash
 
     if($checkPass === false) { // no match from pass to hash, throw error
@@ -149,11 +155,29 @@ function loginUser($conn, $username, $pass) {
     }
     else if($checkPass === true) {
         session_start();
-        $_SESSION["userid"] = $uidExists["usersId"];
-        $_SESSION["username"] = $uidExists["usersName"];
-        $_SESSION["name"] = $uidExists["usersUid"];
+        $_SESSION["userid"] = $uidExists["AssocID"];
+        $_SESSION["username"] = $uidExists["username"];
+        $_SESSION["name"] = $uidExists["First_name"];
         $_SESSION["perms"] = $uidExists["usersPerms"];
-        header("location: ../index.php");
+
+        // handle taking associate to associate page, admin to admin page, hq to hq page
+
+        /*
+        go to associate access page
+        permission for associate: 0
+        */
+        if($_SESSION["perms"] == 0) {
+            // go to associate page
+        }
+        else if($_SESSION["perms"] == 1) {
+            // go to hq page
+        }
+        else if($_SESSION["perms"] == 2) {
+            // go to admin page
+            header("location: ../admin.php");
+        }
+
+        //header("location: ../index.php");
         exit();
     }
 }
