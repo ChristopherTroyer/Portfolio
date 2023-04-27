@@ -76,15 +76,18 @@ function usernameExists($conn, $username, $email) {
 
     if($row = mysqli_fetch_assoc($resultData)) {
         // match was found, return something other than false
-        return $row;
+        //return $row;
+        $result = $row;
     } else {
         // no matching username was found
-        echo "rte";
+        echo "rte ";
         $result = false;
-        return $result; 
+        //return $result; 
     }
 
     mysqli_stmt_close($stmt);
+    
+    return $result;
 }
 
 function createUser($conn, $first_name, $last_name, $username, $pass, $address, $commission, $email, $usersPerms){
