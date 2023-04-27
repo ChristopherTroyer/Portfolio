@@ -161,23 +161,23 @@ function loginUser($conn, $username, $pass) {
         $_SESSION["userid"] = $uidExists["AssocID"];
         $_SESSION["username"] = $uidExists["username"];
         $_SESSION["name"] = $uidExists["First_name"];
-        $_SESSION["perms"] = $uidExists["usersPerms"];
+        $_SESSION["perms"] = $uidExists["permission"];
 
         // handle taking associate to associate page, admin to admin page, hq to hq page
 
         /*
         go to associate access page
-        permission for associate: 0
+        permission for associate: 0, 
         */
-        if($_SESSION["perms"] == 0) {
+        if($_SESSION["perms"] == "0") { 
             // go to associate page
             header("location: ../associate.php");
         }
-        else if($_SESSION["perms"] == 1) {
+        else if($_SESSION["perms"] == "1") {
             // go to hq page
             header("location: ../hq_access.php");
         }
-        else if($_SESSION["perms"] == 2) {
+        else if($_SESSION["perms"] == "2") {
             // go to admin page
             header("location: ../admin.php");
         }
