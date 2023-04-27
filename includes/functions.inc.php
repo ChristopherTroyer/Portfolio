@@ -93,7 +93,7 @@ function createUser($conn, $first_name, $last_name, $username, $pass, $address, 
 
     Updated to handle Associate table and new permission levels
     */
-    $sql = "insert into Associate (First_name, last_name, username, password, address, commission, email, usersPerms) values (?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "insert into Associate (First_name, last_name, username, password, address, commission, email, permission) values (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt, $sql)) { // error checking for query
@@ -103,7 +103,7 @@ function createUser($conn, $first_name, $last_name, $username, $pass, $address, 
 
     $hashedPass = password_hash($pass, PASSWORD_DEFAULT); // create a password hash using default algorithm
 
-    mysqli_stmt_bind_param($stmt, "sssssdsi",$first_name, $last_name, $username, $hashedPass, $address, $commission,$email, $usersPerms);
+    mysqli_stmt_bind_param($stmt, "sssssdss",$first_name, $last_name, $username, $hashedPass, $address, $commission,$email, $usersPerms);
     mysqli_stmt_execute($stmt); // execute creation of new user
 
     mysqli_stmt_close($stmt);
