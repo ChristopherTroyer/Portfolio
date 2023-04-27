@@ -103,7 +103,7 @@ function createUser($conn, $first_name, $last_name, $username, $pass, $address, 
 
     $hashedPass = password_hash($pass, PASSWORD_DEFAULT); // create a password hash using default algorithm
 
-    mysqli_stmt_bind_param($stmt, "sssssdss",$first_name, $last_name, $username, $hashedPass, $address, $commission,$email, $usersPerms);
+    mysqli_stmt_bind_param($stmt, "sssssdsi",$first_name, $last_name, $username, $hashedPass, $address, $commission,$email, $usersPerms);
     mysqli_stmt_execute($stmt); // execute creation of new user
 
     mysqli_stmt_close($stmt);
