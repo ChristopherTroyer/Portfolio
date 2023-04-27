@@ -3,7 +3,7 @@ CREATE TABLE if not exists Associate (
     `First_name` varchar(100),
     `last_name` varchar(100),
     `username` varchar(25),
-    `password` char(6),
+    `password` char(128),
     `address` varchar(250),
     `commission` decimal(10, 2),
     `permission` int,
