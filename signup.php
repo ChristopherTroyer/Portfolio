@@ -5,11 +5,15 @@
 <section class="signup-form">
     <h2>Sign Up</h2>
     <form action="includes/signup.inc.php" method="post">
-        <input type="text" name="name" placeholder="Full name..">
+        <input type="text" name="first_name" placeholder="First name..">
+        <input type="text" name="last_name" placeholder="Last name..">
         <input type="text" name="username" placeholder="Username..">
-        <input type="text" name="email" placeholder="Email..">
         <input type="password" name="pass" placeholder="Password..">
         <input type="password" name="reppass" placeholder="Repeat Password..">
+        <input type="text" name="address" placeholder="Address..">
+        <input type="number" name="commission" placeholder="Commission..">
+        <input type="text" name="email" placeholder="Email..">
+        <input type="number" name="permission" placeholder="permission..">
         <button type="submit" name="submit">Sign Up</button>
     </form>
 </section>

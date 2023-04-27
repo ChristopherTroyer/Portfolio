@@ -5,18 +5,24 @@ use data passed from form to add user to db, process credentials first, create n
 */
 
 if(isset($_POST["submit"])) { // is var set
-    $name = $_POST["name"]; // retrieved data to process
-    $email = $_POST["email"];
+
+    $first_name = $_POST["first_name"]; // retrieve data to process
+    $last_name = $_POST["last_name"];
     $username = $_POST["username"];
     $pass = $_POST["pass"];
     $reppass = $_POST["reppass"];
+    $address = $_POST["address"];
+    $commission = $_POST["commission"];
+    $email = $_POST["email"];
+    $permission = $_POST["permission"];
+
 
     require_once 'dbh.inc.php'; // database handler
     require_once 'functions.inc.php'; // util functions to process data
 
     // process data retrieved, exit if error thrown
 
-    if(emptyInputSignup($name, $email, $username, $pass, $reppass) !== false) {
+    if(emptyInputSignup($first_name, $last_name, $username, $pass, $reppass, $address, $commission, $email, $permission) !== false) {
         header("location: ../signup.php?error=emptyinput");
         exit();
     }
@@ -37,7 +43,9 @@ if(isset($_POST["submit"])) { // is var set
         exit();
     }
 
-    createUser($conn, $name, $email, $username, $pass); // no errors thrown, attempt to add user to database
+
+    // no errors thrown, attempt to add user to database
+    createUser($conn, $first_name, $last_name, $username, $pass, $address, $commission, $email, $permission);
 
 
 

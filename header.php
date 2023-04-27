@@ -18,9 +18,15 @@
                 echo "<a href='profile.php'>Profile</a>";
                 echo "<a href='includes/logout.inc.php'>Sign Out</a>";
 
+                // check if associate is admin
+                if($_SESSION["perms"] == 2) {
+                    // allow access to associate signup
+                    echo "<a href='signup.php'>Add user</a>";
+                }
+
             } else { // user is not logged in
                 echo "<a href='login.php'>Log In</a>";
-                echo "<a href='signup.php'>Sign Up</a>";
+                //echo "<a href='signup.php'>Sign Up</a>";
             }
             ?>
 </div>
