@@ -6,7 +6,7 @@ CREATE TABLE if not exists Associate (
     `password` char(6),
     `address` varchar(250),
     `commission` decimal(10, 2),
-    `permission` char(10),
+    `permission` int,
     `email` varchar(100),
     PRIMARY KEY (AssocID)
 );
