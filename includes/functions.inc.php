@@ -186,3 +186,34 @@ function loginUser($conn, $username, $pass) {
         exit();
     }
 }
+
+
+/*
+ util functions for extracting data from dbs
+*/
+
+function fillArray($db_conn, $your_query) {
+    //db_conn is the $conn variable from dbh.inc.php or legacydbh.inc.php
+    //
+    //your_query is where you build your query, EX: "SELECT * FROM Associate;"
+
+    $result = mysqli_query($db_conn, $your_query);
+
+    $rows = mysqli_fetch_all($result, MYSQLI_ASSOC); // array containing your data
+
+    return $rows;
+
+    /*foreach($rows as $row) {
+        echo  "<p>" . "Customer: " . $row["name"] . "</p>";
+    }*/
+}
+
+function fillDropDown($array, $column_name) {
+    //$array should be the array returned from fillArray()
+    //
+    // column_name is the name of the column you want to retrieve: EX "name" for the column "name" in legacy db
+    foreach($array as $item) {
+        $col = $item["". $column_name .""];
+        echo "<option>$col</option>";
+    }
+}
