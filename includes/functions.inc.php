@@ -217,3 +217,37 @@ function fillDropDown($array, $column_name) {
         echo "<option>$col</option>";
     }
 }
+
+function fillTableColumnNames($array_tbl_col_names) {
+    //array_tbl_col_names is an array of strings, names of columns
+
+    // print the column names
+    echo "<tr>";
+    foreach($array_tbl_col_names as $col) {
+        echo "<th>" . $col . "</th>";
+    }
+    echo "</tr>";
+
+}
+
+function fillTableRow($data_array, $array_tbl_col_names) {
+    // data_array is the array you filled using fillArray()
+    // $array_tbl_col_names is an array of strings, names of columns for table
+    $nbm_of_cols = count($array_tbl_col_names);
+    $nbm_of_rows = count($data_array);
+    $x = 0; // counter for rows
+    $y = 0; // counter for columns
+
+    while($x<$nbm_of_rows) { // for each row
+        echo "<tr>";
+        $y = 0;
+        while($y<$nbm_of_cols){ // for each column
+            $item = $data_array[$x]; //get array of data to fill cell
+            $obj = $item["" . $array_tbl_col_names[$y] . ""]; // get specific cell
+            echo "<td>" . $obj . "</td>"; // print cell
+            $y++;
+        }
+        echo "</tr>";
+        $x++;
+    }
+}
