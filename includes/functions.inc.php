@@ -253,12 +253,17 @@ function fillTableRow($data_array, $array_tbl_col_names) {
     }
 }
 
+function decodeEchoString($your_string) {
+    echo html_entity_decode($your_string);
+}
+
 function createFormField($type,$name, $placeholder) {
     //type is the input type for the form
     //name is the name of the field, used when processing form data
     //placeholder is the hint text in the form field
 
     $str = "<input type='" . $type . "'" . " name='" . $name . "'" . " placeholder='" . $placeholder . "'" . ">";
-    $converted = html_entity_decode($str); // decode string above to make into proper html chars
-    echo $converted;
+    //$converted = html_entity_decode($str); // decode string above to make into proper html chars
+    //echo $converted;
+    decodeEchoString($str);
 }
