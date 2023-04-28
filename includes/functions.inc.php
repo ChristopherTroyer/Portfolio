@@ -252,3 +252,9 @@ function fillTableRow($data_array, $array_tbl_col_names) {
         $x++;
     }
 }
+
+function createFormField($type,$name, $placeholder) {
+    $str = "<input type='" . $type . "'" . " name='" . $name . "'" . " placeholder='" . $placeholder . "'" . ">";
+    $converted = html_entity_decode($str);
+    echo $converted;
+}
