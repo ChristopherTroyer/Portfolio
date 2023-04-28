@@ -186,3 +186,35 @@ function loginUser($conn, $username, $pass) {
         exit();
     }
 }
+
+// Takes in order information and makes request to remote server
+// Extended from professor provided example
+// arguments -> order number, associate id number, custid number, order cost in dollars
+//currently just echos whatever return data
+function externalProcess(int $order, $associate, $custid, double $amount)
+    {
+        $url = 'http://blitz.cs.niu.edu/PurchaseOrder/';
+        $data = array(
+	        'order' => $order, 
+	        'associate' => $associate,
+	        'custid' =>  $custid, 
+	        'amount' => $amount);
+		
+        $options = array(
+            'http' => array(
+                'header' => array('Content-type: application/json', 'Accept: application/json'),
+                'method'  => 'POST',
+                'content' => json_encode($data)
+            )
+        );
+
+        $context  = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+
+        if (!$result) {
+            echo("File_get_contents() failed")
+        }
+        else {
+            echo($result);
+        }
+    }
