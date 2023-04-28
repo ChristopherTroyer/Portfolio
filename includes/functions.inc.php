@@ -214,7 +214,8 @@ function fillDropDown($array, $column_name) {
     // column_name is the name of the column you want to retrieve: EX "name" for the column "name" in legacy db
     foreach($array as $item) {
         $col = $item["". $column_name .""];
-        echo "<option>$col</option>";
+        //echo "<option>$col</option>";
+        echo "<option" . " value=" . $col . ">" . $col . "</option>";
     }
 }
 
