@@ -15,12 +15,40 @@
     require_once 'includes/legacydbh.inc.php'; // legacy database handler
     require_once 'includes/functions.inc.php'; // utility functions for error checking credentials / login utils
 
+    //TODO this needs to be changed to pull from Quotes table
+
     $customersArray = fillArray($conn, "SELECT * FROM customers;"); //retrieve all customers in legacy db, place into array
     fillDropDown($customersArray, "name"); // populate dropdown with the name column from the array
 ?>
         </select>
         <input type="submit" value="Submit">
     </form>
+
+    <br></br>
+    <h1>List of all quotes:</h1>
+
+    <?php
+    require_once 'includes/legacydbh.inc.php'; // legacy database handler
+    require_once 'includes/functions.inc.php'; // utility functions for error checking credentials / login utils
+
+    $data_array = fillArray($conn, "SELECT * FROM customers;"); // retrieve all customers in legacy db, place into array
+
+    // all column names to be used for table
+    $col_names = array(
+        0 => "id",
+        1 => "name",
+        2 => "city",
+        3 => "street",
+        4 => "contact",
+    );
+
+    echo "<table border='1'>";
+    fillTableColumnNames($col_names); // create columns from array
+    fillTableRow($data_array, $col_names); //populate table with data from data_array
+    echo "</table>";
+
+    ?>
+
 </body>
 
 <?php
