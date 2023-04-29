@@ -79,6 +79,7 @@ function draw_bottom($id)
   ';
 }
 
+//handle_quote_note: handles the action of drawing quote notes
 function handle_quote_note($conn, $quoteid)
 {
   // retrieve quote notes from quoteid
@@ -93,6 +94,7 @@ function handle_quote_note($conn, $quoteid)
   }
 }
 
+//handle_quote_note: handles the action of drawing line items
 function handle_line_item($conn, $quoteid)
 {
   // retrieve line items from quoteid
@@ -107,6 +109,7 @@ function handle_line_item($conn, $quoteid)
   }
 }
 
+//handle_quote_note: handles the action of drawing pending quotes
 function handle_pending_quotes($conn)
 {
   // retrieve pending quotes
@@ -125,6 +128,10 @@ function handle_pending_quotes($conn)
   }
 }
 
+//
+// get page options and apply necessary query actions
+//
+
 $queries = array();
 parse_str($_SERVER['QUERY_STRING'], $queries);
 
@@ -142,7 +149,7 @@ if (array_key_exists('_id', $queries))
   }
   else if (array_key_exists('_sanction', $queries))
   {
-    // update price to include discount
+    // update price to include discount, then update status to sanctioned
 
     // (step 1): retrieve price,discount
     $sql_command = 'SELECT price, discount_amnt FROM New_Quote WHERE QuoteID=?';
@@ -159,7 +166,7 @@ if (array_key_exists('_id', $queries))
     $stmt->bind_param("di", $discount, $id);
     $stmt->execute();
 
-    // update status to sanctioned
+    // step(3): update status to sanctioned
     $sql_command = 'UPDATE New_Quote SET status="Sanctioned" WHERE QuoteID=?';
     $stmt = $conn->prepare($sql_command);
     $stmt->bind_param("i", $id);
@@ -221,6 +228,7 @@ if (array_key_exists('_id', $queries))
   ';
 }
 
+// draw the tables
 handle_pending_quotes($conn);
 ?>
 <script>
