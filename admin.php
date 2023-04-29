@@ -13,8 +13,6 @@
 <?php
     require_once 'includes/legacydbh.inc.php';
     require_once 'includes/functions.inc.php';
-    
-    session_start();
 
     try
     {
