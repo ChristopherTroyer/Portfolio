@@ -232,15 +232,16 @@ if (array_key_exists('_id', $queries))
 handle_pending_quotes($conn);
 ?>
 <script>
+function s(s) { return s.replaceAll('?','').replaceAll('=','').replaceAll('&',''); }; // clean input for url
 function refresh(id, options) { window.location.href = location.protocol + "//" + location.host + location.pathname + "?_id=" + id + options; };
-function apply_discount(id) { refresh(id, "&_apply_discount=" + document.getElementById("discount" + id).value); };
+function apply_discount(id) { refresh(id, "&_apply_discount=" + ds(ocument.getElementById("discount" + id).value)); };
 function sanction(id) { refresh(id, "&_sanction=1"); };
-function edit_note(id) { refresh(id, "&_edit_note=" + prompt("Enter a new description:")); };
+function edit_note(id) { refresh(id, "&_edit_note=" + s(prompt("Enter a new description:"))); };
 function remove_note(id) { if (confirm("Remove this note?")) refresh(id, "&_remove_note=1"); };
-function edit_line_item(id) { refresh(id, "&_edit_line_item=" + prompt("Enter a new price:") + "&_edit_line_item_desc=" + prompt("Enter a new description:")); };
+function edit_line_item(id) { refresh(id, "&_edit_line_item=" + s(prompt("Enter a new price:")) + "&_edit_line_item_desc=" + s(prompt("Enter a new description:"))); };
 function remove_line_item(id) { if (confirm("Remove this line item?")) refresh(id, "&_remove_line_item=1"); };
-function add_quote_note(id) { refresh(id, "&_add_quote_note=" + prompt("Enter a description:")); };
-function add_line_item(id) { refresh(id, "&_add_line_item=" + prompt("Enter a price:")  + "&_add_line_item_desc=" + prompt("Enter a description:")); };
+function add_quote_note(id) { refresh(id, "&_add_quote_note=" + s(prompt("Enter a description:"))); };
+function add_line_item(id) { refresh(id, "&_add_line_item=" + s(prompt("Enter a price:"))  + "&_add_line_item_desc=" + s(prompt("Enter a description:"))); };
 </script>
 </div>
 
