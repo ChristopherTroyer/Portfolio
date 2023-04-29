@@ -12,7 +12,7 @@ CREATE TABLE if not exists Associate (
 );
 
 CREATE TABLE if not exists New_Quote (
-    `QuoteID` INT NOT NULL,
+    `QuoteID` INT NOT NULL AUTO_INCREMENT,
     `CustID` INT NOT NULL,
     `AssocID` INT NOT NULL,
     `cust_talk` varchar(50),
@@ -26,7 +26,7 @@ CREATE TABLE if not exists New_Quote (
 );
 
 CREATE TABLE if not exists Quote_Note (
-    `NoteID` int NOT NULL,
+    `NoteID` int NOT NULL AUTO_INCREMENT,
     `QuoteID` INT NOT NULL,
     `note` varchar(1000),
     PRIMARY KEY (NoteID, QuoteID),
@@ -34,7 +34,7 @@ CREATE TABLE if not exists Quote_Note (
 );
 
 CREATE TABLE if not exists Line_Items (
-    `ItemID` INT NOT NULL,
+    `ItemID` INT NOT NULL AUTO_INCREMENT,
     `QuoteID` INT NOT NULL,
     `Price` decimal(8, 2),
     `Free_Desc` varchar(50),
