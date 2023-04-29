@@ -87,7 +87,7 @@ function handle_quote_note($conn, $quoteid)
   $stmt->bind_param("i", $quoteid);
   $stmt->execute();
   $result = $stmt->get_result();
-  $data = array();
+ 
   while ($item = $result->fetch_assoc()) {
     draw_quote_note($item['NoteID'], $item['note']);
   }
@@ -101,7 +101,7 @@ function handle_line_item($conn, $quoteid)
   $stmt->bind_param("i", $quoteid);
   $stmt->execute();
   $result = $stmt->get_result();
-  $data = array();
+ 
   while ($item = $result->fetch_assoc()) {
     draw_line_item($item['ItemID'], $item['Price'], $item['Free_Desc']);
   }
