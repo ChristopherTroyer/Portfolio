@@ -10,13 +10,14 @@
 <?php
 
 //pad: returns n number of whitespaces
-function pad($n) { $s = ""; for ($_ = 1; $_ <= $n; $_++) $s = $s . " "; return $s; }
+function pad($n) { $s = ""; for ($_ = 1; $_ <= $n; $_++) $s = $s . '&nbsp;'; return $s; }
 
 //draw_top: draws the first table
 function draw_top($id, $date, $associate, $price, $oldprice, $email)
 {
+  $associate = htmlspecialchars($associate); // sanitize for safe html usage
+  $email = htmlspecialchars($email);
   $text = pad(($id>9) ? 2 : 4) . '(' . $id . ')' . pad(8) . $date . pad(8) . $associate . ' : (' . $email . ')' . pad(16) . '$' . $price . ' (original price: $' . $oldprice . ')';
-  $text = htmlspecialchars($text); // sanitize for safe html usage
   echo '
   <div style="background-color: #c8ffa6; height: 20px; width: 1000%">
     <p style="display: inline-block; margin-top: 0px;">' . $text . '</p>
@@ -27,8 +28,8 @@ function draw_top($id, $date, $associate, $price, $oldprice, $email)
 //draw_quote_note: draws a quote note
 function draw_quote_note($noteid, $desc)
 {
+  $desc = htmlspecialchars($desc); // sanitize for safe html usage
   $text = pad(($noteid>9) ? 30 : 32) . '(' . $noteid . ')' . pad(8) . 'Quote Note' . pad(8) . ($desc ? $desc : "null");
-  $text = htmlspecialchars($text); // sanitize for safe html usage
   echo '
   <div style="background-color: #e6ffd0; height: 20px; margin-top: -17px; width: 1000%">
     <p>' . $text . '</p>
@@ -42,12 +43,12 @@ function draw_quote_note($noteid, $desc)
 //draw_line_item: draws a line item
 function draw_line_item($itemid, $price, $desc)
 {
+  $desc = htmlspecialchars($desc ? $desc : "null"); // sanitize for safe html usage
   $text = pad(($itemid>9) ? 30 : 32) . '(' . $itemid . ')' . pad(8) . 'Line Item' . pad(11) . '$' . $price;
-  $text = htmlspecialchars($text); // sanitize for safe html usage
   echo '
   <div style="background-color: #e6ffd0; height: 20px; margin-top: -17px; width: 1000%">
     <p>' . $text . '</p>
-    <a style="margin-left: 380px;position: absolute;margin-top: -34px;">'. htmlspecialchars($desc ? $desc : "null") .'</a>
+    <a style="margin-left: 380px;position: absolute;margin-top: -34px;">' . $desc . '</a>
   </div>
 
   <div style="margin-top: -20px; margin-left: 5px"><button id="' . $itemid . '" onclick="edit_line_item(this.id)">Edit</button></div>
