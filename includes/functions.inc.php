@@ -179,7 +179,7 @@ function loginUser($conn, $username, $pass) {
         }
         else if($_SESSION["perms"] == "2") {
             // go to admin page
-            header("location: ../admin.php");
+            header("location: ../Admin_Home.php");
         }
 
         //header("location: ../index.php");
