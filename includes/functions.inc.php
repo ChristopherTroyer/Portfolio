@@ -190,7 +190,7 @@ function loginUser($conn, $username, $pass) {
 // Takes in order information and makes request to remote server
 // Extended from professor provided example
 // arguments -> order number, associate id number, custid number, order cost in dollars
-//currently just echos whatever return data
+//currently just echos whatever return data as debug but confirms that it has successfully submitted
 function externalProcess(int $order, $associate, $custid, double $amount)
     {
         $url = 'http://blitz.cs.niu.edu/PurchaseOrder/';
@@ -215,6 +215,8 @@ function externalProcess(int $order, $associate, $custid, double $amount)
             echo("File_get_contents() failed")
         }
         else {
+            echo("Submission to external system successful!")
+            echo("Debug return info:")
             echo($result);
         }
     }
