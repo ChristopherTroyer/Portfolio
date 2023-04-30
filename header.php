@@ -22,6 +22,8 @@
                 if($_SESSION["perms"] == 2) {
                     // allow access to associate signup
                     echo "<a href='signup.php'>Add user</a>";
+                    //allows admin to go back to main page to see assoc or quote
+                    echo "<a href='Admin_Home.php'>Back</a>";
                 }
 
             } else { // user is not logged in
