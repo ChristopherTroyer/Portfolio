@@ -4,14 +4,13 @@
 -->
 
 <?php
- include_once 'header.php';
+ include_once 'header.php'
 ?>
-
-<main>This is a test for admin page</main>
 
 <html>
 <?php
-    session_start();
+    require_once 'includes/legacydbh.inc.php';
+    require_once 'includes/functions.inc.php';
 
     try
     {
@@ -20,14 +19,14 @@
             //this will have everything associate related
             header("location:admin_view_assoc.php");
         }
-        if
+        if(isset($_POST["quote"]))
         {
             //this will have everything quote related
             header("location:search_quotes.php");
         }
     }
 
-    (PDOexception $e)
+    catch(PDOexception $e)
     {
         echo "Connection failed: " . &e->getMessage();
     }
