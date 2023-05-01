@@ -187,11 +187,10 @@ function loginUser($conn, $username, $pass) {
     }
 }
 
-// Takes in order information and makes request to remote server
-// Extended from professor provided example
-// arguments -> order number, associate id number, custid number, order cost in dollars
+//Takes in order information and makes request to remote server, extended from professor provided example.
+//arguments -> order number, associate id number, custid number, order cost in dollars
 //currently just echos whatever return data as debug but confirms that it has successfully submitted
-function externalProcess(int $order, $associate, $custid, double $amount)
+function submitOrder(int $order, $associate, $custid, double $amount)
     {
         $url = 'http://blitz.cs.niu.edu/PurchaseOrder/';
         $data = array(
