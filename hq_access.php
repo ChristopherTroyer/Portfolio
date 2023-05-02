@@ -179,7 +179,7 @@ if (array_key_exists('_id', $queries))
   else if (array_key_exists('_submit_order', $queries))
   {
     // complete submitting an order
-    
+
     // retrieve relevant information about a quote, and then submit an order
     $sql_command = 'SELECT AssocID, discount_amnt, price, CustID FROM New_Quote WHERE QuoteID=?';
     $stmt = $conn->prepare($sql_command);
@@ -299,16 +299,17 @@ handle_sanctioned_quotes($conn);
 ?>
 <script>
 function s(s) { return s.replaceAll('?','').replaceAll('=','').replaceAll('&',''); }; // clean input for url
+function checkprice(p) { if (p < 0) return 0; return p; }; // positive floats only
 function refresh(id, options) { window.location.href = location.protocol + "//" + location.host + location.pathname + "?_id=" + id + options; };
-function apply_discount(id) { refresh(id, "&_apply_discount=" + s(document.getElementById("discount" + id).value)); };
+function apply_discount(id) { refresh(id, "&_apply_discount=" + s(checkprice(document.getElementById("discount" + id).value))); };
 function sanction(id) { if (confirm("Would you like to sanction this quote?")) refresh(id, "&_sanction=1"); };
 function submit_order(id) { if (confirm("Would you like to submit this order?")) refresh(id, "&_submit_order=1"); };
 function edit_note(id) { refresh(id, "&_edit_note=" + s(prompt("Enter a new description:"))); };
 function remove_note(id) { if (confirm("Remove this note?")) refresh(id, "&_remove_note=1"); };
-function edit_line_item(id) { refresh(id, "&_edit_line_item=" + s(prompt("Enter a new price:")) + "&_edit_line_item_desc=" + s(prompt("Enter a new description:"))); };
+function edit_line_item(id) { refresh(id, "&_edit_line_item=" + s(checkprice(prompt("Enter a new price:"))) + "&_edit_line_item_desc=" + s(prompt("Enter a new description:"))); };
 function remove_line_item(id) { if (confirm("Remove this line item?")) refresh(id, "&_remove_line_item=1"); };
 function add_quote_note(id) { refresh(id, "&_add_quote_note=" + s(prompt("Enter a description:"))); };
-function add_line_item(id) { refresh(id, "&_add_line_item=" + s(prompt("Enter a price:"))  + "&_add_line_item_desc=" + s(prompt("Enter a description:"))); };
+function add_line_item(id) { refresh(id, "&_add_line_item=" + s(checkprice(prompt("Enter a price:")))  + "&_add_line_item_desc=" + s(prompt("Enter a description:"))); };
 </script>
 </div>
 
