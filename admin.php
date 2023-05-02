@@ -9,8 +9,8 @@
 
 <html>
 <?php
-    require_once 'legacydbh.inc.php';
-    require_once 'functions.inc.php';
+    require_once 'includes/legacydbh.inc.php';
+    require_once 'includes/functions.inc.php';
 
     try
     {
@@ -56,8 +56,8 @@
 <br />
 
 <?php
-    require_once 'legacydbh.inc.php';
-    require_once 'functions.inc.php';
+    require_once 'includes/legacydbh.inc.php';
+    require_once 'includes/functions.inc.php';
     require_once 'adminfunctions.inc.php';
 
     function show_all_assoc()
