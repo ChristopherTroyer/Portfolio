@@ -30,7 +30,7 @@
         }
         if(isset($_POST["BACK"]))
         {
-            header('location:admin_view_assoc.php');
+            header('location:admin.php');
         }
     }
     catch(PDOexception $e)
