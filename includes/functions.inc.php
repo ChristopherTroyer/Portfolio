@@ -191,7 +191,7 @@ function loginUser($conn, $username, $pass) {
 //arguments -> order number, associate id number, custid number, order cost in dollars
 //the return from this server will be in JSON format and include the date the order will be processed and a commission % for the sales person
 //if there is an error it will return with an error field with a relevant message
-function submitOrder(int $order, $associate, $custid, double $amount)
+function submitOrder(int $order, $associate, $custid, float $amount)
     {
         $url = 'http://blitz.cs.niu.edu/PurchaseOrder/';
         $data = array(
