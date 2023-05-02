@@ -211,11 +211,11 @@ function submitOrder(int $order, $associate, $custid, double $amount)
         $result = file_get_contents($url, false, $context);
 
         if (!$result) {
-            echo("File_get_contents() failed")
+            echo("File_get_contents() failed");
         }
         else {
-            echo("Submission to external system successful!")
-            echo("Debug return info:")
+            echo("Submission to external system successful!");
+            echo("Debug return info:");
             echo($result);
         }
     }
