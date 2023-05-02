@@ -272,8 +272,8 @@ handle_sanctioned_quotes($conn);
 function s(s) { return s.replaceAll('?','').replaceAll('=','').replaceAll('&',''); }; // clean input for url
 function refresh(id, options) { window.location.href = location.protocol + "//" + location.host + location.pathname + "?_id=" + id + options; };
 function apply_discount(id) { refresh(id, "&_apply_discount=" + s(document.getElementById("discount" + id).value)); };
-function sanction(id) { refresh(id, "&_sanction=1"); };
-function submit_order(id) { refresh(id, "&_submit_order=1"); };
+function sanction(id) { if (confirm("Would you like to sanction this quote?")) refresh(id, "&_sanction=1"); };
+function submit_order(id) { if (confirm("Would you like to submit this order?")) refresh(id, "&_submit_order=1"); };
 function edit_note(id) { refresh(id, "&_edit_note=" + s(prompt("Enter a new description:"))); };
 function remove_note(id) { if (confirm("Remove this note?")) refresh(id, "&_remove_note=1"); };
 function edit_line_item(id) { refresh(id, "&_edit_line_item=" + s(prompt("Enter a new price:")) + "&_edit_line_item_desc=" + s(prompt("Enter a new description:"))); };
