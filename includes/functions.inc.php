@@ -189,7 +189,8 @@ function loginUser($conn, $username, $pass) {
 
 //Takes in order information and makes request to remote server, extended from professor provided example.
 //arguments -> order number, associate id number, custid number, order cost in dollars
-//currently just echos whatever return data as debug but confirms that it has successfully submitted
+//the return from this server will be in JSON format and include the date the order will be processed and a commission % for the sales person
+//if there is an error it will return with an error field with a relevant message
 function submitOrder(int $order, $associate, $custid, double $amount)
     {
         $url = 'http://blitz.cs.niu.edu/PurchaseOrder/';
@@ -210,12 +211,16 @@ function submitOrder(int $order, $associate, $custid, double $amount)
         $context  = stream_context_create($options);
         $result = file_get_contents($url, false, $context);
 
-        if (!$result) {
-            echo("File_get_contents() failed")
+        $decodedResult = json_decode($result);
+
+        //check if return contains the string "error"
+        if (str_contains($result, "error") || !$result) {
+            echo("File_get_contents() failed or JSON returned error");
+            echo"Debug return info: ",$decodedResult->error;
         }
         else {
-            echo("Submission to external system successful!")
-            echo("Debug return info:")
-            echo($result);
+            echo("Submission to external system successful!");
+            echo "Expect this order to be processed on ", $decodedResult->processDay;
+            echo "Comission for salesperson: ", $decodedResult->commission;
         }
     }
