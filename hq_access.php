@@ -10,6 +10,9 @@
 <div style="overflow: hidden; overflow-y: none">
 <?php
 
+// constants
+$COMMISSION_RATE = .33;
+
 //pad: returns n number of whitespaces
 function pad($n) { $s = ""; for ($_ = 1; $_ <= $n; $_++) $s = $s . '&nbsp;'; return $s; }
 
@@ -175,6 +178,8 @@ if (array_key_exists('_id', $queries))
   }
   else if (array_key_exists('_submit_order', $queries))
   {
+    // complete submitting an order
+    
     // retrieve relevant information about a quote, and then submit an order
     $sql_command = 'SELECT AssocID, discount_amnt, price, CustID FROM New_Quote WHERE QuoteID=?';
     $stmt = $conn->prepare($sql_command);
@@ -185,9 +190,33 @@ if (array_key_exists('_id', $queries))
     while ($item = $result->fetch_assoc())
     {
       $amount = (float) ($item['price'] - $item['discount_amnt']); // price - discount
-      submitOrder($id, $item['AssocID'], $item['CustID'], $amount);
+      $associate = $item['AssocID'];
+      submitOrder($id, $associate, $item['CustID'], $amount);
       break;
     }
+
+    // update associate's commission
+    // step 1: get associate's current commission
+    $sql_command = 'SELECT commission FROM Associate WHERE AssocID=?';
+    $stmt = $conn->prepare($sql_command);
+    $stmt->bind_param("i", $associate);
+    $stmt->execute();
+    $result = $stmt->get_result();
+   
+    while ($item = $result->fetch_assoc())
+      $commission = $item['commission'];
+
+    $add_amount = round($amount * $COMMISSION_RATE, 2.);
+    $new_commission = $commission + $add_amount;
+
+    // step 2: update associate's commission to include order
+    $sql_command = 'UPDATE Associate SET commission=? WHERE AssocID=?';
+    $stmt = $conn->prepare($sql_command);
+    $stmt->bind_param("di", $new_commission, $associate);
+    $stmt->execute();
+
+    // show success message
+    echo '<script>alert("Order submitted; $' . $add_amount . ' has been added to Associate ' . $associate . '\'s commissions.");</script>';
 
     // delete quote from db
     $sql_command = 'DELETE FROM Quote_Note WHERE QuoteID=?;';
