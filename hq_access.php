@@ -6,7 +6,6 @@
 
 <br>
 <main style="font-size: larger;text-align: center;"> HQ Page </main>
-<br>
 <a href="#finalized_quotes">Finalized Quotes</a>
 <a href="#sanctioned_quotes">Sanctioned Quotes</a>
 <hr>
@@ -299,9 +298,9 @@ if (array_key_exists('_id', $queries))
 }
 
 // draw the tables
-echo '<h style="color: black;font-size: larger;font-variant-caps: all-petite-caps;">Finalized Quotes</h>';
+echo '<h style="color: black;font-size: larger;font-variant-caps: all-petite-caps;">Finalized Quotes</h><br><br>';
 handle_finalized_quotes($conn);
-echo '<hr style="border: 1px dotted #dbdbdb;"><h style="color: black;font-size: larger;font-variant-caps: all-petite-caps;">Sanctioned Quotes</h>';
+echo '<hr style="border: 1px dotted #dbdbdb;"><h style="color: black;font-size: larger;font-variant-caps: all-petite-caps;">Sanctioned Quotes</h><br><br>';
 handle_sanctioned_quotes($conn);
 
 ?>
