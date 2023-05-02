@@ -7,6 +7,10 @@
 <br>
 <main style="font-size: larger;text-align: center;"> HQ Page </main>
 <br>
+<a href="#finalized_quotes">Finalized Quotes</a>
+<a href="#sanctioned_quotes">Sanctioned Quotes</a>
+<hr>
+
 <div style="overflow: hidden; overflow-y: none">
 <?php
 
@@ -119,6 +123,7 @@ function handle_finalized_quotes($conn)
   $result = mysqli_query($conn, $sql_command);
   $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+  echo '<div id="finalized_quotes">';
   foreach ($rows as $item)
   {
     $price = $item['price'] - $item['discount_amnt']; // discounted price
@@ -128,6 +133,7 @@ function handle_finalized_quotes($conn)
     handle_line_item($conn, $item['QuoteID'], true);
     draw_bottom($item['QuoteID'], true);
   }
+  echo '</div>';
 }
 
 //handle_sanctioned_quotes: handles the action of drawing sanctioned quotes
@@ -138,6 +144,7 @@ function handle_sanctioned_quotes($conn)
   $result = mysqli_query($conn, $sql_command);
   $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+  echo '<div id="sanctioned_quotes">';
   foreach ($rows as $item)
   {
     $price = $item['price'] - $item['discount_amnt']; // discounted price
@@ -147,6 +154,7 @@ function handle_sanctioned_quotes($conn)
     handle_line_item($conn, $item['QuoteID'], false);
     draw_bottom($item['QuoteID'], false);
   }
+  echo '</div>';
 }
 
 //
@@ -293,7 +301,7 @@ if (array_key_exists('_id', $queries))
 // draw the tables
 echo '<h style="color: black;font-size: larger;font-variant-caps: all-petite-caps;">Finalized Quotes</h>';
 handle_finalized_quotes($conn);
-echo '<hr><h style="color: black;font-size: larger;font-variant-caps: all-petite-caps;">Sanctioned Quotes</h>';
+echo '<hr style="border: 1px dotted #dbdbdb;"><h style="color: black;font-size: larger;font-variant-caps: all-petite-caps;">Sanctioned Quotes</h>';
 handle_sanctioned_quotes($conn);
 
 ?>
@@ -312,6 +320,10 @@ function add_quote_note(id) { refresh(id, "&_add_quote_note=" + s(prompt("Enter 
 function add_line_item(id) { refresh(id, "&_add_line_item=" + s(checkprice(prompt("Enter a price:")))  + "&_add_line_item_desc=" + s(prompt("Enter a description:"))); };
 </script>
 </div>
+
+<hr>
+<a href="#finalized_quotes">Finalized Quotes</a>
+<a href="#sanctioned_quotes">Sanctioned Quotes</a>
 
 <?php
  include_once 'footer.php'
