@@ -219,3 +219,82 @@ function submitOrder(int $order, $associate, $custid, double $amount)
             echo($result);
         }
     }
+/*
+ util functions for extracting data from dbs
+*/
+
+function fillArray($db_conn, $your_query) {
+    //db_conn is the $conn variable from dbh.inc.php or legacydbh.inc.php
+    //
+    //your_query is where you build your query, EX: "SELECT * FROM Associate;"
+
+    $result = mysqli_query($db_conn, $your_query);
+
+    $rows = mysqli_fetch_all($result, MYSQLI_ASSOC); // array containing your data
+
+    return $rows;
+
+    /*foreach($rows as $row) {
+        echo  "<p>" . "Customer: " . $row["name"] . "</p>";
+    }*/
+}
+
+function fillDropDown($array, $column_name) {
+    //$array should be the array returned from fillArray()
+    //
+    // column_name is the name of the column you want to retrieve: EX "name" for the column "name" in legacy db
+    foreach($array as $item) {
+        $col = $item["". $column_name .""];
+        //echo "<option>$col</option>";
+        echo "<option" . " value=" . $col . ">" . $col . "</option>";
+    }
+}
+
+function fillTableColumnNames($array_tbl_col_names) {
+    //array_tbl_col_names is an array of strings, names of columns
+
+    // print the column names
+    echo "<tr>";
+    foreach($array_tbl_col_names as $col) {
+        echo "<th>" . $col . "</th>";
+    }
+    echo "</tr>";
+
+}
+
+function fillTableRow($data_array, $array_tbl_col_names) {
+    // data_array is the array you filled using fillArray()
+    // $array_tbl_col_names is an array of strings, names of columns for table
+    $nbm_of_cols = count($array_tbl_col_names);
+    $nbm_of_rows = count($data_array);
+    $x = 0; // counter for rows
+    $y = 0; // counter for columns
+
+    while($x<$nbm_of_rows) { // for each row
+        echo "<tr>";
+        $y = 0;
+        while($y<$nbm_of_cols){ // for each column
+            $item = $data_array[$x]; //get array of data to fill cell
+            $obj = $item["" . $array_tbl_col_names[$y] . ""]; // get specific cell
+            echo "<td>" . $obj . "</td>"; // print cell
+            $y++;
+        }
+        echo "</tr>";
+        $x++;
+    }
+}
+
+function decodeEchoString($your_string) {
+    echo html_entity_decode($your_string);
+}
+
+function createFormField($type,$name, $placeholder) {
+    //type is the input type for the form
+    //name is the name of the field, used when processing form data
+    //placeholder is the hint text in the form field
+
+    $str = "<input type='" . $type . "'" . " name='" . $name . "'" . " placeholder='" . $placeholder . "'" . ">";
+    //$converted = html_entity_decode($str); // decode string above to make into proper html chars
+    //echo $converted;
+    decodeEchoString($str);
+}
