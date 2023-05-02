@@ -1,11 +1,11 @@
-
 <?php
  include_once 'header.php';
  require_once 'includes/dbh.inc.php';
+ require_once 'includes/functions.inc.php';
 ?>
 
 <br>
-<main> HQ Page </main>
+<main style="font-size: larger;text-align: center;"> HQ Page </main>
 <br>
 <div style="overflow: hidden; overflow-y: none">
 <?php
@@ -27,57 +27,59 @@ function draw_top($id, $date, $associate, $price, $oldprice, $email)
 }
 
 //draw_quote_note: draws a quote note
-function draw_quote_note($noteid, $desc)
+function draw_quote_note($noteid, $desc, $allowchanges)
 {
   $desc = htmlspecialchars($desc); // sanitize for safe html usage
-  $text = pad(($noteid>9) ? 30 : 32) . '(' . $noteid . ')' . pad(8) . 'Quote Note' . pad(8) . ($desc ? $desc : "null");
+  $text = pad((!($allowchanges) ? (($noteid>9) ? 2 : 4) : (($noteid >9) ? 30 : 32))) . '(' . $noteid . ')' . pad(8) . 'Quote Note' . pad(8) . ($desc ? $desc : "null");
   echo '
   <div style="background-color: #e6ffd0; height: 20px; margin-top: -17px; width: 1000%">
     <p>' . $text . '</p>
   </div>
+  ' . ($allowchanges ? '
   <div style="margin-top: -20px; margin-left: 5px"><button id="' . $noteid . '" onclick="edit_note(this.id)">Edit</button></div>
   <div style="margin-top: -21px; margin-left: 50px"><button id="' . $noteid . '" onclick="remove_note(this.id)">Remove</button></div>
-  ';
+  ' : '');
 }
 
 //draw_line_item: draws a line item
-function draw_line_item($itemid, $price, $desc)
+function draw_line_item($itemid, $price, $desc, $allowchanges)
 {
   $desc = htmlspecialchars($desc ? $desc : "null"); // sanitize for safe html usage
-  $text = pad(($itemid>9) ? 30 : 32) . '(' . $itemid . ')' . pad(8) . 'Line Item' . pad(11) . '$' . $price;
+  $text = pad((!($allowchanges) ? (($itemid>9) ? 2 : 4) : (($itemid>9) ? 30 : 32))) . '(' . $itemid . ')' . pad(8) . 'Line Item' . pad(11) . '$' . $price;
   echo '
   <div style="background-color: #e6ffd0; height: 20px; margin-top: -17px; width: 1000%">
     <p>' . $text . '</p>
-    <a style="margin-left: 380px;position: absolute;margin-top: -34px;">' . $desc . '</a>
+    <a style="margin-left: ' . ($allowchanges ? '380' : '270') . 'px;position: absolute;margin-top: -34px;">' . $desc . '</a>
   </div>
+  ' . ($allowchanges ? '
   <div style="margin-top: -20px; margin-left: 5px"><button id="' . $itemid . '" onclick="edit_line_item(this.id)">Edit</button></div>
   <div style="margin-top: -21px; margin-left: 50px"><button id="' . $itemid . '" onclick="remove_line_item(this.id)">Remove</button></div>
-  ';
+  ' : '');
 }
 
 //draw_bottom: draws the last table
-function draw_bottom($id)
+function draw_bottom($id, $allowchanges)
 {
   echo '
   <div style="background-color: #8da18d; height: 20px; margin-top: -16px; width: 1000%">
     <p></p>
   </div>
   <div style="margin-top: -35px; padding: 15px 5px">
-      <button id="' . $id . '" onclick="add_quote_note(this.id)">Add Quote Note</button>
-      <button id="' . $id . '" onclick="add_line_item(this.id)">Add Line Item</button>
+      <button id="' . $id . '" onclick="add_quote_note(this.id)" ' . ($allowchanges ? '' : 'disabled') . '>Add Quote Note</button>
+      <button id="' . $id . '" onclick="add_line_item(this.id)" ' . ($allowchanges ? '' : 'disabled') . '>Add Line Item</button>
   </div>
   <form style="margin-top: -35px; margin-left: 242px;">
     <label for="discount" style="color: white;text-shadow: 2px 2px #000000;">Discount amount ($):</label>
     <input style ="width: 35px; text-align: right;" type="text" id="discount' . $id . '" name="discount"><br><br>
   </form>
   <div style="margin-top: -39px; margin-left: 431px;"><button id="' . $id . '" onclick="apply_discount(this.id)">Apply</button></div>
-  <div style="margin-top: -21px; margin-left: 485px;"><button id="' . $id . '"onclick="sanction(this.id)">Sanction Quote</button></div>
+  <div style="margin-top: -21px; margin-left: 485px;"><button id="' . $id . '"onclick="' . ($allowchanges ? 'sanction' : 'submit_order') . '(this.id)">' . ($allowchanges ? 'Sanction Quote' : 'Submit Order') . '</button></div>
   <br>
   ';
 }
 
 //handle_quote_note: handles the action of drawing quote notes
-function handle_quote_note($conn, $quoteid)
+function handle_quote_note($conn, $quoteid, $allowchanges)
 {
   // retrieve quote notes from quoteid
   $sql_command = 'SELECT NoteID, note FROM Quote_Note WHERE QuoteID=?';
@@ -87,12 +89,12 @@ function handle_quote_note($conn, $quoteid)
   $result = $stmt->get_result();
  
   while ($item = $result->fetch_assoc()) {
-    draw_quote_note($item['NoteID'], $item['note']);
+    draw_quote_note($item['NoteID'], $item['note'], $allowchanges);
   }
 }
 
-//handle_quote_note: handles the action of drawing line items
-function handle_line_item($conn, $quoteid)
+//handle_line_item: handles the action of drawing line items
+function handle_line_item($conn, $quoteid, $allowchanges)
 {
   // retrieve line items from quoteid
   $sql_command = 'SELECT ItemID, Price, Free_Desc FROM Line_Items WHERE QuoteID=?';
@@ -102,15 +104,15 @@ function handle_line_item($conn, $quoteid)
   $result = $stmt->get_result();
  
   while ($item = $result->fetch_assoc()) {
-    draw_line_item($item['ItemID'], $item['Price'], $item['Free_Desc']);
+    draw_line_item($item['ItemID'], $item['Price'], $item['Free_Desc'], $allowchanges);
   }
 }
 
-//handle_quote_note: handles the action of drawing pending quotes
-function handle_pending_quotes($conn)
+//handle_finalized_quotes: handles the action of drawing finalized quotes
+function handle_finalized_quotes($conn)
 {
-  // retrieve pending quotes
-  $sql_command = 'SELECT QuoteID, process_date, username, email, discount_amnt, price FROM New_Quote JOIN Associate ON New_Quote.AssocID=Associate.AssocID WHERE status="Pending"';
+  // retrieve finalized quotes
+  $sql_command = 'SELECT QuoteID, process_date, username, email, discount_amnt, price FROM New_Quote JOIN Associate ON New_Quote.AssocID=Associate.AssocID WHERE status="Finalized"';
   $result = mysqli_query($conn, $sql_command);
   $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
@@ -119,9 +121,28 @@ function handle_pending_quotes($conn)
     $price = $item['price'] - $item['discount_amnt']; // discounted price
     $price = number_format($price, 2, '.', ''); // format 0.00
     draw_top($item['QuoteID'], $item['process_date'], $item['username'], $price, $item['price'], $item['email']);
-    handle_quote_note($conn, $item['QuoteID']);
-    handle_line_item($conn, $item['QuoteID']);
-    draw_bottom($item['QuoteID']);
+    handle_quote_note($conn, $item['QuoteID'], true);
+    handle_line_item($conn, $item['QuoteID'], true);
+    draw_bottom($item['QuoteID'], true);
+  }
+}
+
+//handle_sanctioned_quotes: handles the action of drawing sanctioned quotes
+function handle_sanctioned_quotes($conn)
+{
+  // retrieve sanctioned quotes
+  $sql_command = 'SELECT QuoteID, process_date, username, email, discount_amnt, price FROM New_Quote JOIN Associate ON New_Quote.AssocID=Associate.AssocID WHERE status="Sanctioned"';
+  $result = mysqli_query($conn, $sql_command);
+  $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+  foreach ($rows as $item)
+  {
+    $price = $item['price'] - $item['discount_amnt']; // discounted price
+    $price = number_format($price, 2, '.', ''); // format 0.00
+    draw_top($item['QuoteID'], $item['process_date'], $item['username'], $price, $item['price'], $item['email']);
+    handle_quote_note($conn, $item['QuoteID'], false);
+    handle_line_item($conn, $item['QuoteID'], false);
+    draw_bottom($item['QuoteID'], false);
   }
 }
 
@@ -146,25 +167,40 @@ if (array_key_exists('_id', $queries))
   }
   else if (array_key_exists('_sanction', $queries))
   {
-    // update price to include discount, then update status to sanctioned
-
-    // (step 1): retrieve price,discount
-    $sql_command = 'SELECT price, discount_amnt FROM New_Quote WHERE QuoteID=?';
+    // update status to sanctioned
+    $sql_command = 'UPDATE New_Quote SET status="Sanctioned" WHERE QuoteID=?';
     $stmt = $conn->prepare($sql_command);
     $stmt->bind_param("i", $id);
     $stmt->execute();
-    $stmt->bind_result($_price, $_discount_amnt);
-    while ($stmt->fetch());
-    $discount = (float) ($_price - $_discount_amnt);
-
-    // (step 2): update price
-    $sql_command = 'UPDATE New_Quote SET price=?, discount_amnt=0 WHERE QuoteID=?';
+  }
+  else if (array_key_exists('_submit_order', $queries))
+  {
+    // retrieve relevant information about a quote, and then submit an order
+    $sql_command = 'SELECT AssocID, discount_amnt, price, CustID FROM New_Quote WHERE QuoteID=?';
     $stmt = $conn->prepare($sql_command);
-    $stmt->bind_param("di", $discount, $id);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+   
+    while ($item = $result->fetch_assoc())
+    {
+      $amount = (float) ($item['price'] - $item['discount_amnt']); // price - discount
+      submitOrder($id, $item['AssocID'], $item['CustID'], $amount);
+      break;
+    }
+
+    // delete quote from db
+    $sql_command = 'DELETE FROM Quote_Note WHERE QuoteID=?;';
+    $stmt = $conn->prepare($sql_command);
+    $stmt->bind_param("i", $id);
     $stmt->execute();
 
-    // step(3): update status to sanctioned
-    $sql_command = 'UPDATE New_Quote SET status="Sanctioned" WHERE QuoteID=?';
+    $sql_command = 'DELETE FROM Line_Items WHERE QuoteID=?;';
+    $stmt = $conn->prepare($sql_command);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+
+    $sql_command = 'DELETE FROM New_Quote WHERE QuoteID=?;';
     $stmt = $conn->prepare($sql_command);
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -226,13 +262,18 @@ if (array_key_exists('_id', $queries))
 }
 
 // draw the tables
-handle_pending_quotes($conn);
+echo '<h style="color: black;font-size: larger;font-variant-caps: all-petite-caps;">Finalized Quotes</h>';
+handle_finalized_quotes($conn);
+echo '<hr><h style="color: black;font-size: larger;font-variant-caps: all-petite-caps;">Sanctioned Quotes</h>';
+handle_sanctioned_quotes($conn);
+
 ?>
 <script>
 function s(s) { return s.replaceAll('?','').replaceAll('=','').replaceAll('&',''); }; // clean input for url
 function refresh(id, options) { window.location.href = location.protocol + "//" + location.host + location.pathname + "?_id=" + id + options; };
 function apply_discount(id) { refresh(id, "&_apply_discount=" + s(document.getElementById("discount" + id).value)); };
 function sanction(id) { refresh(id, "&_sanction=1"); };
+function submit_order(id) { refresh(id, "&_submit_order=1"); };
 function edit_note(id) { refresh(id, "&_edit_note=" + s(prompt("Enter a new description:"))); };
 function remove_note(id) { if (confirm("Remove this note?")) refresh(id, "&_remove_note=1"); };
 function edit_line_item(id) { refresh(id, "&_edit_line_item=" + s(prompt("Enter a new price:")) + "&_edit_line_item_desc=" + s(prompt("Enter a new description:"))); };
