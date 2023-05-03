@@ -9,9 +9,12 @@ function emptyInputSignup($first_name, $last_name, $username, $pass, $reppass, $
     Check if any of the parameters passed in are empty, return true if so
     */
     $result = false;
-    if(empty($first_name) || empty($last_name) || empty($username) || empty($pass) || empty($reppass) || empty($address) || empty($commission) || empty($email) || empty($permission)) {
+    if(empty($first_name) || empty($last_name) || empty($username) || empty($pass) || empty($reppass) || empty($address) || empty($commission) || empty($email)) {
         $result = true;
     } 
+    if (empty($permission) && $permission != 0) {
+        $result = true;
+    }
     return $result;
 }
 
