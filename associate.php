@@ -7,9 +7,9 @@
 
 <body> 
     <p>Select a customer to create a new quote:</p>
-    <form> 
-        <select> 
-            <option selected="selected">Choose Customer</option>
+    <form action="create_quote.php" method="post"> 
+        <select name="customer"> 
+            <option value="default">Choose Customer</option>
 
 <?php
     require_once 'includes/legacydbh.inc.php'; // legacy database handler
