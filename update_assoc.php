@@ -13,7 +13,7 @@
 $id = $_GET['AssocID'];
 
 // Select data associated with id
-$result = mysqli_query($my_sqli, "SELECT * FROM Associate WHERE AssocID = $id");
+$result = mysqli_query($conn, "SELECT * FROM Associate WHERE AssocID = $id");
 
 // Fetch the next row of a result set as array
 $resultData = mysqli_fetch_assoc($result);
