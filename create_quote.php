@@ -162,6 +162,23 @@ if(isset($_POST["customer"])) { // is there a submission from associate.php
     $_SESSION['customer_name'] = $customer_name;
     showQuoteForm($customer_name, $input_email, $line_itm_desc, $line_itm_price, $secrete_note_ar, $discount_amount, $final_price); // these are empty vars, if vars are filled in then the appropriate fields will be filled
 }
+if (isset($_POST["quote"])) { // is there a submission from
+    require 'includes/dbh.inc.php';
+    $quote_to_edit = $_POST["quote"];
+    //$_SESSION['edited_quote'] = $quote_to_edit;
+    //echo($quote_to_edit);
+
+    $quote = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM New_Quote WHERE QuoteID = $quote_to_edit"));
+    $quote_cust = $quote['CustID'];
+    //avert your eyes
+    $cust = mysqli_fetch_array(mysqli_query(mysqli_connect("blitz.cs.niu.edu", "student", "student", "csci467"), "SELECT * FROM customers WHERE id = $quote_cust"));
+
+    print_r($cust);
+    echo("<hr>");
+    print_r($quote);
+
+    //showQuoteForm($cust['name'], $cust['contact'], );
+}
 
 /*
     Handle submission of form: new quote creation
