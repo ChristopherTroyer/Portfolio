@@ -148,8 +148,9 @@
         decodeEchoString("<input type='radio' name='ramount' id='ramount_rbtn' value='ramount'/>");
         decodeEchoString("<label for='ramount_rbtn'>Amount</label>");
         echo "<br></br>";
+
         //create the quote
-        decodeEchoString("<button type='submit' name='submit'>Create Quote</button>");
+        decodeEchoString("<button type='submit' name='submit'>Create Quote</button>"); // submission button
         echo "<br></br>";
     
         //display final price
@@ -166,6 +167,10 @@ if(isset($_POST["customer"])) { // is there a submission from associate.php
 /*
     Handle submission of form: new quote creation
 */
+
+if(isset($_POST["submit"])) { // associate creates a new quote
+
+}
 
 ?>
 
