@@ -4,7 +4,7 @@
 
 <script type='text/javascript'>
     var counter = 1; // counter for line items, starts at 1 because there is a field already there, it cannot be deleted
-    var noteCounter = 0; // secret note counter
+    var noteCounter = 1; // secret note counter
     var d_btn_id = "";
 
     function removeLineItem() {
@@ -12,7 +12,7 @@
 
         var toRemove = document.getElementById(this.id); //the delete button
 
-        var thenum = this.id.match(/\d+/)[0] // extract the number from the id
+        var thenum = this.id.match(/\d+/)[0]; // extract the number from the id
         var lineItem = document.getElementById("lineItem" + thenum); // line item
         var linePrice = document.getElementById("linePrice" + thenum); // line item price
         var br = document.getElementById("br" + thenum);
@@ -68,18 +68,38 @@
         var container = document.getElementById("secret_notes"); // where to delete childNodes from
 
         var toRemove = document.getElementById(this.id); // the delete button
+
+        var thenum = this.id.match(/\d+/)[0]; // extract the number from the id
+        var noteField = document.getElementById("secret_field" + thenum); // note to remove
+        var br = document.getElementById("br" + thenum); // br to remove
+
+        var deleteNote = container.removeChild(noteField); // remove note field
+        var removeBtn = container.removeChild(toRemove); // remove delete button
+        var removeBr = container.removeChild(br); // remove br tag
+
+        noteCounter--;
     }
 
     function addSecretNote() {
         var container = document.getElementById("secret_notes"); // append to this div
         
-        var input = document.createElement("input");
+        var input = document.createElement("input"); // new secret note field
+        var deleteBtn = document.createElement("input"); // delete button
+        var br = document.createElement("br");
 
         input.type = "text";
         input.name = "secret" + noteCounter;
+        input.setAttribute('id', "secret_field" + noteCounter); // assign id to note field
+        deleteBtn.setAttribute('id', "delete_secret" + noteCounter); // assign id name to delete button
+        deleteBtn.type = "button";
+        deleteBtn.value = "delete";
+        deleteBtn.onclick = removeSecretNote;
+
+        br.setAttribute('id', "br" + noteCounter); // assign id name to br tag
 
         container.appendChild(input);
-        container.appendChild(document.createElement("br"));
+        container.appendChild(deleteBtn);
+        container.appendChild(br);
 
         noteCounter++;
     }
