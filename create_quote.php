@@ -95,6 +95,30 @@
 
         noteCounter++;
     }
+
+    function calculatePrice() {
+        var itemPriceSum = 0;
+        //var line_item = document.getElementById("linePrice" + 1); // get specific line item price field
+        //alert(line_item.value);
+        //var discountAmount = document.getElementById("")
+
+        for(i=1;i<counter;i++) {
+            //iterate through all prices to get sum
+            var line_item = document.getElementById("linePrice" + i); // get specific line item price field
+            itemPriceSum += Number(line_item.value);
+
+        }
+
+        //TODO neeed to change how the line items are implemented in the showQuoteForm()
+        // it needs to include and id
+        //var first_ln_item = 
+        if(document.getElementById("percent_rbtn").checked) {
+            // checked percent
+            alert(itemPriceSum);
+        } else if(document.getElementById("ramount_rbtn")) {
+            // checked amount
+        }
+    }
 </script>
 
 <?php
@@ -142,7 +166,7 @@
     
         //discount amount
         createFormFieldFilled("number", "discount_amt", "Discount Amount", $discount);
-        decodeEchoString("<button type='submit' name='calc_price'>Calculate Price</button>");
+        decodeEchoString("<button type='button' name='calc_price' onclick='calculatePrice()'>Calculate Price</button>");
         decodeEchoString("<input type='radio' name='ramount' id='percent_rbtn' value='percent'/>");
         decodeEchoString("<label for='percent_rbtn'>percent</label>");
         decodeEchoString("<input type='radio' name='ramount' id='ramount_rbtn' value='ramount'/>");
