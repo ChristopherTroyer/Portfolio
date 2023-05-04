@@ -160,8 +160,13 @@
 if(isset($_POST["customer"])) { // is there a submission from associate.php
     $customer_name = $_POST["customer"];
     $_SESSION['customer_name'] = $customer_name;
-    showQuoteForm($customer_name, $input_email, $line_itm_desc, $line_itm_price, $secrete_note_ar, $discount_amount, $final_price);
+    showQuoteForm($customer_name, $input_email, $line_itm_desc, $line_itm_price, $secrete_note_ar, $discount_amount, $final_price); // these are empty vars, if vars are filled in then the appropriate fields will be filled
 }
+
+/*
+    Handle submission of form: new quote creation
+*/
+
 ?>
 
 <?php
