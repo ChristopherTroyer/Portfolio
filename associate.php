@@ -24,11 +24,28 @@
         <input type="submit" value="Submit">
     </form>
 
+    <p>Select a quote to edit:</p>
+    <form action="edit_quote.php" method="post"> 
+        <select name="quote"> 
+            <option value="default">Choose Quote id</option>
+    
+    <?php //select quote to edit
+          // BUG: this breaks the following table for some reason?
+        require_once 'includes/dbh.inc.php'; // current database handler
+        require_once 'includes/functions.inc.php'; // utility
+
+        $quoteArray = fillArray($conn, "SELECT * FROM New_Quote;"); //gets all quotes
+        fillDropDown($quoteArray, "QuoteID");
+    ?>
+            </select>
+        <input type="submit" value="Submit">
+    </form>
+
     <br></br>
     <h1>List of all quotes:</h1>
 
     <?php
-    require_once 'includes/legacydbh.inc.php'; // legacy database handler
+    require 'includes/legacydbh.inc.php'; // legacy database handler
     require_once 'includes/functions.inc.php'; // utility functions for error checking credentials / login utils
 
     $data_array = fillArray($conn, "SELECT * FROM customers;"); // retrieve all customers in legacy db, place into array
