@@ -5,7 +5,6 @@
 <script type='text/javascript'>
     var counter = 1; // counter for line items, starts at 1 because there is a field already there, it cannot be deleted
     var noteCounter = 1; // secret note counter
-    var d_btn_id = "";
 
     function removeLineItem() {
         var container = document.getElementById("line_items"); // where to delete childNodes from
@@ -22,9 +21,10 @@
         var throwawayNode = container.removeChild(toRemove); // remove the delete button
         var deleteLinePrice = container.removeChild(linePrice); // remove price field
         var deleteBr = container.removeChild(br);
-        counter--; // decrement line item counter
 
+        counter--; // decrement line item counter
     }
+
     //function to add lineItem_desc and lineItem price input
     function addLineItem() {
         var container = document.getElementById("line_items"); // append to this div
@@ -55,14 +55,6 @@
 
         counter++;
     }
-
-    /*function removeLineItem(clicked_id) {
-        var container = document.getElementById("line_items"); // where to delete childNodes from
-
-        var toRemove = document.getElementById(clicked_id);
-
-        var throwawayNode = container.removeChild(toRemove);
-    }*/
 
     function removeSecretNote() {
         var container = document.getElementById("secret_notes"); // where to delete childNodes from
@@ -121,11 +113,11 @@
         //
         include_once 'includes/functions.inc.php'; // util functions to process data
     
-        //$selected_customer = $_POST["customer"];
         echo "<h1>Quote for: " . $cust_nme . "</h1>"; // Show who the quote is for
     
         echo "<br></br>";
-        decodeEchoString("<form action='create_quote.php' method='post'>"); //begin form    
+        decodeEchoString("<form action='create_quote.php' method='post'>"); //begin form
+
         createFormFieldFilled("text", "usr_email", "Email", $in_email); // email to send quote to
         echo "<br></br>";
 
@@ -138,8 +130,6 @@
         echo "<br></br>";
         decodeEchoString("<button type='button' onclick='addLineItem()'>New Line Item</button>"); // button used to add a new line item
 
-        // display line items
-        //listLineItems($lne_item_desc, $lne_item_price);
         echo "<br></br>";
     
         // secret notes
@@ -170,52 +160,12 @@
 if(isset($_POST["customer"])) { // is there a submission from associate.php
     $customer_name = $_POST["customer"];
     $_SESSION['customer_name'] = $customer_name;
-    showQuoteForm($customer_name, $input_email, $line_itm_desc, $line_itm_price, $secrete_note_ar, $discount_amount, $final_price);
+    showQuoteForm($customer_name, $input_email, $line_itm_desc, $line_itm_price, $secrete_note_ar, $discount_amount, $final_price); // these are empty vars, if vars are filled in then the appropriate fields will be filled
 }
 
-
-// a submit button was pressed, show form again but with 
-// previously filled in fields populated
-
-if(isset($_POST["new_line"])) {
-    //check if line desc is empty or if price is empty
-    echo "test";
-    echo $_SESSION['customer_name'];
-    //echo $_POST["usr_email"];
-    //$cust_nme = $customer_name;
-    $in_email = $_POST["usr_email"];
-    echo $in_email;
-    $lne_item_desc = $_POST["line_item"];
-    $lne_item_price = $_POST["line_item_price"];
-    $new_note = $_POST["secret_note"];
-    $discount = $_POST["discount_amt"];
-    $final_prce = "0"; // do something to calc current price
-
-
-    if(!empty($cust_nme)) {
-        //$customer_name = $cust_nme;
-    }
-    if(!empty($in_email)) {
-        $input_email = $in_email;
-    }
-    if(!empty($lne_item_desc)) {
-        array_push($line_itm_desc, $lne_item_desc);
-    }
-    if(!empty($lne_item_price)) {
-        array_push($line_itm_price, $lne_item_price);
-    }
-    if(!empty($new_note)) {
-        array_push($secrete_note_ar, $new_note);
-    }
-    if(!empty($discount)) {
-        $discount_amount = $discount;
-    }
-    if(!empty($final_prce)) {
-        $final_price = $final_prce;
-    }
-
-    showQuoteForm($customer_name, $input_email, $line_itm_desc, $line_itm_price, $secrete_note_ar, $discount_amount, $final_price);
-}
+/*
+    Handle submission of form: new quote creation
+*/
 
 ?>
 
