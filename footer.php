@@ -1,6 +1,6 @@
 
     </body>
     <footer>
-        <p>Footer</p>
+        <p>By: Morales, Rowe, Troyer, Zak</p>
     </footer>
 </html>

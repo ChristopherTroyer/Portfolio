@@ -6,16 +6,15 @@
 
 <html>
     <head>
-        <title>testing</title>
+        <title>Quotes and Such</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
         <div class="topnav">
-            <a href="index.php">Home</a>
             <?php
             //Show that user is logged in inside header
             if(isset($_SESSION["userid"])) {
-                echo "<a href='profile.php'>Profile</a>";
+                //echo "<a href='profile.php'>Profile</a>";
                 echo "<a href='includes/logout.inc.php'>Sign Out</a>";
 
                 // check if associate is admin
@@ -24,6 +23,10 @@
                     echo "<a href='signup.php'>Add user</a>";
                     //allows admin to go back to main page to see assoc or quote
                     echo "<a href='admin.php'>Back</a>";
+                }
+
+                if ($_SESSION["perms"] == 1) {
+                    echo "<a href='hq_access.php'>Sanction Quotes</a>";
                 }
 
             } else { // user is not logged in
