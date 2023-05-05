@@ -7,10 +7,6 @@
     include 'header.php';
 ?>
 
-<br />
-<h2>Current Associates</h2>
-<br />
-
 <?php
     $username = "debian-sys-maint";
     $password = "vUlvuFil887Af63z";
@@ -55,7 +51,7 @@
             <td><?=$ainfo['address']?></td>
             <td><?=$ainfo['commission']?></td>
             <td><?=$ainfo['permission']?></td>
-            <td clas="other">
+            <td class="other">
                 <a href="update_assoc.php?AssocID=<?=$ainfo['AssocID']?>" class="update"></a>
                 <a href="delete_assoc.php?AssocID=<?=$ainfo['AssocID']?>" class="Delete"></a>
             </td>
