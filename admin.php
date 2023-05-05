@@ -15,7 +15,7 @@
     require_once 'includes/dbh.inc.php';
     require_once 'includes/functions.inc.php';
     require_once 'adminfunctions.php';
-
+/*
     function show_all_assoc()
     {
         echo
@@ -46,7 +46,7 @@
             echo ("</tr>");
         }
     }
-
+*/
     try
     {
         show_all_assoc();
