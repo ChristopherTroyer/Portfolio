@@ -282,12 +282,6 @@ if(isset($_POST["submit"])) { // associate creates a new quote
     } else {
         echo "Error: " . mysqli_error($legacy);
     }
-    print_r($result_array);
-    print_r($_POST["line_item"]);
-    print_r($_POST["line_item_price"]);
-    print_r($_POST["secret_note"]);
-    echo $_POST["usr_email"];
-    echo $_POST["finalPrice"];
 
     // retrieve data filled into form
     $discountAmount = $_POST["discountAmount"]; // store discount amount
