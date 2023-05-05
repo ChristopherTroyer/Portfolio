@@ -7,18 +7,19 @@
 <?php
     require_once 'includes/dbh.inc.php';
     require_once 'includes/legacydbh.inc.php';
-/*
-        $username = "debian-sys-maint";
-        $password = "vUlvuFil887Af63z";
-        $dbname = "testing";
-        $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password); 
-*/
+
+
+
     //searches through dbh for information and gathers it all
     //to use
     function dbhquery($my_sqli, $arr = null)
     {
-
-        $drop = $conn->prepare($my_sqli);
+        $username = "debian-sys-maint";
+        $password = "vUlvuFil887Af63z";
+        $dbname = "testing";
+        $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password); 
+        
+        $drop = $pdo->prepare($my_sqli);
         if(isset($arr))
         {
             $drop->execute($arr);
@@ -50,7 +51,7 @@
         global $conn;
         $my_sqli = "SELECT * FROM Associate WHERE AssocID = :Id";
 
-        $drop = $pdo->prepare($my_sqli);
+        $drop = $conn->prepare($my_sqli);
         $drop->execute(['Id' => $ID]);
 
         $ainfo = $drop->fetch();
@@ -116,29 +117,6 @@
         {
             $arr = $arrID['QuoteID'];
         }
-        return $arr;
-    }
-
-    //Gathers information on quote based on ID
-    function quoteinfo(int $ID)
-    {
-        global $conn;
-        $my_sqli = "SELECT * FROM New_Quote WHERE QuoteID = :Id";
-
-        $drop = $pdo->prepare($my_sqli);
-        $drop->execute(['Id' => $ID]);
-
-        $qinfo = $drop->fetch();
-
-        $arr ['Customer_ID'] = $qinfo['CustID'];
-        $arr ['Associate_ID'] = $qinfo['AssocID'];
-        $arr ['Customer_email'] = $qinfo['cust_talk'];
-        $arr ['Discount_amount'] = $qinfo['discount_amnt'];
-        $arr ['Discount_percent'] = $qinfo['discount_prcn'];
-        $arr ['Price'] = $qinfo['price'];
-        $arr ['Status'] = $qinfo['status'];
-        $arr ['Date'] = $qinfo['process_date'];
-
         return $arr;
     }
 ?>
