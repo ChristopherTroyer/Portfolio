@@ -5,7 +5,6 @@
 <?php
     require_once 'includes/legacydbh.inc.php'; // legacy database handler
     require_once 'includes/functions.inc.php';
-    require_once 'adminfunctions.php';
 
     function showquotes($table)
     {
