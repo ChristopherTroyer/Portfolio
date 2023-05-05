@@ -14,7 +14,7 @@
     require_once 'includes/legacydbh.inc.php';
     require_once 'includes/dbh.inc.php';
     require_once 'includes/functions.inc.php';
-    require_once 'adminfunctions.inc.php';
+    require_once 'adminfunctions.php';
 
     function show_all_assoc()
     {
