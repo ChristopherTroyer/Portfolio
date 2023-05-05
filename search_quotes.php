@@ -33,7 +33,7 @@
                 echo"<td>$type</td>"; //shows info
             }
 
-            echo'<td><a href ="view_quotes.php/?specQuote=' .$table['QuoteID'].'                                                                                            ">View Quote</a></td>';
+            echo'<td><a href ="view_quotes.php/?specQuote=' .$table['QuoteID'].'">View Quote</a></td>';
             echo"</tr>";
         }
     }
@@ -85,7 +85,7 @@
 
         $selectsearch="SELECT DISTINCT status FROM New_Quote";
 
-        echo "<br><form method='post'><select name=status onchange='javascript:                                                                                             submit()' value=''>Status</option>";
+        echo "<br><form method='post'><select name=status onchange='javascript: submit()' value=''>Status</option>";
         echo"<option value=all>status...</option>";
 
         foreach($pdo->query($selectsearch) as $stattable)
@@ -108,7 +108,7 @@
             else
             {
                 $assoc = $_POST['AssocID'];
-                $associnfo = "SELECT * FROM New_Quote WHERE AssocID = '$assoc';"                                                                                            ;
+                $associnfo = "SELECT * FROM New_Quote WHERE AssocID = '$assoc';";
                 $temp = $pdo->query($associnfo);
                 $row = $temp->fetchAll(PDO::FETCH_ASSOC);
 
@@ -140,12 +140,12 @@
 
         $assocsearch="SELECT DISTINCT AssocID FROM New_Quote;";
 
-        echo "<br><form method='post'><select name=status onchange='javascript:                                                                                             submit()' value=''>AssocID</option>";
+        echo "<br><form method='post'><select name=status onchange='javascript: submit()' value=''>AssocID</option>";
         echo"<option value=all>Associate...</option>";
 
         foreach($pdo->query($assocsearch) as $assoctable)
         {
-            echo"<option value=$assoctable[AssocID]>$stattable[AssocID]</option>                                                                                            ";
+            echo"<option value=$assoctable[AssocID]>$stattable[AssocID]</option>";
         }
         echo"</select></form>";
 
@@ -196,7 +196,7 @@
 
         $custsearch="SELECT DISTINCT CustID FROM New_Quote;";
 
-        echo "<br><form method='post'><select name=status onchange='javascript:                                                                                             submit()' value=''>CustID</option>";
+        echo "<br><form method='post'><select name=status onchange='javascript: submit()' value=''>CustID</option>";
         echo"<option value=all>Customer ID...</option>";
 
         foreach($pdo->query($custsearch) as $stattable)
