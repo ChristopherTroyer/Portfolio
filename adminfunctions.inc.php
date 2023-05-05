@@ -7,18 +7,18 @@
 <?php
     require_once 'includes/dbh.inc.php';
     require_once 'includes/legacydbh.inc.php';
-
+/*
         $username = "debian-sys-maint";
         $password = "vUlvuFil887Af63z";
         $dbname = "testing";
         $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password); 
-
+*/
     //searches through dbh for information and gathers it all
     //to use
     function dbhquery($my_sqli, $arr = null)
     {
 
-        $drop = $pdo->prepare($my_sqli);
+        $drop = $conn->prepare($my_sqli);
         if(isset($arr))
         {
             $drop->execute($arr);
@@ -47,7 +47,7 @@
     //gathers all information from associate based on ID
     function associateinfo(int $ID)
     {
-        global $pdo;
+        global $conn;
         $my_sqli = "SELECT * FROM Associate WHERE AssocID = :Id";
 
         $drop = $pdo->prepare($my_sqli);
@@ -122,7 +122,7 @@
     //Gathers information on quote based on ID
     function quoteinfo(int $ID)
     {
-        global $pdo;
+        global $conn;
         $my_sqli = "SELECT * FROM New_Quote WHERE QuoteID = :Id";
 
         $drop = $pdo->prepare($my_sqli);
