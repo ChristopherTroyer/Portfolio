@@ -62,17 +62,3 @@
         echo "Connection failed: " . $e->getMessage();
     }
 ?>
-    <body>
-        <form method="POST">
-            <br />
-            <input type="submit" name="associate" value="Associates">
-            <input type="submit" name="quote" value="Quotes">
-            <br />
-        </form>
-    </body>
-</html>
-
-<?php
- include_once 'footer.php'
-?>
-
