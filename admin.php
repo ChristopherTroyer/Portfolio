@@ -46,7 +46,6 @@
                 echo ("<td>" . $assoc['First_name'] . "</td>");
                 echo ("<td>" . $assoc['last_name'] . "</td>");
                 echo ("<td>" . $assoc['commission'] . "</td>");
-                echo '<td><a href="view_all_info.php='. $arrID.'">View All Info</a></td?';
                 echo '<td><a href="update_assoc.php?id='.$arrID.'">Update</a></td>';
                 echo '<td><a href="delete_assoc.php?id='.$arrID.'">Delete</a></td>';
             echo ("</tr>");
