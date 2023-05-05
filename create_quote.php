@@ -5,6 +5,9 @@
 <script type='text/javascript'>
     var counter = 1; // counter for line items, starts at 1 because there is a field already there, it cannot be deleted
     var noteCounter = 1; // secret note counter
+    var line_item_array = []; // all line items
+    var line_item_price_array = []; // all line item prices
+    var secret_notes_array = []; // all secret notes
 
     function removeLineItem() {
         var container = document.getElementById("line_items"); // where to delete childNodes from
@@ -22,6 +25,16 @@
         var deleteLinePrice = container.removeChild(linePrice); // remove price field
         var deleteBr = container.removeChild(br);
 
+        //remove line item from line_item_array
+        var lineItemIndex = line_item_array.indexOf(("line" + thenum));
+        var lineItemPriceIndex = line_item_price_array.indexOf(("linePrice" + thenum));
+        if(lineItemIndex > -1){
+            line_item_array.splice(lineItemIndex, 1); // remove only the one line item
+            line_item_price_array.splice(lineItemPriceIndex, 1); // remove only the one price line item
+        }
+        //alert(line_item_array);
+        //updateArrays();
+
         counter--; // decrement line item counter
     }
 
@@ -36,10 +49,12 @@
 
         input.setAttribute('id', "lineItem" + counter);
         input.type = "text";
-        input.name = "line" + counter;
+        //input.name = "line" + counter;
+        input.name = "line_item[]";
         price.setAttribute('id', "linePrice" + counter);
         price.type = "number";
-        price.name = "price" + counter;
+        //price.name = "price" + counter;
+        price.name = "line_item_price[]";
         deleteBtn.setAttribute('id', ("delete_line_item" + counter));
         deleteBtn.type = "button";
         deleteBtn.value = "delete"
@@ -48,10 +63,19 @@
 
         br.setAttribute('id', ("br" + counter));
 
+        // add line item to line_item_array
+        //line_item_array.push(("line"+counter).toString);
+        line_item_array.push(("line"+counter));
+        // add line item price to line_item_price_array
+        line_item_price_array.push(("linePrice" + counter));
+
         container.appendChild(input);
         container.appendChild(price);
         container.appendChild(deleteBtn);
         container.appendChild(br);
+
+
+        //updateArrays();
 
         counter++;
     }
@@ -80,7 +104,7 @@
         var br = document.createElement("br");
 
         input.type = "text";
-        input.name = "secret" + noteCounter;
+        input.name = "secret_note[]";
         input.setAttribute('id', "secret_field" + noteCounter); // assign id to note field
         deleteBtn.setAttribute('id', "delete_secret" + noteCounter); // assign id name to delete button
         deleteBtn.type = "button";
@@ -97,27 +121,39 @@
     }
 
     function calculatePrice() {
-        var itemPriceSum = 0;
-        //var line_item = document.getElementById("linePrice" + 1); // get specific line item price field
-        //alert(line_item.value);
-        //var discountAmount = document.getElementById("")
+        // calculate final price and set that price into hidden input for retrieval
+        var itemPriceSum = 0; // total sum of all the line item prices
+        var userInput = document.getElementById("discount_amount"); // entered into discount field
+        var priceAfterDiscount = 0.0;
 
         for(i=1;i<counter;i++) {
             //iterate through all prices to get sum
             var line_item = document.getElementById("linePrice" + i); // get specific line item price field
             itemPriceSum += Number(line_item.value);
-
         }
 
-        //TODO neeed to change how the line items are implemented in the showQuoteForm()
-        // it needs to include and id
-        //var first_ln_item = 
+        //handle the first field, not included in loop above
+        itemPriceSum += document.getElementById("line_item_price0").value;
+
+        // check which radio button was checked
         if(document.getElementById("percent_rbtn").checked) {
             // checked percent
-            alert(itemPriceSum);
+            // convert input into percent and mutliply by the itemPriceSum, subract result from itemPriceSum
+            var discPerc = (userInput.value / 100);
+            var toSubtract = (itemPriceSum * discPerc);
+            priceAfterDiscount = (itemPriceSum - toSubtract); // passed on to hidden var
         } else if(document.getElementById("ramount_rbtn")) {
-            // checked amount
+            // checked amount, just subtract the amount from the itemPriceSum
+            priceAfterDiscount = (itemPriceSum - userInput.value);
         }
+
+        var finalPrice = document.getElementById("finalPrice"); // hidden input, store final price
+        finalPrice.value = priceAfterDiscount; // set final price
+
+        // display price to user
+        var finalPriceDisp = document.getElementById("final_price_disp");
+        finalPriceDisp.innerText = "Final Price: " + priceAfterDiscount;
+
     }
 </script>
 
@@ -141,14 +177,17 @@
     
         echo "<br></br>";
         decodeEchoString("<form action='create_quote.php' method='post'>"); //begin form
+        decodeEchoString("<input type='hidden' id='finalPrice' name='finalPrice'>"); // hidden input, store final price after discounts 
 
         createFormFieldFilled("text", "usr_email", "Email", $in_email); // email to send quote to
         echo "<br></br>";
 
         // where you enter line items
         decodeEchoString("<div id='line_items'>"); // use this to append children / line items
-        createFormField("text", "line_item", "Line Item");
-        createFormField("text", "line_item_price", "Price");
+        //createFormField("text", "line_item", "Line Item");
+        //createFormField("text", "line_item_price", "Price");
+        decodeEchoString("<input type='text' name='line_item[]' id='line_item0' placeholder='Line Item'>");
+        decodeEchoString("<input type='number' name='line_item_price[]' id='line_item_price0' placeholder='Price'>");
         echo"<br></br>";
         decodeEchoString("</div>"); // div used to append more line items
         echo "<br></br>";
@@ -158,14 +197,16 @@
     
         // secret notes
         decodeEchoString("<div id='secret_notes'>"); // use this to append children / secret notes
-        createFormField("text", "secret_note", "Secret Notes");
+        //createFormField("text", "secret_note", "Secret Notes");
+        decodeEchoString("<input type='text' name='secret_note[]' id='secret_note0' placeholder='Secret Notes'>");
         echo "<br></br>";
         decodeEchoString("</div>"); // div used to append secret notes
         decodeEchoString("<button type='button' onclick='addSecretNote()'>New Note</button>");
         echo "<br></br>";
     
         //discount amount
-        createFormFieldFilled("number", "discount_amt", "Discount Amount", $discount);
+        decodeEchoString("<input type='number' id='discount_amount' name='discount_amount' placeholder='" . $discount . "'>");
+        //createFormFieldFilled("number", "discount_amt", "Discount Amount", $discount);
         decodeEchoString("<button type='button' name='calc_price' onclick='calculatePrice()'>Calculate Price</button>");
         decodeEchoString("<input type='radio' name='ramount' id='percent_rbtn' value='percent'/>");
         decodeEchoString("<label for='percent_rbtn'>percent</label>");
@@ -178,7 +219,7 @@
         echo "<br></br>";
     
         //display final price
-        decodeEchoString("<p>Final Price: " . $final_prce); // display the final quote price
+        decodeEchoString("<p id='final_price_disp'>Final Price: " . $final_prce); // display the final quote price
         echo "</form>"; // end of form
     }
 
@@ -210,7 +251,11 @@ if (isset($_POST["quote"])) { // is there a submission from
 */
 
 if(isset($_POST["submit"])) { // associate creates a new quote
-
+    print_r($_POST["line_item"]);
+    print_r($_POST["line_item_price"]);
+    print_r($_POST["secret_note"]);
+    echo $_POST["usr_email"];
+    echo $_POST["finalPrice"];
 }
 
 ?>
