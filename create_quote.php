@@ -125,30 +125,39 @@
         var itemPriceSum = 0; // total sum of all the line item prices
         var userInput = document.getElementById("discount_amount"); // entered into discount field
         var priceAfterDiscount = 0.0;
+        var saveDiscountAmount = document.getElementById("discountAmount");
+        var saveDiscountPercent = document.getElementById("discountPercent");
 
         for(i=1;i<counter;i++) {
             //iterate through all prices to get sum
             var line_item = document.getElementById("linePrice" + i); // get specific line item price field
-            itemPriceSum += Number(line_item.value);
+            itemPriceSum += (line_item.value);
         }
 
         //handle the first field, not included in loop above
-        itemPriceSum += document.getElementById("line_item_price0").value;
+        itemPriceSum += (document.getElementById("line_item_price0").value);
 
         // check which radio button was checked
         if(document.getElementById("percent_rbtn").checked) {
             // checked percent
             // convert input into percent and mutliply by the itemPriceSum, subract result from itemPriceSum
-            var discPerc = (userInput.value / 100);
-            var toSubtract = (itemPriceSum * discPerc);
-            priceAfterDiscount = (itemPriceSum - toSubtract); // passed on to hidden var
+            var discPerc = ((userInput.value) / 100.0);
+            var toSubtract = ((itemPriceSum) * discPerc);
+            priceAfterDiscount = ((itemPriceSum) - (toSubtract)); // passed on to hidden var
+            //alert(priceAfterDiscount);
+            saveDiscountAmount.value = (toSubtract);
+            saveDiscountPercent.value = (discPerc);
         } else if(document.getElementById("ramount_rbtn")) {
             // checked amount, just subtract the amount from the itemPriceSum
-            priceAfterDiscount = (itemPriceSum - userInput.value);
+            priceAfterDiscount = (itemPriceSum - (userInput.value));
+            saveDiscountAmount.value = userInput.value;
+            //saveDiscountPercent.value = 0.0;
         }
 
         var finalPrice = document.getElementById("finalPrice"); // hidden input, store final price
+        alert(priceAfterDiscount);
         finalPrice.value = priceAfterDiscount; // set final price
+        //alert(finalPrice.value);
 
         // display price to user
         var finalPriceDisp = document.getElementById("final_price_disp");
@@ -178,14 +187,14 @@
         echo "<br></br>";
         decodeEchoString("<form action='create_quote.php' method='post'>"); //begin form
         decodeEchoString("<input type='hidden' id='finalPrice' name='finalPrice'>"); // hidden input, store final price after discounts 
+        decodeEchoString("<input type=hidden id='discountAmount' name='discountAmount>'"); // hidden input, store discount amount
+        decodeEchoString("<input type=hidden id='discountPercent' name='discountPercent>'"); // hidden input, store discount amount
 
         createFormFieldFilled("text", "usr_email", "Email", $in_email); // email to send quote to
         echo "<br></br>";
 
         // where you enter line items
         decodeEchoString("<div id='line_items'>"); // use this to append children / line items
-        //createFormField("text", "line_item", "Line Item");
-        //createFormField("text", "line_item_price", "Price");
         decodeEchoString("<input type='text' name='line_item[]' id='line_item0' placeholder='Line Item'>");
         decodeEchoString("<input type='number' name='line_item_price[]' id='line_item_price0' placeholder='Price'>");
         echo"<br></br>";
@@ -197,7 +206,6 @@
     
         // secret notes
         decodeEchoString("<div id='secret_notes'>"); // use this to append children / secret notes
-        //createFormField("text", "secret_note", "Secret Notes");
         decodeEchoString("<input type='text' name='secret_note[]' id='secret_note0' placeholder='Secret Notes'>");
         echo "<br></br>";
         decodeEchoString("</div>"); // div used to append secret notes
@@ -206,7 +214,6 @@
     
         //discount amount
         decodeEchoString("<input type='number' id='discount_amount' name='discount_amount' placeholder='" . $discount . "'>");
-        //createFormFieldFilled("number", "discount_amt", "Discount Amount", $discount);
         decodeEchoString("<button type='button' name='calc_price' onclick='calculatePrice()'>Calculate Price</button>");
         decodeEchoString("<input type='radio' name='ramount' id='percent_rbtn' value='percent'/>");
         decodeEchoString("<label for='percent_rbtn'>percent</label>");
@@ -225,7 +232,9 @@
 
 if(isset($_POST["customer"])) { // is there a submission from associate.php
     $customer_name = $_POST["customer"];
-    $_SESSION['customer_name'] = $customer_name;
+    echo $_POST["customer"];
+    //$_SESSION['customer_name'] = $customer_name;
+    $_SESSION['customer_name'] = $_POST["customer"];
     showQuoteForm($customer_name, $input_email, $line_itm_desc, $line_itm_price, $secrete_note_ar, $discount_amount, $final_price); // these are empty vars, if vars are filled in then the appropriate fields will be filled
 }
 if (isset($_POST["quote"])) { // is there a submission from
@@ -251,12 +260,67 @@ if (isset($_POST["quote"])) { // is there a submission from
 */
 
 if(isset($_POST["submit"])) { // associate creates a new quote
-    print_r($_POST["line_item"]);
-    print_r($_POST["line_item_price"]);
-    print_r($_POST["secret_note"]);
-    echo $_POST["usr_email"];
-    echo $_POST["finalPrice"];
+    require 'includes/functions.inc.php';
+    require 'includes/dbh.inc.php';
+
+    $legacy = mysqli_connect("blitz.cs.niu.edu", "student", "student", "csci467");
+    $c_name = $_SESSION["customer_name"];
+    $result = mysqli_query($legacy, "SELECT id FROM customers WHERE name = '$c_name'");
+    $custId = 0;
+    if ($result) { // get the customer id
+        $result_array = mysqli_fetch_array($result);
+        $customer_id = $result_array['id'];
+        $custId = $customer_id;
+    } else {
+        echo "Error: " . mysqli_error($legacy);
+    }
+    $getCustContact = mysqli_query($legacy, "SELECT contact FROM customers WHERE id = '$custId'");
+    $custContact = "";
+    if($getCustContact) { // get the customers contact info
+        $result_array = mysqli_fetch_array($getCustContact);
+        $custContact = $result_array['contact'];
+    } else {
+        echo "Error: " . mysqli_error($legacy);
+    }
+
+    // retrieve data filled into form
+    $discountAmount = $_POST["discountAmount"]; // store discount amount
+    $discountPercent = $_POST["discountPercent"]; // store discount amount
+    $userId = $_SESSION["userid"]; // associate id
+    $finalPrice = $_SESSION["finalPrice"]; // store final price
+    $price = $_POST["finalPrice"]; // final price
+    $status = "pending";
+    $processDate = date('Y-m-d');
+    $all_line_items = $_POST["line_item"];
+    $all_line_items_prices = $_POST["line_item_price"];
+    $all_notes = $_POST["secret_note"];
+
+    $sql = "INSERT INTO New_Quote (CustID, AssocID, cust_talk, status, discount_amnt, discount_prcn, price, process_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = mysqli_stmt_init($conn);
+    
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../newQuoteError.php?error=stmtfailed");
+        exit();
+    }
+    
+    mysqli_stmt_bind_param($stmt, "iisssdss", $custId, $userId, $custContact, $status, $discountAmount, $discountPercent, $price, $processDate);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    // handle inserting quote notes
+/*    $line_item_sql = "insert into Quote_Note (QuoteID, note) values (? , ?)";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../newQuoteNoteError.php?error=stmtfailed");
+        exit();
+    }
+    
+    mysqli_stmt_bind_param($stmt, "is", );
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);*/
 }
+
 
 ?>
 
