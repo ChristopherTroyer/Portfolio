@@ -61,7 +61,7 @@
 
                 if($row != false)
                 {
-                    draw_table($row);
+                    showquotes($row);
                 }
                 else
                 {
@@ -116,7 +116,7 @@
 
                 if($row != false)
                 {
-                    draw_table($row);
+                    showquotes($row);
                 }
                 else
                 {
@@ -171,7 +171,7 @@
 
                 if($row != false)
                 {
-                    draw_table($row);
+                    showquotes($row);
                 }
                 else
                 {
