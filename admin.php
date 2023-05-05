@@ -1,63 +1,67 @@
 <!--
-    This sets up the home page for administration.
-    There will be two buttons to view associates and view quotes
--->
-
-<?php
-    include_once 'header.php';
-?>
-
-<!--
     This allows the admin to view, edit, add, and delete
     associates in the company.
 -->
+
+<?php
+    include 'header.php';
+?>
 
 <br />
 <h2>Current Associates</h2>
 <br />
 
 <?php
+    $username = "debian-sys-maint";
+    $password = "vUlvuFil887Af63z";
+    $dbname = "testing";
+    $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password); 
+
     require_once 'includes/legacydbh.inc.php';
-    require_once 'includes/dbh.inc.php';
     require_once 'includes/functions.inc.php';
-    require_once 'adminfunctions.inc.php';
 
-    function show_all_assoc()
-    {
-        echo
-        ("
-            <table border=solid>
-            <tr>
-            <th> ID </th>
-            <th> Username </th>
-            <th> First Name </th>
-            <th> Last Name </th>
-            <th> Commission </th>
-            </tr>
-        ");
-        $ID = associateIDS();
-        foreach($ID as $arrID)
-        {
-            $assoc = associateinfo($arrID);
+    $sel = $pdo->prepare('SELECT * FROM Associate ORDER BY AssocID');
+    $sel->execute();
+    $assoc = $sel->fetchAll(PDO::FETCH_ASSOC);
 
-            echo ("<tr>");
-                echo ("<td>" . $arrID . "</td>");
-                echo ("<td>" . $assoc['username'] . "</td>");
-                echo ("<td>" . $assoc['First_name'] . "</td>");
-                echo ("<td>" . $assoc['last_name'] . "</td>");
-                echo ("<td>" . $assoc['commission'] . "</td>");
-                echo '<td><a href="update_assoc.php?id='.$arrID.'">Update</a></td>';
-                echo '<td><a href="delete_assoc.php?id='.$arrID.'">Delete</a></td>';
-            echo ("</tr>");
-        }
-    }
-
-    try
+    if($pdo!=false)
     {
-        show_all_assoc();
-    }
-    catch(PDOexception $e)
-    {
-        echo "Connection failed: " . $e->getMessage();
+        $countassoc = $pdo->query('SELECT COUNT(*) FROM Associate')->fetchColumn();
     }
 ?>
+
+    <h2>Show Associate</h2>
+    <table>
+    <thead>
+        <tr>
+            <td>Associate ID</td>
+            <td>Name</td>
+            <td>Username</td>
+            <td>Password</td>
+            <td>Email</td>
+            <td>Address</td>
+            <td>Commission</td>
+            <td>Permission</td>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($assoc as $ainfo): ?>
+        <tr>
+            <td><?=$ainfo['AssocID']?></td>
+            <td><?=$ainfo['First_name']. $ainfo['last_name']?></td>
+            <td><?=$ainfo['username']?></td>
+            <td><?=$ainfo['password']?></td>
+            <td><?=$ainfo['email']?></td>
+            <td><?=$ainfo['address']?></td>
+            <td><?=$ainfo['commission']?></td>
+            <td><?=$ainfo['permission']?></td>
+            <td clas="other">
+                <a href="update_assoc.php?AssocID=<?=$ainfo['AssocID']?>" class="update"></a>
+                <a href="delete_assoc.php?AssocID=<?=$ainfo['AssocID']?>" class="Delete"></a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+    </table>
+
+    </tbody>
