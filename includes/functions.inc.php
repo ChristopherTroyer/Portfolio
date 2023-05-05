@@ -215,7 +215,7 @@ function fillDropDown($array, $column_name) {
     foreach($array as $item) {
         $col = $item["". $column_name .""];
         //echo "<option>$col</option>";
-        echo "<option" . " value=" . $col . ">" . $col . "</option>";
+        echo "<option" . " value='" . $col . "'>" . $col . "</option>";
     }
 }
 
