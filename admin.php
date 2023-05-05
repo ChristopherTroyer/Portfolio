@@ -1,46 +1,4 @@
 <!--
-    This sets up the home page for administration.
-    There will be two buttons to view associates and view quotes
--->
-
-
-<?php
- include_once 'header.php';
-?>
-
-<html>
-<?php
-    require_once 'includes/legacydbh.inc.php';
-    require_once 'includes/functions.inc.php';
-
-    try
-    {
-        if(isset($_POST["quote"]))
-        {
-            //this will have everything quote related
-            header("location:search_quotes.php");
-        }
-    }
-
-    catch(PDOexception $e)
-    {
-        echo "Connection failed: " . $e->getMessage();
-    }
-?>
-
-    <body>
-        <form method="POST">
-            <br />
-            <!-- This button was broken, I brought page to the button -->
-<!--            <input type="submit" name="associate" value="Associate"> -->
-            <input type="submit" name="quote" value="Quotes">
-            <br />
-        </form>
-    </body>
-</html>
-
-
-<!--
     This allows the admin to view, edit, add, and delete
     associates in the company.
 -->
@@ -54,6 +12,7 @@
 
 <?php
     require_once 'includes/legacydbh.inc.php';
+    require_once 'includes/dbh.inc.php';
     require_once 'includes/functions.inc.php';
     require_once 'adminfunctions.inc.php';
 
