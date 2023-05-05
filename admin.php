@@ -52,8 +52,8 @@
             <td><?=$ainfo['commission']?></td>
             <td><?=$ainfo['permission']?></td>
             <td class="other">
-                <a href="update_assoc.php?AssocID=<?=$ainfo['AssocID']?>" class="update"></a>
-                <a href="delete_assoc.php?AssocID=<?=$ainfo['AssocID']?>" class="Delete"></a>
+                <a href="update_assoc.php?AssocID=<?=$ainfo['AssocID']?>" class="button">Update</a>
+                <a href="delete_assoc.php?AssocID=<?=$ainfo['AssocID']?>" class="button">Delete</a>
             </td>
         </tr>
         <?php endforeach; ?>
