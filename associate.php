@@ -2,7 +2,6 @@
  include_once 'header.php';
 ?>
 
-<main>This is a test for associate page</main>
 <br></br>
 
 <body> 
