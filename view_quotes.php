@@ -8,8 +8,8 @@
     $dbname = "testing";
     $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password); 
 
-    require_once 'legacydbh.inc.php';
-    require_once 'functions.inc.php';
+    require_once 'includes/legacydbh.inc.php';
+    require_once 'includes/functions.inc.php';
 
     if(isset($_POST['QuoteID']))
     {
