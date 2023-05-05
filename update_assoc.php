@@ -7,7 +7,7 @@
 <?php
     require_once 'includes/legacydbh.inc.php';
     require_once 'includes/functions.inc.php';
-    require_once 'adminfunctions.php';
+    require_once 'adminfunctions.inc.php';
 
 // Get id from URL
 $id = $_GET['AssocID'];
@@ -31,6 +31,7 @@ $email = $resultData['email'];
 
 <!--
     HTML covering the fields to edit the associates information
+
     WARNING: THIS IS NOT TESTED WITH USER DATA.
 -->
 

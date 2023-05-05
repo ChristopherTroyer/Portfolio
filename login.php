@@ -15,7 +15,7 @@
 <?php
  if(isset($_GET["error"])) { // if error is set
      if($_GET["error"] == "emptyinput") {
-         echo "<p>Fill in al fields!</p>"; // show user that they must input all fields
+         echo "<p>Fill in all fields!</p>"; // show user that they must input all fields
      }
      else if ($_GET["error"] == "wronglogin") {
          echo "<p>Invalid credentials!</p>"; // error is of wronglogin, show user they input invalid credentials

@@ -1,10 +1,16 @@
 <!--
-    This allows the admin to view, edit, add, and delete
-    associates in the company.
+    This sets up the home page for administration.
+    There will be two buttons to view associates and view quotes
 -->
+
 <?php
     include_once 'header.php';
 ?>
+
+<!--
+    This allows the admin to view, edit, add, and delete
+    associates in the company.
+-->
 
 <br />
 <h2>Current Associates</h2>
@@ -14,9 +20,9 @@
     require_once 'includes/legacydbh.inc.php';
     require_once 'includes/dbh.inc.php';
     require_once 'includes/functions.inc.php';
-    require_once 'adminfunctions.php';
+    require_once 'adminfunctions.inc.php';
 
-    function show_all()
+    function show_all_assoc()
     {
         echo
         ("
@@ -49,10 +55,24 @@
 
     try
     {
-        show_all();
+        show_all_assoc();
     }
     catch(PDOexception $e)
     {
         echo "Connection failed: " . $e->getMessage();
     }
 ?>
+    <body>
+        <form method="POST">
+            <br />
+            <input type="submit" name="associate" value="Associates">
+            <input type="submit" name="quote" value="Quotes">
+            <br />
+        </form>
+    </body>
+</html>
+
+<?php
+ include_once 'footer.php'
+?>
+

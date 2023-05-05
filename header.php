@@ -22,7 +22,9 @@
                     // allow access to associate signup
                     echo "<a href='signup.php'>Add user</a>";
                     //allows admin to go back to main page to see assoc or quote
-                    echo "<a href='admin.php'>Back</a>";
+                    echo "<a href='admin.php'>Associates</a>";
+                    //allows admin to go to search quotes page
+                    echo "<a href='search_quotes.php'>Quotes</a>";
                 }
 
                 if ($_SESSION["perms"] == 1) {

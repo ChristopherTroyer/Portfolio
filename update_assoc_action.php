@@ -7,7 +7,7 @@
 <?php
     require_once 'includes/legacydbh.inc.php';
     require_once 'includes/functions.inc.php';
-    require_once 'adminfunctions.php';
+    require_once 'adminfunctions.inc.php';
 
     if (isset($_POST['update']))
     {
