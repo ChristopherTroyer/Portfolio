@@ -198,7 +198,17 @@ if (array_key_exists('_id', $queries))
     {
       $amount = (float) ($item['price'] - $item['discount_amnt']); // price - discount
       $associate = $item['AssocID'];
-      submitOrder($id, $associate, $item['CustID'], $amount);
+      $commission_rate = submitOrder((int) $id, $associate, (int) $item['CustID'], (float) $amount);
+      if ($commission_rate == -1)
+      {
+        echo '<script>alert("Error while submitting order")</script>';
+        // refresh the page
+        echo'<script>
+        window.location.href = location.protocol + "//" + location.host + location.pathname;
+        </script>
+        ';
+      }
+      $commission_rate = $commission_rate / 100.;
       break;
     }
 
@@ -213,7 +223,7 @@ if (array_key_exists('_id', $queries))
     while ($item = $result->fetch_assoc())
       $commission = $item['commission'];
 
-    $add_amount = round($amount * $COMMISSION_RATE, 2.);
+    $add_amount = round($amount * $commission_rate, 2.);
     $new_commission = $commission + $add_amount;
 
     // step 2: update associate's commission to include order
