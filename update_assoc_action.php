@@ -2,8 +2,6 @@
     include 'header.php';
 ?>
 
-<main> This is test to edit associates</main>
-
 <?php
     require_once 'includes/legacydbh.inc.php';
     require_once 'includes/functions.inc.php';
@@ -81,8 +79,4 @@
         }
     }
 
-?>
-
-<?php
-    include 'footer.php';
 ?>
