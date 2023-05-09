@@ -8,6 +8,11 @@
     $dbname = "testing";
     $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
 
+    $id = $_GET['CustID'];
+
+    // Select data associated with id
+    $result = mysqli_query($conn, "SELECT * FROM New_Quote WHERE CustID = $id");
+
     //gathers all information about each quote
     $output = $pdo->prepare('SELECT * FROM Associate, New_Quote WHERE New_Quotes.AssocID = AssocID');
     $output->execute();
