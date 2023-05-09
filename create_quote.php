@@ -120,48 +120,44 @@
         noteCounter++;
     }
 
-    function calculatePrice() {
+    function calcPrice() {
         // calculate final price and set that price into hidden input for retrieval
-        var itemPriceSum = 0; // total sum of all the line item prices
+        var itemPriceSum = 0.0; // total sum of all the line item prices
         var userInput = document.getElementById("discount_amount"); // entered into discount field
         var priceAfterDiscount = 0.0;
         var saveDiscountAmount = document.getElementById("discountAmount");
         var saveDiscountPercent = document.getElementById("discountPercent");
+        var userInputConverted = parseFloat(userInput.value);
+        var discPerc = 0.0; // convert the amount entered into decimal
+        var subPercent = 0.0; //amount subtracted from itemPriceSum(if percent is checked)
+        var priceAfterDiscount = 0.0; // final result after discount
 
         for(i=1;i<counter;i++) {
             //iterate through all prices to get sum
             var line_item = document.getElementById("linePrice" + i); // get specific line item price field
-            itemPriceSum += (line_item.value);
+            itemPriceSum += parseFloat(line_item.value);
         }
 
-        //handle the first field, not included in loop above
-        itemPriceSum += (document.getElementById("line_item_price0").value);
+        itemPriceSum += parseFloat(document.getElementById("line_item_price0").value); // include the very first line item(not included in loop above)
 
-        // check which radio button was checked
         if(document.getElementById("percent_rbtn").checked) {
-            // checked percent
-            // convert input into percent and mutliply by the itemPriceSum, subract result from itemPriceSum
-            var discPerc = ((userInput.value) / 100.0);
-            var toSubtract = ((itemPriceSum) * discPerc);
-            priceAfterDiscount = ((itemPriceSum) - (toSubtract)); // passed on to hidden var
-            //alert(priceAfterDiscount);
-            saveDiscountAmount.value = (toSubtract);
-            saveDiscountPercent.value = (discPerc);
+            //checked percent
+            discPerc = (userInputConverted / 100.0);
+            subPercent = (itemPriceSum * discPerc);
+            priceAfterDiscount = (itemPriceSum - subPercent);
         } else if(document.getElementById("ramount_rbtn")) {
-            // checked amount, just subtract the amount from the itemPriceSum
-            priceAfterDiscount = (itemPriceSum - (userInput.value));
-            saveDiscountAmount.value = userInput.value;
-            //saveDiscountPercent.value = 0.0;
+            // checked amount
+            priceAfterDiscount = (itemPriceSum - userInputConverted);
+            //alert(priceAfterDiscount);
         }
+
 
         var finalPrice = document.getElementById("finalPrice"); // hidden input, store final price
-        alert(priceAfterDiscount);
         finalPrice.value = priceAfterDiscount; // set final price
-        //alert(finalPrice.value);
 
         // display price to user
         var finalPriceDisp = document.getElementById("final_price_disp");
-        finalPriceDisp.innerText = "Final Price: " + priceAfterDiscount;
+        finalPriceDisp.innerText = "Final Price: $" + priceAfterDiscount;
 
     }
 </script>
@@ -214,7 +210,7 @@
     
         //discount amount
         decodeEchoString("<input type='number' id='discount_amount' name='discount_amount' placeholder='" . $discount . "'>");
-        decodeEchoString("<button type='button' name='calc_price' onclick='calculatePrice()'>Calculate Price</button>");
+        decodeEchoString("<button type='button' name='calc_price' onclick='calcPrice()'>Calculate Price</button>");
         decodeEchoString("<input type='radio' name='ramount' id='percent_rbtn' value='percent'/>");
         decodeEchoString("<label for='percent_rbtn'>percent</label>");
         decodeEchoString("<input type='radio' name='ramount' id='ramount_rbtn' value='ramount'/>");
@@ -327,3 +323,4 @@ if(isset($_POST["submit"])) { // associate creates a new quote
 <?php
 include_once 'footer.php'
 ?>
+
