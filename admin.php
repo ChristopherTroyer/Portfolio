@@ -96,5 +96,3 @@
         <?php endforeach; ?>
     </tbody>
     </table>
-
-    </tbody>
