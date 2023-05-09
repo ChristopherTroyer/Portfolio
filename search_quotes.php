@@ -9,7 +9,7 @@
 <!-- THE ABILITY TO SEARCH BY ASSOCIATE ID -->
 <body> 
     <p>Select an Associate Id to Search:</p>
-    <form action="search_by_assoc.php" method="post"> 
+    <form action="search_by_assoc.php" method="get"> 
         <select name="AssocID"> 
             <option value="default">Choose Associate ID</option>
 
@@ -27,7 +27,7 @@
 <!-- THE ABILITY TO SEARCH BY CUSTOMER ID -->
     <body> 
     <p>Select a Customer Id to Search:</p>
-    <form action="search_by_cust.php" method="post"> 
+    <form action="search_by_cust.php" method="get"> 
         <select name="CustID"> 
             <option value="default">Choose Customer Id</option>
 
@@ -44,7 +44,7 @@
        
 <!-- THE BILITY TO SEARCH BY STATUS OF THE QUOTES -->
     <p>Select Status to Search:</p>
-    <form action="search_by_status.php" method="post"> 
+    <form action="search_by_status.php" method="get"> 
         <select name="status"> 
             <option value="default">Choose Status</option>
 
