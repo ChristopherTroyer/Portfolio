@@ -35,7 +35,7 @@
     require_once 'includes/functions.inc.php'; // utility functions for error checking credentials / login utils
 
     $AssociatesArray = fillArray($conn, "SELECT * FROM Associate;"); //get all associate in db to array
-    fillDropDown($customersArray, "AssocID"); //dropdown to delete an associate
+    fillDropDown($AssociatesArray, "AssocID"); //dropdown to delete an associate
 ?>
         </select>
         <input type="submit" value="Submit">
