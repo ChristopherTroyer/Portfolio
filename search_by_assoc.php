@@ -8,10 +8,11 @@
     $dbname = "testing";
     $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
 
-    //gathers all information about each quote
-    $output = $pdo->prepare('SELECT * FROM Associate, New_Quote WHERE New_Quotes.AssocID = AssocID');
-    $output->execute();
-    $qid = $output->fetchAll(PDO::FETCH_ASSOC);
+    //ID from the dropdown
+    $id = $_GET['AssocID'];
+
+    // Select data associated with id
+    $result = mysqli_query($conn, "SELECT * FROM New_Quote WHERE AssocID = $id");
 
     $output = $pdo->prepare('SELECT * FROM New_Quote, Line_Item WHERE QuoteID.ItemID=Line_Items.QuoteID');
     $output->execute();
