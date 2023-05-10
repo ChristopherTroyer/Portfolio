@@ -8,7 +8,7 @@
     $dbname = "testing";
     $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
 
-    if(isset($_POST['QuoteID']))
+    if(isset($_POST['CustID']))
     {
     $id = $_GET['CustID'];
 
