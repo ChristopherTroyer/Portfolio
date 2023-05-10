@@ -8,6 +8,8 @@
     $dbname = "testing";
     $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
 
+    if(isset($_POST['QuoteID']))
+    {
     $id = $_GET['CustID'];
 
     // Select data associated with id
@@ -25,6 +27,11 @@
     $output = $conn->prepare('SELECT * FROM customers');
     $output->execute();
     $cust = $output->fetchAll(PDO::FETCH_ASSOC);
+    }
+    else
+    {
+        exit();
+    }
 ?>
 
     <!-- CREATES A TABLE FULL OF THE QUOTES. THIS IS ALSO USED IN THE DIFFERENT SEARCHES -->
