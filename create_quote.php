@@ -304,17 +304,6 @@ if(isset($_POST["submit"])) { // associate creates a new quote
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 
-    // handle inserting quote notes
-/*    $line_item_sql = "insert into Quote_Note (QuoteID, note) values (? , ?)";
-    $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../newQuoteNoteError.php?error=stmtfailed");
-        exit();
-    }
-    
-    mysqli_stmt_bind_param($stmt, "is", );
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);*/
 }
 
 
