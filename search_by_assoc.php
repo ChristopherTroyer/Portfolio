@@ -8,6 +8,8 @@
     $dbname = "testing";
     $pdo = new PDO("mysql:host=localhost;dbname=$dbname", $username, $password);
 
+    if(isset($_POST['AssocID']))
+    {
     //ID from the dropdown
     $id = $_GET['AssocID'];
 
@@ -21,6 +23,11 @@
     $output = $conn->prepare('SELECT * FROM customers');
     $output->execute();
     $cust = $output->fetchAll(PDO::FETCH_ASSOC);
+    }
+    else
+    {
+        exit();
+    }
 ?>
 
     <!-- CREATES A TABLE FULL OF THE QUOTES. THIS IS ALSO USED IN THE DIFFERENT SEARCHES -->
