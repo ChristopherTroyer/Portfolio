@@ -5,12 +5,36 @@ import java.io.IOException;
 
 public class bio2 {
     public static void main(String[] args) {
-        String filePath = "/home/hopper/z1940978/human.rat.chr22.maf"; // Replace with your input file path
+        String filePath = "/home/turing/mhou/data/human.chimpanzee.chr22.maf"; // Replace with your input file path
         int positionToCompare = 38; // Start comparison from position 38
         int pairCount = 0; // Initialize the pair count
         int lineCount = 0; // Initialize the line count
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+
+        int transitionCount = 0;
+        int transversionCount = 0;
+        // substitutionCount = transitionCount + transversionCount
+
+        int[][] countTable = new int[4][4];
+        //representation of output table:
+        /*
+                    Other Genome
+                 +===+===+===+===+===+
+                 | * | A | C | G | T |
+                 +===+===+===+===+===+
+        Human    | A |   |   |   |   |
+                 +---+---+---+---+---+
+                 | C |   |   |   |   |
+                 +---+---+---+---+---+
+                 | G |   |   |   |   |
+                 +---+---+---+---+---+
+                 | T |   |   |   |   |
+                 +---+---+---+---+---+
+        */
+
+
+
+/*         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             String sequence1 = null;
             String sequence2 = null;
@@ -21,16 +45,18 @@ public class bio2 {
                     if (line.length() >= positionToCompare) { // Check line length
                         if (sequence1 == null) {
                             sequence1 = line.substring(positionToCompare);
-                            System.out.println("sequence 1 -> "+sequence1);
+                            //System.out.println("sequence 1 -> "+sequence1);
                         } else {
                             sequence2 = line.substring(positionToCompare);
-                            System.out.println("sequence 2 -> "+sequence2);
+                            //System.out.println("sequence 2 -> "+sequence2);
+
+                            //usually print is a "blocking" function so it slows down big loops like this
+                            //best bet if you need in progress prints is to space them out a bunch
 
                             // Check if the sequences match
                             if (matchSequences(sequence1, sequence2)) {
                                 pairCount++;
                             }
-
                             sequence1 = sequence2;
                         }
                     }
@@ -38,9 +64,11 @@ public class bio2 {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } */
 
-        System.out.println("Matching sequence pairs: " + pairCount);
+        //System.out.println("Matching sequence pairs: " + pairCount);
+
+        printTable(countTable);
     }
 
     // Function to check if sequences match 
@@ -64,7 +92,24 @@ public class bio2 {
 
         return true; // All characters match
     }
+
+    public static void printTable(int[][] table)
+    {
+        System.out.println("| * | A | C | G | T ");
+        String[] chartStart = new String[] {"| A ", "| C ", "| G ", "| T "};
+        int startCount = 0;
+        for (int[] is : table) 
+        {
+            System.out.print(chartStart[startCount]);
+            startCount++;
+            for (int i = 0; i < is.length; i++)
+            {
+                System.out.print("| ");
+                System.out.print(is[i]);
+                System.out.print(" ");
+            }
+            System.out.println("");
+        }
+        
+    }
 }
-
-
-
