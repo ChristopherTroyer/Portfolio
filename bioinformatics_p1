@@ -1,0 +1,128 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class bioinformatic_p1 {
+    public static void main(String[] args) {
+        String filename = "/home/hopper/z1940978/human.chimpanzee.chr22.maf"; // Replace with the actual file path
+        int[][] totalCharacterCounts = new int[5][5]; // Initialize a 5x5 matrix for character counts
+        // Row 0: 'A' in seq1, Row 1: 'T' in seq1, Row 2: 'C' in seq1, Row 3: 'G' in seq1, Row 4: '-' in seq1
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            String prevLine = null;
+            int lineCount = 0;
+            boolean shouldCompare = false;
+
+            while ((line = br.readLine()) != null) {
+                lineCount++;
+
+                if (lineCount > 3) {
+                    // Only start comparing from line 4 onwards
+                    shouldCompare = true;
+
+                    if (shouldCompare) {
+                        if (prevLine != null && line.length() >= 38 && prevLine.length() >= 38) {
+                            // Extract sequences starting from the 38th position
+                            String sequence1 = prevLine.substring(37).toLowerCase(); // Convert to lowercase
+                            String sequence2 = line.substring(37).toLowerCase(); // Convert to lowercase
+
+                            // Count characters at the exact corresponding positions
+                            countMatchingCharacters(sequence1, sequence2, totalCharacterCounts);
+                            System.out.println("Comparison:");
+                            System.out.println("Sequence 1: " + sequence1);
+                            System.out.println("Sequence 2: " + sequence2);
+                            System.out.println("Character counts at exact positions:");
+                            printCharacterCounts(totalCharacterCounts);
+                            System.out.println();
+                        }
+                    }
+                }
+
+                prevLine = line;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Print the total character counts at the end
+        System.out.println("Total character counts at exact positions:");
+        printCharacterCounts(totalCharacterCounts);
+    }
+
+    // Function to count characters at exact corresponding positions
+    private static void countMatchingCharacters(String seq1, String seq2, int[][] counts) {
+        if (seq1.length() != seq2.length()) {
+            return; // Sequences must have the same length
+        }
+
+        for (int i = 0; i < seq1.length(); i++) {
+            char charSeq1 = seq1.charAt(i);
+            char charSeq2 = seq2.charAt(i);
+
+            int row = -1;
+            int col = -1;
+
+            switch (charSeq1) {
+                case 'a':
+                case 'A':
+                    row = 0;
+                    break;
+                case 't':
+                case 'T':
+                    row = 1;
+                    break;
+                case 'c':
+                case 'C':
+                    row = 2;
+                    break;
+                case 'g':
+                case 'G':
+                    row = 3;
+                    break;
+                case '-':
+                    row = 4;
+                    break;
+            }
+
+            switch (charSeq2) {
+                case 'a':
+                case 'A':
+                    col = 0;
+                    break;
+                case 't':
+                case 'T':
+                    col = 1;
+                    break;
+                case 'c':
+                case 'C':
+                    col = 2;
+                    break;
+                case 'g':
+                case 'G':
+                    col = 3;
+                    break;
+                case '-':
+                    col = 4;
+                    break;
+            }
+
+            if (row != -1 && col != -1) {
+                counts[row][col]++; // Increment the count for the corresponding character pair
+            }
+        }
+    }
+
+    // Function to print character counts
+    private static void printCharacterCounts(int[][] counts) {
+        char[] characters = {'A', 'T', 'C', 'G', '-'};
+        for (int i = 0; i < counts.length; i++) {
+            System.out.print(characters[i] + " : ");
+            for (int j = 0; j < counts[i].length; j++) {
+                System.out.print(characters[j] + " -> " + counts[i][j] + "  ");
+            }
+            System.out.println();
+        }
+    }
+}
+
