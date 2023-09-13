@@ -21,10 +21,10 @@ public class bio2 {
                     if (line.length() >= positionToCompare) { // Check line length
                         if (sequence1 == null) {
                             sequence1 = line.substring(positionToCompare);
-System.out.println("sequence 1 -> "+sequence1);
+                            System.out.println("sequence 1 -> "+sequence1);
                         } else {
                             sequence2 = line.substring(positionToCompare);
-System.out.println("sequence 2 -> "+sequence2);
+                            System.out.println("sequence 2 -> "+sequence2);
 
                             // Check if the sequences match
                             if (matchSequences(sequence1, sequence2)) {
