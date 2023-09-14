@@ -1,10 +1,32 @@
+/********************************************************************
+Class:     CSCI 652/490
+Program:   Project 1
+Authors:   Kleo, Chris 
+
+Purpose:   Analysis of substitution in genome comparison. 
+
+Execution: java bioinformatics_p1
+    or     java bioinformatics_p1 "path/to/your/file.maf"
+
+*********************************************************************/
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class bioinformatic_p1 {
+public class bioinformatics_p1 {
     public static void main(String[] args) {
-        String filename = "/home/hopper/z1940978/human.chimpanzee.chr22.maf"; // Replace with the actual file path
+        
+        String filename = "";
+        if (args.length == 0)
+        {
+            filename = "/home/turing/mhou/data/human.chimpanzee.chr22.maf"; // Replace with the actual file path
+        }
+        else
+        {
+            filename = args[0];
+        }
+
         int[][] totalCharacterCounts = new int[5][5]; // Initialize a 5x5 matrix for character counts
         // Row 0: 'A' in seq1, Row 1: 'T' in seq1, Row 2: 'C' in seq1, Row 3: 'G' in seq1, Row 4: '-' in seq1
 
@@ -27,14 +49,7 @@ public class bioinformatic_p1 {
                             String sequence1 = prevLine.substring(37).toLowerCase(); // Convert to lowercase
                             String sequence2 = line.substring(37).toLowerCase(); // Convert to lowercase
 
-                            // Count characters at the exact corresponding positions
                             countMatchingCharacters(sequence1, sequence2, totalCharacterCounts);
-                            System.out.println("Comparison:");
-                            System.out.println("Sequence 1: " + sequence1);
-                            System.out.println("Sequence 2: " + sequence2);
-                            System.out.println("Character counts at exact positions:");
-                            printCharacterCounts(totalCharacterCounts);
-                            System.out.println();
                         }
                     }
                 }
@@ -46,8 +61,23 @@ public class bioinformatic_p1 {
         }
 
         // Print the total character counts at the end
-        System.out.println("Total character counts at exact positions:");
+        System.out.println("Total character counts:");
         printCharacterCounts(totalCharacterCounts);
+
+        //calculate substitution rate
+        int matches = totalCharacterCounts[0][0] + totalCharacterCounts[1][1] + totalCharacterCounts[2][2] + totalCharacterCounts[3][3];
+        int transversions = totalCharacterCounts[0][1] + totalCharacterCounts[0][2] + totalCharacterCounts[1][0] + totalCharacterCounts[2][0]
+        + totalCharacterCounts[1][3] + totalCharacterCounts[2][3] + totalCharacterCounts[3][1] + totalCharacterCounts[3][2];
+        int transitions = totalCharacterCounts[0][3] + totalCharacterCounts[3][0] + totalCharacterCounts[1][2] + totalCharacterCounts[2][1];
+        System.out.println("matches: " + matches);
+        System.out.println("Transitions: " + transitions);
+        System.out.println("Transversions: " + transversions);
+
+        int mismatch = transitions + transversions;
+        float subRate = ((float)mismatch / (mismatch + matches));
+        System.out.println("\nSubstitution rate: " + subRate);
+        float trRate =  (float)transitions/transversions;
+        System.out.println("\ntransitions vs transversions ratio: " + trRate);
     }
 
     // Function to count characters at exact corresponding positions
