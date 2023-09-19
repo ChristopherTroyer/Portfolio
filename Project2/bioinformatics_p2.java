@@ -1,12 +1,13 @@
+package Project2;
 /********************************************************************
 Class:     CSCI 652/490
-Program:   Project 1
+Program:   Project 2
 Authors:   Kleo, Chris 
 
 Purpose:   Analysis of substitution in genome comparison. 
 
-Execution: java bioinformatics_p1
-    or     java bioinformatics_p1 "path/to/your/file.maf"
+Execution: java bioinformatics_p2
+    or     java bioinformatics_p2 "path/to/your/file.maf"
 
 *********************************************************************/
 
@@ -14,7 +15,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class bioinformatics_p1 {
+public class bioinformatics_p2 {
     public static void main(String[] args) {
         
         String filename = "";
