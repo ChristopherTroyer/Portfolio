@@ -3,7 +3,7 @@ Class:     CSCI 652/490
 Program:   Project 2
 Authors:   Kleo, Chris 
 
-Purpose:   Analysis of substitution in genome comparison. 
+Purpose:   Analysis of gap lengths in genome comparison. 
 
 Execution: java bioinformatics_p2 > output.csv
     or     java bioinformatics_p2 "path/to/your/file.maf" > output.csv
@@ -25,7 +25,12 @@ public class bioinformatics_p2 {
         }
         else
         {
-            filename = args[0];
+            try 
+            {
+                filename = args[0];
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         int[][] totalCharacterCounts = new int[5][5]; // Initialize a 5x5 matrix for character counts
@@ -33,7 +38,6 @@ public class bioinformatics_p2 {
 
         int[] gapSizeCount = new int[105];
         Arrays.fill(gapSizeCount, 0);
-        int gapCount = 0;
 
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
