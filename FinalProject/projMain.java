@@ -15,16 +15,41 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class main {
+
+public class projMain {
     static int[][] totalCharacterCounts = new int[5][5]; // Initialize a 5x5 matrix for character counts
     // Row 0: 'A' in seq1, Row 1: 'T' in seq1, Row 2: 'C' in seq1, Row 3: 'G' in seq1, Row 4: '-' in seq1
 
     static int[] gapSizeCount = new int[105];
+    static String filename1;
+    static String filename2;
 
-    public void init()
+
+    public static void main(String[] args)
     {
         Arrays.fill(gapSizeCount, 0);
-        System.out.println("hehe");
+        filename1 = "";
+        filename2 = "";
+        if (args.length == 0)
+        {
+            //filename = "/home/turing/mhou/data/human.chimpanzee.chr22.maf"; // Replace with the actual file path
+            System.out.println("program requires 2 file arguments");
+        }
+        else
+        {
+            try 
+            {
+                filename1 = args[0];
+                //filename2 = args[1];
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        readFile(filename1);
+        printCharacterCounts(totalCharacterCounts);
+        printGapCounts(gapSizeCount);
+        System.out.println("sum of gaps: " + sumTotalGaps(gapSizeCount));
     }
 
     private static void readFile(String filename)
