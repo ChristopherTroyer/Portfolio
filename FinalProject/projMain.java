@@ -41,7 +41,6 @@ public class projMain {
             try 
             {
                 filename1 = args[0];
-                //filename2 = args[1];
             } catch (Exception e) {
                 e.printStackTrace();
             }
