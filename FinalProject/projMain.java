@@ -3,7 +3,8 @@ Class:     CSCI 652/490
 Program:   Final Project Proposal
 Authors:   Kleo, Chris 
 
-Purpose:   
+Purpose: Generate a distance matrix for input files to be fed into a tree construction program
+i.e. http://www.trex.uqam.ca/index.php?action=trex&menuD=1&method=2
 
 Execution: java main > output.csv
     or     java main "path/to/your/file.maf" > output.csv
