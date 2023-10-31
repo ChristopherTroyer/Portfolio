@@ -24,7 +24,24 @@ public class projMain {
     static int[] gapSizeCount = new int[105];
     static String filename1;
     static String filename2;
+    // A T C G -
+    //score matrix
+    //    A    C    G    T
+    // A  91  -114  -31 -123
+    // C -114  100 -125 -31
+    // G -31  -125  100 -114
+    // T -123  -31 -114   91
 
+    static int indel = 0; //400 open score 30 for extend
+    static int[][] scoreMatrix = 
+    {
+
+     {91,-123,-114,-31, indel},
+     {-123,91,-31,-114, indel},  //last is indel
+     {-114,-31,100,-125, indel},
+     {-31,-114,-125,100, indel},
+     {indel,indel,indel,indel,indel}
+    };
 
     public static void main(String[] args)
     {
@@ -48,6 +65,7 @@ public class projMain {
 
         readFile(filename1);
         printCharacterCounts(totalCharacterCounts);
+        System.out.println("score: " + scoreCharacterCounts(totalCharacterCounts, gapSizeCount));
         printGapCounts(gapSizeCount);
         System.out.println("sum of gaps: " + sumTotalGaps(gapSizeCount));
     }
@@ -63,17 +81,27 @@ public class projMain {
             while ((line = br.readLine()) != null) {
                 lineCount++;
 
-                if (lineCount > 3) {
+                if (lineCount > 4 && !line.startsWith("#")) {
                     // Only start comparing from line 4 onwards
                     shouldCompare = true;
 
                     if (shouldCompare) {
-                        if (prevLine != null && line.length() >= 38 && prevLine.length() >= 38) {
-                            // Extract sequences starting from the 38th position
-                            String sequence1 = prevLine.substring(37).toLowerCase(); // Convert to lowercase
-                            String sequence2 = line.substring(37).toLowerCase(); // Convert to lowercase
+                        if (prevLine != null && line.length() >= 50 && prevLine.length() >= 50) {
+                            // Extract sequences starting from the 43th position
+                            System.out.println("reading line: " + lineCount);
+
+
+
+                            String sequence1 = prevLine.substring(prevLine.lastIndexOf(" ")+1).toLowerCase(); // Convert to lowercase
+                            String sequence2 = line.substring(line.lastIndexOf(" ")+1).toLowerCase(); // Convert to lowercase
+
+                            System.out.print(prevLine.substring(0, prevLine.lastIndexOf(" ")) + '\n');
+                            //System.out.println(sequence1);
+                            System.out.print(line.substring(0, line.lastIndexOf(" ")) + '\n');
+                            //System.out.println(sequence2);
 
                             countMatchingCharacters(sequence1, sequence2, totalCharacterCounts, gapSizeCount);
+                            break;
                         }
                     }
                 }
@@ -154,9 +182,7 @@ public class projMain {
                 if (seq1.charAt(i+1) != '-')
                 {
                     rowGapLength++;
-
                     gapSizeCount[rowGapLength]++;
-
                     rowGapLength = 0;
 
                 }
@@ -173,9 +199,7 @@ public class projMain {
                 if (seq2.charAt(i+1) != '-')
                 {
                     colGapLength++;
-
                     gapSizeCount[colGapLength]++;
-
                     colGapLength = 0;
 
                 }
@@ -215,12 +239,46 @@ public class projMain {
     private static int sumTotalGaps(int[] gapList)
     {
         int retVal = 0;
-
+        int lineNum = 0;
         for (int i : gapList)
         {
-            retVal = retVal + i;
+            retVal = retVal + i*lineNum;
+            lineNum++;
         }
 
         return retVal;
+    }
+
+    private static int scoreCharacterCounts(int [][] counts, int[] gapList)
+    {
+        int score = 0;
+
+            for (int i = 0; i < counts.length; i++) {
+                //System.out.print(characters[i] + " : ");
+                for (int j = 0; j < counts[i].length; j++) {
+                    score = score + (counts[i][j] * scoreMatrix[i][j]);
+                    //System.out.println(counts[i][j] + " times " + scoreMatrix[i][j]);
+                    //System.out.println(i + " " + j);
+                    }      
+                }
+
+        //calculate gap score
+        int lineNum = 0;
+        for (int i : gapList)
+        {
+            if (i != 0)
+            {
+                if (lineNum == 1) {
+                    score = score - 400;
+                }
+                else
+                {
+                    score = score - (400 + ((lineNum-1)*30));
+                }
+            }
+            lineNum++;
+        }            
+
+        return score;
     }
 }
