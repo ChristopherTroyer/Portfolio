@@ -16,13 +16,21 @@ from Bio.Phylo.TreeConstruction import *
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.Align import MultipleSeqAlignment
+from matplotlib import pyplot
+from Bio.Phylo.Consensus import *
 
-distance_matrix = None
+def sciNota(inputNum):
+    return "{:e}".format(inputNum)
 
+def innerKiller(inputStr):
+    if(inputStr.name.find("Inner") == -1):
+        return inputStr
+    else:
+        return ""
 
 #### MANUAL ALIGNMENT TEST STUFF
 # sarsPath = "FinalProject\ProjectData\seqs\zeta"
-# sars2Path = "FinalProject\ProjectData\seqs\sars2"
+# sars2Path = "FinalProject\ProjectData\seqs\mers"
 # sarsData = ""
 # sars2Data = ""
 
@@ -42,11 +50,11 @@ distance_matrix = None
 # #aligner.mode = 'global'
 # aligner.substitution_matrix = substitution_matrices.load("BLOSUM62")
 
-#alignments = aligner.align(sarsData,sars2Data)
+# alignments = aligner.align(sarsData,sars2Data)
 
-#alignment = alignments[0]
-#print(alignment.score)
-#print(alignment)
+# alignment = alignments[0]
+# print(alignment.score)
+# print(alignment)
 
 
 # for alignment in sorted(alignments):
@@ -55,18 +63,48 @@ distance_matrix = None
 
 # input("done")
 
-calc = DistanceCalculator('identity') #could also use 'genetic'
-for record in AlignIO.parse("FinalProject\ProjectData\multi\sars2VariantsAll.multiz.maf", "maf"):
-    if record.get_alignment_length() > 100:
+distance = None
+
+calc = DistanceCalculator('genetic') #could also use 'identity'
+filePath = "FinalProject\ProjectData\multi\sars2VariantsAll.multiz.maf"
+fileName = filePath[filePath.rfind("\\")+1:]
+
+trees = list()
+constructor = DistanceTreeConstructor(calc)
+
+
+for record in AlignIO.parse(filePath, "maf"):
+    if record.get_alignment_length() > 500:
         print(record)
         distance_matrix = calc.get_distance(record)
         print(distance_matrix)
 
-# Build the tree
-constructor = DistanceTreeConstructor()
-tree = constructor.nj(distance_matrix)
+tree = constructor.nj(distance_matrix) #distance_matrix
 
-#tree.ladderize() sorts the tree branches by length
+# Build the tree
+#tree = constructor.nj(distance_matrix) #distance_matrix
+
+tree.ladderize() #sorts the tree branches by length
+
+#pyplot.xkcd() funny
+
+#pyplot.rc('axes', labelsize=0)
+fig = pyplot.figure(figsize=(30, 20), dpi=300)
+axes = fig.add_subplot(1, 1, 1)
+
+tree.root.color = "gray"
+# Draw the tree
+Phylo.draw(tree, branch_labels=(lambda c:c.branch_length), label_func=(lambda x: innerKiller(x)), title=(fileName+" Neighbor Joining", None, 'center', None),axes=axes, do_show=False)
+pyplot.savefig(fileName+"_NeighborJoining.png",bbox_inches='tight', dpi=300)
+
+
+pyplot.cla()
+
+tree = constructor.upgma(distance_matrix) #distance_matrix
+tree.ladderize() #sorts the tree branches by length
+tree.root.color = "gray"
+pyplot.rc('axes', labelsize=0)
 
 # Draw the tree
-Phylo.draw(tree)
+Phylo.draw(tree, branch_labels=(lambda c:c.branch_length), label_func=(lambda x: innerKiller(x)), title=(fileName+" UPGMA", None, 'center', None),axes=axes, do_show=False)
+pyplot.savefig(fileName+"_UPGMA.png",bbox_inches='tight', dpi=300)
