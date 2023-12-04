@@ -17,7 +17,6 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.Align import MultipleSeqAlignment
 from matplotlib import pyplot
-from Bio.Phylo.Consensus import *
 
 def sciNota(inputNum):
     return "{:e}".format(inputNum)
@@ -56,7 +55,6 @@ def innerKiller(inputStr):
 # print(alignment.score)
 # print(alignment)
 
-
 # for alignment in sorted(alignments):
 #     print("Score = %.1f:" % alignment.score)
 #     print(alignment)
@@ -66,45 +64,55 @@ def innerKiller(inputStr):
 distance = None
 
 calc = DistanceCalculator('genetic') #could also use 'identity'
-filePath = "FinalProject\ProjectData\multi\sars2VariantsAll.multiz.maf"
+filePath = "FinalProject\ProjectData\multi\multi.sars-like.maf"
 fileName = filePath[filePath.rfind("\\")+1:]
 
 trees = list()
 constructor = DistanceTreeConstructor(calc)
 
-
+testRecord = None
 for record in AlignIO.parse(filePath, "maf"):
     if record.get_alignment_length() > 500:
         print(record)
         distance_matrix = calc.get_distance(record)
         print(distance_matrix)
+        testRecord = record
 
 tree = constructor.nj(distance_matrix) #distance_matrix
 
-# Build the tree
-#tree = constructor.nj(distance_matrix) #distance_matrix
+pScorer = ParsimonyScorer()
+pSearcher = NNITreeSearcher(pScorer)
+pConstructor = ParsimonyTreeConstructor(pSearcher, tree)
+pars_tree = constructor.build_tree(testRecord)
+
+
+
+# # Build the tree
+# #tree = constructor.nj(distance_matrix) #distance_matrix
+
+
+# #pyplot.xkcd() funny
 
 tree.ladderize() #sorts the tree branches by length
-
-#pyplot.xkcd() funny
-
 #pyplot.rc('axes', labelsize=0)
 fig = pyplot.figure(figsize=(30, 20), dpi=300)
 axes = fig.add_subplot(1, 1, 1)
+Phylo.draw(tree, title=(fileName+" Fitch & Sankoff algorithm", None, 'center', None), do_show=False,axes=axes)
+# tree.root.color = "gray"
+# # Draw the tree //branch_labels=(lambda c:c.branch_length)
+# Phylo.draw(tree,branch_labels=(lambda c:c.branch_length), label_func=(lambda x: innerKiller(x)), title=(fileName+" Neighbor Joining", None, 'center', None),axes=axes, do_show=False)
+pyplot.savefig(fileName+"_Parsimony_noLabel.png",bbox_inches='tight', dpi=300)
+#pyplot.savefig(fileName+"_Parsimony.svg",bbox_inches='tight', dpi=300)
 
-tree.root.color = "gray"
-# Draw the tree
-Phylo.draw(tree, branch_labels=(lambda c:c.branch_length), label_func=(lambda x: innerKiller(x)), title=(fileName+" Neighbor Joining", None, 'center', None),axes=axes, do_show=False)
-pyplot.savefig(fileName+"_NeighborJoining.png",bbox_inches='tight', dpi=300)
 
 
-pyplot.cla()
+# pyplot.cla()
 
-tree = constructor.upgma(distance_matrix) #distance_matrix
-tree.ladderize() #sorts the tree branches by length
-tree.root.color = "gray"
-pyplot.rc('axes', labelsize=0)
+# tree = constructor.upgma(distance_matrix) #distance_matrix
+# tree.ladderize() #sorts the tree branches by length
+# tree.root.color = "gray"
+# pyplot.rc('axes', labelsize=0)
 
-# Draw the tree
-Phylo.draw(tree, branch_labels=(lambda c:c.branch_length), label_func=(lambda x: innerKiller(x)), title=(fileName+" UPGMA", None, 'center', None),axes=axes, do_show=False)
-pyplot.savefig(fileName+"_UPGMA.png",bbox_inches='tight', dpi=300)
+# # Draw the tree
+# Phylo.draw(tree,branch_labels=(lambda c:c.branch_length), label_func=(lambda x: innerKiller(x)), title=(fileName+" UPGMA", None, 'center', None),axes=axes, do_show=False)
+# pyplot.savefig(fileName+"_UPGMA_Vector.svg",bbox_inches='tight', dpi=300)
