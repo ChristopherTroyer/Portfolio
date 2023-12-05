@@ -64,7 +64,7 @@ def innerKiller(inputStr):
 distance = None
 
 calc = DistanceCalculator('genetic') #could also use 'identity'
-filePath = "FinalProject\ProjectData\multi\sars2VariantsAll.multiz.maf"
+filePath = "FinalProject\ProjectData\multi\multi.sars-like.maf"
 fileName = filePath[filePath.rfind("\\")+1:]
 
 trees = list()
@@ -78,12 +78,14 @@ for record in AlignIO.parse(filePath, "maf"):
         print(distance_matrix)
         testRecord = record
 
-tree = constructor.nj(distance_matrix) #distance_matrix
+
+
+##tree = constructor.nj(distance_matrix) #distance_matrix
 
 pScorer = ParsimonyScorer()
 pSearcher = NNITreeSearcher(pScorer)
-pConstructor = ParsimonyTreeConstructor(pSearcher, tree)
-pars_tree = constructor.build_tree(testRecord)
+pConstructor = ParsimonyTreeConstructor(pSearcher)
+pars_tree = pConstructor.build_tree(testRecord)
 
 
 
@@ -93,19 +95,25 @@ pars_tree = constructor.build_tree(testRecord)
 
 # #pyplot.xkcd() funny
 
-tree.ladderize() #sorts the tree branches by length
+##tree.ladderize() #sorts the tree branches by length
+pars_tree.ladderize()
 #pyplot.rc('axes', labelsize=0)
 fig = pyplot.figure(figsize=(30, 20), dpi=300)
 axes = fig.add_subplot(1, 1, 1)
-tree.root.color = "gray"
-Phylo.draw(tree, title=(fileName+" Fitch & Sankoff algorithm", None, 'center', None),branch_labels=(lambda c:c.branch_length),label_func=(lambda x: innerKiller(x)), do_show=False,axes=axes)
+##tree.root.color = "gray"
+pars_tree.root.color = "gray"
+Phylo.draw(pars_tree, title=(fileName+" Fitch's algorithm", None, 'center', None),branch_labels=(lambda c:c.branch_length),label_func=(lambda x: innerKiller(x)), do_show=False,axes=axes)
+
 # tree.root.color = "gray"
 # # Draw the tree //branch_labels=(lambda c:c.branch_length)
 # Phylo.draw(tree,branch_labels=(lambda c:c.branch_length), label_func=(lambda x: innerKiller(x)), title=(fileName+" Neighbor Joining", None, 'center', None),axes=axes, do_show=False)
+
 pyplot.savefig(fileName+"_Parsimony.png",bbox_inches='tight', dpi=300)
 pyplot.savefig(fileName+"_Parsimony.svg",bbox_inches='tight', dpi=300)
 
-
+pyplot.cla() #Clears figure to make another with different content
+Phylo.draw(pars_tree, title=(fileName+" Fitch's algorithm", None, 'center', None),label_func=(lambda x: innerKiller(x)), do_show=False,axes=axes)
+pyplot.savefig(fileName+"_Parsimony_noLabels.png",bbox_inches='tight', dpi=300)
 
 # pyplot.cla()
 
