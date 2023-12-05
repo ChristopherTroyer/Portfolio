@@ -64,7 +64,7 @@ def innerKiller(inputStr):
 distance = None
 
 calc = DistanceCalculator('genetic') #could also use 'identity'
-filePath = "FinalProject\ProjectData\multi\multi.sars-like.maf"
+filePath = "FinalProject\ProjectData\multi\sars2VariantsAll.multiz.maf"
 fileName = filePath[filePath.rfind("\\")+1:]
 
 trees = list()
@@ -97,12 +97,13 @@ tree.ladderize() #sorts the tree branches by length
 #pyplot.rc('axes', labelsize=0)
 fig = pyplot.figure(figsize=(30, 20), dpi=300)
 axes = fig.add_subplot(1, 1, 1)
-Phylo.draw(tree, title=(fileName+" Fitch & Sankoff algorithm", None, 'center', None), do_show=False,axes=axes)
+tree.root.color = "gray"
+Phylo.draw(tree, title=(fileName+" Fitch & Sankoff algorithm", None, 'center', None),branch_labels=(lambda c:c.branch_length),label_func=(lambda x: innerKiller(x)), do_show=False,axes=axes)
 # tree.root.color = "gray"
 # # Draw the tree //branch_labels=(lambda c:c.branch_length)
 # Phylo.draw(tree,branch_labels=(lambda c:c.branch_length), label_func=(lambda x: innerKiller(x)), title=(fileName+" Neighbor Joining", None, 'center', None),axes=axes, do_show=False)
-pyplot.savefig(fileName+"_Parsimony_noLabel.png",bbox_inches='tight', dpi=300)
-#pyplot.savefig(fileName+"_Parsimony.svg",bbox_inches='tight', dpi=300)
+pyplot.savefig(fileName+"_Parsimony.png",bbox_inches='tight', dpi=300)
+pyplot.savefig(fileName+"_Parsimony.svg",bbox_inches='tight', dpi=300)
 
 
 
