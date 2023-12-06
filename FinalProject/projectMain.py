@@ -18,7 +18,7 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.Align import MultipleSeqAlignment
 from matplotlib import pyplot
-from ete3 import Tree, TreeStyle
+from ete3 import Tree, TreeStyle, TextFace, NodeStyle
 
 def sciNota(inputNum):
     return "{:e}".format(inputNum)
@@ -66,7 +66,7 @@ def innerKiller(inputStr):
 distance = None
 
 calc = DistanceCalculator('genetic') #could also use 'identity'
-filePath = "FinalProject\ProjectData\multi\multi.sars-like.maf"
+filePath = "FinalProject\ProjectData\multi\sars2VariantsAll.multiz.maf"
 fileName = filePath[filePath.rfind("\\")+1:]
 
 trees = list()
@@ -82,7 +82,7 @@ for record in AlignIO.parse(filePath, "maf"):
 
 
 
-##tree = constructor.nj(distance_matrix) #distance_matrix
+tree = constructor.nj(distance_matrix) #distance_matrix
 
 #pScorer = ParsimonyScorer()
 #pSearcher = NNITreeSearcher(pScorer)
@@ -92,7 +92,7 @@ for record in AlignIO.parse(filePath, "maf"):
 
 
 # # Build the tree
-tree = constructor.nj(distance_matrix) #distance_matrix
+#tree = constructor.nj(distance_matrix) #distance_matrix
 
 
 # #pyplot.xkcd() funny
@@ -117,8 +117,15 @@ ts.mode = "c"
 ts.show_leaf_name = True
 ts.show_branch_length = True
 ts.show_branch_support = True
+#ts.show_border = True
 
-t.show(tree_style=ts)
+ts.scale = 20
+ts.title.add_face(TextFace(fileName+" Neighbor Joining", fsize=20), column=0)
+
+
+#t.show(tree_style=ts)
+t.render(fileName+"_NJ_new.svg", tree_style=ts)
+t.render(fileName+"_NJ_new.png", tree_style=ts)
 
 
 
