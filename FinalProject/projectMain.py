@@ -12,11 +12,13 @@ Execution: python projectMain.py
 from Bio import AlignIO
 from Bio import Align
 from Bio import Phylo
+from Bio import SeqIO
 from Bio.Phylo.TreeConstruction import *
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.Align import MultipleSeqAlignment
 from matplotlib import pyplot
+from ete3 import Tree, TreeStyle
 
 def sciNota(inputNum):
     return "{:e}".format(inputNum)
@@ -82,38 +84,57 @@ for record in AlignIO.parse(filePath, "maf"):
 
 ##tree = constructor.nj(distance_matrix) #distance_matrix
 
-pScorer = ParsimonyScorer()
-pSearcher = NNITreeSearcher(pScorer)
-pConstructor = ParsimonyTreeConstructor(pSearcher)
-pars_tree = pConstructor.build_tree(testRecord)
+#pScorer = ParsimonyScorer()
+#pSearcher = NNITreeSearcher(pScorer)
+#pConstructor = ParsimonyTreeConstructor(pSearcher)
+#pars_tree = pConstructor.build_tree(testRecord)
 
 
 
 # # Build the tree
-# #tree = constructor.nj(distance_matrix) #distance_matrix
+tree = constructor.nj(distance_matrix) #distance_matrix
 
 
 # #pyplot.xkcd() funny
 
-##tree.ladderize() #sorts the tree branches by length
-pars_tree.ladderize()
+tree.ladderize() #sorts the tree branches by length
+
+#pars_tree.ladderize()
+
 #pyplot.rc('axes', labelsize=0)
-fig = pyplot.figure(figsize=(30, 20), dpi=300)
-axes = fig.add_subplot(1, 1, 1)
+##fig = pyplot.figure(figsize=(30, 20), dpi=300)
+##axes = fig.add_subplot(1, 1, 1)
 ##tree.root.color = "gray"
-pars_tree.root.color = "gray"
-Phylo.draw(pars_tree, title=(fileName+" Fitch's algorithm", None, 'center', None),branch_labels=(lambda c:c.branch_length),label_func=(lambda x: innerKiller(x)), do_show=False,axes=axes)
+##pars_tree.root.color = "gray"
+
+Phylo.write(tree, fileName+".nwk", "newick")
+t = Tree(fileName+".nwk",  format=1)
+
+t.get_tree_root().unroot()
+
+ts = TreeStyle()
+ts.mode = "c"
+ts.show_leaf_name = True
+ts.show_branch_length = True
+ts.show_branch_support = True
+
+t.show(tree_style=ts)
+
+
+
+
+#Phylo.draw(pars_tree, title=(fileName+" Fitch's algorithm", None, 'center', None),branch_labels=(lambda c:c.branch_length),label_func=(lambda x: innerKiller(x)), do_show=False,axes=axes)
 
 # tree.root.color = "gray"
 # # Draw the tree //branch_labels=(lambda c:c.branch_length)
 # Phylo.draw(tree,branch_labels=(lambda c:c.branch_length), label_func=(lambda x: innerKiller(x)), title=(fileName+" Neighbor Joining", None, 'center', None),axes=axes, do_show=False)
 
-pyplot.savefig(fileName+"_Parsimony.png",bbox_inches='tight', dpi=300)
-pyplot.savefig(fileName+"_Parsimony.svg",bbox_inches='tight', dpi=300)
+#pyplot.savefig(fileName+"_Parsimony.png",bbox_inches='tight', dpi=300)
+#pyplot.savefig(fileName+"_Parsimony.svg",bbox_inches='tight', dpi=300)
 
-pyplot.cla() #Clears figure to make another with different content
-Phylo.draw(pars_tree, title=(fileName+" Fitch's algorithm", None, 'center', None),label_func=(lambda x: innerKiller(x)), do_show=False,axes=axes)
-pyplot.savefig(fileName+"_Parsimony_noLabels.png",bbox_inches='tight', dpi=300)
+#pyplot.cla() #Clears figure to make another with different content
+#Phylo.draw(pars_tree, title=(fileName+" Fitch's algorithm", None, 'center', None),label_func=(lambda x: innerKiller(x)), do_show=False,axes=axes)
+#pyplot.savefig(fileName+"_Parsimony_noLabels.png",bbox_inches='tight', dpi=300)
 
 # pyplot.cla()
 
