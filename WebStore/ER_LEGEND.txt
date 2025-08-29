@@ -1,0 +1,67 @@
+ENTITIES
+
+Ent     - CUSTOMER
+Desc    - Account of the people buying from the website to associate with orders/purchases/rewards etc
+ATT_KEY - USERID      - surrogate key assigned to identify customer
+ATT     - Name        - Name of customer
+ATT     - Addr        - Address of customer
+ATT     - Birthday    - birthday of customer
+ATT     - Phone       - valid phone number
+ATT     - Email       - valid email address
+ATT     - PASS        - user password (UNSECURE DO NOT USE REAL PASSWORDS)
+ATT     - EMP         - integer representing user status in system (0 = customer, 1 = employee/storeowner)
+
+Ent     - PRODUCT
+Desc    - Product tracked in store inventory
+ATT_KEY - PID         - surrogate key assigned to identify product in inventory
+ATT     - Name        - Name of product
+ATT     - Weight      - Weight of product
+ATT     - Price       - Price per count of product
+ATT     - Rating      - Rating of product
+ATT     - Quantity    - Count of product in stock
+ATT     - Description - Brief description of product
+ATT     - IMG         - path to image file (from root)
+
+
+Ent     - ORDER
+Desc    - Weak entity holding informations about orders in various states belonging to customers. Order would not exist without a Customer having one
+ATT_KEY - OID          - surrogate key assigned to orders upon data storage
+ATT     - Status      - status of order ('SHOPPING', 'PENDING', 'COMPLETE')
+
+Ent     - SESSION
+Desc    - Weak entity holding informations about active browsing sessions. Cannot exist without a CUSTOMER to browse
+ATT_KEY - SID         - something that can uniquely identify a browser session
+
+
+
+
+RELATIONSHIPS
+
+Relat   - Places An
+Ents    - CUSTOMER, ORDER
+Desc    - Represents that each ORDER belongs to exactly one CUSTOMER
+#C      - For any given ORDER, there is exactly one CUSTOMER who owns it
+#O      - For any given CUSTOMER, there can be many or no ORDERS under their ownership
+
+
+Relat   - IN CART
+Ents    - ORDER, PRODUCT
+Desc    - Represents a product being associated with an order (in the shopping cart)
+ATT     - NUM        - Number of PRODUCT in cart 
+#O      - For any given PRODUCT/s there can be many or no ORDERs
+#P      - For any given ORDER there can be none to many PRODUCTs
+
+
+Relat   - WISHES FOR
+Ents    - CUSTOMER, PRODUCT
+Desc    - Represents a PRODUCT being wished for by a CUSTOMER
+ATT     - NUM        - Number of PRODUCT wished for
+#C      - For any given PRODUCT/s there can be many or no CUSTOMERs wishing for them
+#P      - For any given CUSTOMER there can be none to many PRODUCTs they wish for
+
+
+Relat   - BROWSES
+Ents    - CUSTOMER, SESSION
+Desc    - Represents a product being associated with an order (in the shopping cart) 
+#C      - For any given SESION there can be only one CUSTOMER
+#S      - For any given CUSTOMER there can be none to many active SESSION/s (different browsers, devices, etc)

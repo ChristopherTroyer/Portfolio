@@ -1,0 +1,111 @@
+/* center body and header */
+body {
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+header {
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+/* put links in a row, center them, make them look nice */
+nav {
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+}
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+nav li {
+  display: inline-block;
+  padding: 0;
+}
+nav a {
+  display: block;
+  padding: 0.5em;
+  text-decoration: none;
+  color: #000;
+  background-color: #ccc;
+}
+nav a:hover {
+  background-color: #999;
+}
+
+/* space tables away from edges of screen */
+table {
+  margin: 0 auto;
+  width: 80%;
+  text-align: center;
+}
+td {
+  padding: 0.5em;
+  border: 1px solid #000;
+  text-align: center;
+}
+/* alternate colors for rows */
+tr:nth-child(even) {
+  background-color: #ccc;
+}
+tr:nth-child(odd) {
+  background-color: #eee;
+}
+
+/*center images vertically within table cells*/
+td img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Storefront classes */
+.storefrontHeader {
+  text-decoration: underline;
+  font-size:40px;
+}
+
+.storefrontText {
+  font-size:20px;
+}
+
+.storefrontImg{
+  max-width:100%;
+  max-height:100%;
+}
+
+.storefrontDiv{
+  height:200px;
+  width: 200px;
+}
+
+/* Order class */
+.orderTable{
+  font-size:20px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* prodClasses */
+.prodStockTextG{
+  font-size:30px;
+  float: left;
+  color: green;
+}
+.prodStockTextR{
+  font-size:30px;
+  float: left;
+  color: red;
+}
+.prodBRClear{
+  clear: both;
+}
+.prodFloat{
+  float: left;
+}
+.prodP30px{
+  font-size:30px;
+  float: left;
+}
