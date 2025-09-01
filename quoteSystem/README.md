@@ -1,4 +1,16 @@
-# CSCI467-Project, Quote system.
+## Quote System:
+  ### Responsibilities: Database planning. Use case planning, wrote most of the use/actor table and related Diagrams.
+  #### Languages: PHP, CSS, SQL
+  Using an Agile methodology we constructed a website that would generate price quotes for a fictional buisness.
+    
+  This site was required to be compatable with a locked down legacy database, and send orders via POST requests to a RESTful processing system.
+  
+  The site had to implement it's own associate and quotes managment (update, view, search, delete) including user accounts for different levels of access to the database.
+  
+  I also took on setting up and running a LAMP stack on a rented server. I also wrote a setup guide for my group members so they could run a server of their own.<br/>
+
+
+
 
 [Use/Actor table](https://docs.google.com/document/d/1tDHzCVj-peA-vWgy1vFP9yJHyWqzmNMserJfFrErD_Y/)
 

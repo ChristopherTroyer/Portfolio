@@ -1,4 +1,14 @@
-# CSCI_466_GROUP_22
+## E-commerse web store:
+  ### Responsibilities: HTML for pages, majority of CSS styling and formatting. SQL debugging.
+  #### Languages: PHP, CSS, SQL
+  
+  Simulation of an E-commerse website.
+  
+  Database designed using a Entity-Relationship model.
+  
+  Manages orders, user accounts, 'shopping carts', and tracks the store's inventory.<br/>
+
+  
 Web Based Store Group Project
 
 ## Sample user accounts to test website with ##
