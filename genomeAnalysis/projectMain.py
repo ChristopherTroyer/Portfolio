@@ -89,7 +89,8 @@ def renderNjTree(tree,fileName,save):
     os.remove(fileName+".nwk")
 
 def main():
-    filePath = "ProjectData\multi\omicronVariants.multiz.maf" #default input
+    filePath = "ProjectData\multi\omicronVariants.multiz.maf" #default input for quick debugging
+    
     #handle file input
     if args.i != None:
         if os.path.isfile(args.i):
