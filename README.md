@@ -6,11 +6,11 @@
 
   Has input files and expected output files in their own directories.
 
-## E-commerse web store:
+## E-commerce web store:
   ### Responsibilities: HTML for pages, majority of CSS styling and formatting. SQL debugging.
   #### Languages: PHP, CSS, SQL
   
-  Simulation of an E-commerse website.
+  Simulation of an E-commerce website.
   
   Database designed using a Entity-Relationship model.
   
@@ -20,7 +20,7 @@
   ### Responsibilities: Primary Developer in an interdisiplinary group.
   #### Language: Python
   
-  In a group led by a PHD candidate in biology, I was tasked with generating data for a presentation on the relation between SARS-Cov-2 and other SARS-related coronavirus.
+  In a group led by a PHD candidate in biology, I was tasked with processing data and generating tables for a presentation on the relation between SARS-Cov-2 and other SARS-related coronavirus.
   
   For the final project I wrote a Python script that takes in '.maf' (Multiple Alignment Format) files and generates phylogenetic trees based on a choice of three aglorithms. 
 
@@ -35,4 +35,4 @@
   
   The site had to implement it's own associate and quotes managment (update, view, search, delete) including user accounts for different levels of access to the database.
   
-  I also took on setting up and running a LAMP stack on a rented server. I also wrote a setup guide for my group members so they could run a server of their own.
+  I also took on setting up and running a LAMP stack on a rented server, as well as writing a guide for my group members so they could run a server of their own.

@@ -7,9 +7,7 @@
   
   The site had to implement it's own associate and quotes managment (update, view, search, delete) including user accounts for different levels of access to the database.
   
-  I also took on setting up and running a LAMP stack on a rented server. I also wrote a setup guide for my group members so they could run a server of their own.<br/>
-
-
+  I also took on setting up and running a LAMP stack on a rented server, as well as writing a guide for my group members so they could run a server of their own.
 
 
 [Use/Actor table](https://docs.google.com/document/d/1tDHzCVj-peA-vWgy1vFP9yJHyWqzmNMserJfFrErD_Y/)
